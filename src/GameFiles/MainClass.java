@@ -4,11 +4,16 @@ package GameFiles;
  * Keep you're business running at all costs. */
 
 public class MainClass {
+	
+	
 
 	public static void main(String[] args) 
 	{
+		Player player = new Player("Ross");
+		
 		displayStartMessage();
 		
+		System.out.println(player);
 		
 		
 
@@ -21,4 +26,4 @@ public class MainClass {
 				+ "it is your duty to keep it running at all costs.\n");
 	} // displayStartMessage()
 
-}
+} // Class MainClass
