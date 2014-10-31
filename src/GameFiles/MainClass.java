@@ -9,11 +9,12 @@ public class MainClass {
 
 	public static void main(String[] args) 
 	{
-		Player player = new Player("Ross");
+		GameManager gameManager = new GameManager();
+		//Player player = new Player("Ross");
 		
 		displayStartMessage();
 		
-		System.out.println(player);
+		gameManager.mainMenu();
 		
 		
 
