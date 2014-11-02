@@ -6,7 +6,7 @@ package GameFiles;
 public class GameManager {
 	
 	// Methods
-	public void mainMenu()
+	public void printMainMenu()
 	{
 		System.out.println("\n1.) Start New Game.");
 		System.out.println("2.) Load Game.");
@@ -14,6 +14,8 @@ public class GameManager {
 		System.out.println("4.) About Game.");
 		System.out.println("5.) Exit.\n");
 	} // mainMenu()
+	
+	
 	
 
 } // Class GameManager

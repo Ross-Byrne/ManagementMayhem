@@ -14,7 +14,7 @@ public class MainClass {
 		
 		displayStartMessage();
 		
-		gameManager.mainMenu();
+		gameManager.printMainMenu();
 		
 		
 
