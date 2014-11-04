@@ -18,12 +18,12 @@ public class MainClass {
 		int menuChoice = 0, endGame = 0;
 		
 		// Some start up stuff
-		
 		gameManager.displayStartMessage();
-		gameManager.printMainMenu();
 		
 		while(endGame != 99) //type 5 to exit
 		{
+			gameManager.printMainMenu(); // to print main menu
+			
 			System.out.print("\nPlease Enter your Choice: ");
 			menuChoice = console.nextInt();
 			
@@ -31,7 +31,8 @@ public class MainClass {
 			{
 			case 1:
 				// Start New Game
-				System.out.println("Starting new Game!");
+				System.out.println("\nStarting new Game!\n");
+				createCharacter(player, gameManager, console);
 				break;
 			case 2:
 				// Load Game
@@ -55,10 +56,54 @@ public class MainClass {
 			
 		} // while
 		
-		// closes console
+		// For then the program ends - closes console
+		// and gives a message to user.
 		console.close();
 		System.out.println("\n\nProgram Ended\n\n");
 	} // main()
+	
+	public static void startNewGame()
+	{
+		// Starting a new Game Stuff
+		
+	} // startNewGame()
+	
+	public static void createCharacter(Player player, GameManager gameManager, Scanner console)
+	{
+		int menuChoice=0;
+		
+		while(menuChoice != 99)
+		{
+			gameManager.printCharacterCreateMenu();
+			
+			System.out.print("\nEnter Option Choice: ");
+			menuChoice = console.nextInt();
+			
+			switch(menuChoice)
+			{
+			case 1:
+				console.nextLine(); // flush the buffer
+				System.out.print("\nPlease Enter your new Character's Name: ");
+				player.setName(console.nextLine());
+				
+				System.out.println("\nYour Character's Name is "+player.getName()+".");
+				break;
+			case 2:
+				System.out.print("\nSelect Characters traits!\n");
+				break;
+			case 3:
+				System.out.print("\nChoose Game Difficulty!\n");
+				break;
+			case 4:
+				menuChoice=99;
+				break;
+			} // switch
+			
+		} // while
+		
+	} // createCharacter()
+	
+
 	
 	
 	
