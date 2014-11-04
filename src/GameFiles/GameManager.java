@@ -1,11 +1,37 @@
 package GameFiles;
 
 /* This class is to manage the game
- * this includes the menus, etc*/
+ * this includes the menus, certain variables, etc*/
 
 public class GameManager {
 	
-	// Methods
+	public String gameDifficulty = "Normal";
+	public boolean isCharacterCreated=false;
+	
+	// Get and Set Methods
+	
+	public void setGameDifficulty(String theDif)
+	{
+		gameDifficulty = theDif;
+	} // setGameDifficulty
+	
+	public String getGameDifficulty()
+	{
+		return gameDifficulty;
+	} // getGameDifficulty
+	
+	public void setIsCharacterCreated(boolean isItCreated)
+	{
+		isCharacterCreated = isItCreated;
+	} // setIsCharacterCreated()
+	
+	public boolean getIsCharacterCreated()
+	{
+		return isCharacterCreated;
+	} // getIsCharacterCreated()
+	
+	// Other Methods
+	
 	public void displayStartMessage()
 	{
 		System.out.println("Welcome to Management Mayhem!\n"

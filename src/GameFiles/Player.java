@@ -67,19 +67,23 @@ public class Player extends Person {
 		int i=0;
 		
 		for(i=0; i<5; ++i)
-			tempTraits += traits[i] + "\n";
+			tempTraits += traits[i] + "\n\t";
 		
 		return tempTraits;
 	} // getTraits()
 	
+	
+	
 	// toString Method
-	public String toString()
+	public String displayPlayerInfo()
 	{
-		String str;
+		String str="";
 		
-		str = getName();
+		str += "\nName: " + getName() +
+				"\nBank Account: " + getBankAccount() +
+				"\nTraits: " + getTraits();
 		
 		return str;
-	} // toString()
+	} // displayePlayerInfo()
 
 } // Class Person
