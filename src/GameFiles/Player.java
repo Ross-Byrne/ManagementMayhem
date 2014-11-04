@@ -30,9 +30,33 @@ public class Player extends Person {
 		return super.getName();
 	} // getName()
 	
+	public void setPlayerTraits(int index, String trait)
+	{
+		// user enters trait number (1 - 5), -1 to convert it to 0 indexing
+		traits[index - 1] = trait;
+	} // setPlayerTraits()
+	
+	public String getPlayerTraits(int index)
+	{
+		String trait="";
+		
+		if (index > 0 || index < 5)
+			trait = traits[index - 1];
+			else
+				for(int i=0; i<5; ++i)
+					trait += traits[i] + "\n";
+		
+		return trait;
+	} // getPlayerTraits()
+	
+	// toString Method
 	public String toString()
 	{
-		return getName();
+		String str;
+		
+		str = getName();
+		
+		return str;
 	} // toString()
 
-}
+} // Class Person
