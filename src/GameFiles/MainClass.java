@@ -68,10 +68,29 @@ public class MainClass {
 		// if the game is ready to be played cause
 		// a new game was made or a game was loaded
 		// Do game playing stuff here!
+		
 		if(gameManager.getIsCharacterCreated() == true)
 		{
 			System.out.println("\nYAY, your Character is Created!\nYou can now start playing once I actually make the game!!!!");
+			//if a new game is created, endGame is set to 0
+			//this makes you enter the main game loop
+			//if character isn't created, endGame stays 99 and 
+			//main game loop is skipped.
+			
+			endGame = 0;
 		} // if
+		
+		// This is the Main Game Loop where the game runs
+		while(endGame != 99)
+		{
+			System.out.println("\nEntering Main Game Loop\n");
+			
+			// Game stuff!!
+			
+			System.out.println("\nExiting Main Game Loop\n");
+			endGame=99;
+		} // while
+		
 		
 		// Gives a message to user.
 		System.out.println("\n\nProgram Ended\n\n");
