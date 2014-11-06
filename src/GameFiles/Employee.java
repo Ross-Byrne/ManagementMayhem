@@ -9,18 +9,18 @@ public class Employee extends Person {
 	
 	public Employee(String theName) 
 	{
-		super(theName);
+		setName(theName);
 	}
 	
 	// Methods
 	public void setName(String theName)
 	{
-		super.setName(theName);
+		name = theName;
 	} // setName()
 	
 	public String getName()
 	{
-		return super.getName();
+		return name;
 	} // getName()
 	
 	public String toString()

@@ -16,18 +16,18 @@ public class Player extends Person {
 	
 	public Player(String theName) 
 	{
-		super(theName);
+		setName(theName);
 	}
 	
 	// Methods
 	public void setName(String theName)
 	{
-		super.setName(theName);
+		name = theName;
 	} // setName()
 	
 	public String getName()
 	{
-		return super.getName();
+		return name;
 	} // getName()
 	
 	public void setbankAccount(float theAccount)

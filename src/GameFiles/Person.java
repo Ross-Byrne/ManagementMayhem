@@ -5,26 +5,9 @@ public abstract class Person {
 	// Variables
 	String name;
 	
-	// Constructors
-	public Person()
-	{
-	}
-	
-	public Person(String theName)
-	{
-		name = theName;
-	}
-	
 	// Methods
-	public void setName(String theName)
-	{
-		name = theName;
-	} // SetName()
+	abstract void setName(String theName);
 	
-	public String getName()
-	{
-		return name;
-	} // getName()
-
+	abstract String getName();
 
 } // Class Person
