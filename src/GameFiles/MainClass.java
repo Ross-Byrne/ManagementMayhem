@@ -14,6 +14,7 @@ public class MainClass {
 		// Creating Objects
 		Scanner console = new Scanner(System.in);
 		Player player = new Player();
+		Business business = new Business();
 		GameManager gameManager = new GameManager();
 		
 		// Variables
@@ -21,6 +22,15 @@ public class MainClass {
 		
 		// Some start up stuff
 		gameManager.displayStartMessage();
+		
+		business.setBankAccount(1000f);
+		business.setEmployeeSalary(10);
+		System.out.println("Business Bank Account: " + business.getBankAccount());
+		System.out.println("Employee Salary: " + business.getEmployeeSalary());
+		
+		business.payEmployees(10);
+		System.out.println("Employee Salary Costs: " + business.getTotalEmployeeSalary());
+		System.out.println("Business Bank Account: " + business.getBankAccount());
 		
 		while(endGame != 99) //type 5 to exit
 		{
@@ -34,7 +44,7 @@ public class MainClass {
 			case 1:
 				// Start New Game
 				System.out.println("\nStarting new Game!\n");
-				createCharacter(player, gameManager, console);
+				createCharacter(player, business, gameManager, console);
 				break;
 			case 2:
 				// Load Game
@@ -104,7 +114,7 @@ public class MainClass {
 		
 	} // startNewGame()
 	
-	public static void createCharacter(Player player, GameManager gameManager, Scanner console)
+	public static void createCharacter(Player player, Business business, GameManager gameManager, Scanner console)
 	{
 		int menuChoice = 0;
 		boolean createStage1, createStage2, createStage3;
@@ -158,17 +168,17 @@ public class MainClass {
 				if(difChoice == 1) // if easy
 				{
 					gameManager.setGameDifficulty("easy");
-					player.setbankAccount(100000f);
+					business.setBankAccount(100000f);
 				}
 				else if (difChoice == 2) // if normal
 				{
 					gameManager.setGameDifficulty("normal");
-					player.setbankAccount(50000);
+					business.setBankAccount(50000);
 				}
 				else // if hard
 				{
 					gameManager.setGameDifficulty("hard");
-					player.setbankAccount(10000);
+					business.setBankAccount(10000);
 				} // if else
 				
 				createStage3 = true; // to show stage is completed

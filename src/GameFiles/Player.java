@@ -30,7 +30,7 @@ public class Player extends Person {
 		return name;
 	} // getName()
 	
-	public void setbankAccount(float theAccount)
+	public void setBankAccount(float theAccount)
 	{
 		bankAccount = theAccount;
 	} // setBankAccount()

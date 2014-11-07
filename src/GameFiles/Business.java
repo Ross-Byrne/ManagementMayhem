@@ -11,6 +11,7 @@ public class Business {
 	public int badReputation;
 	public int buildingSize;
 	public float employeeSalary;
+	public float totalEmployeeSalary;
 	
 	public Business()
 	{
@@ -71,14 +72,35 @@ public class Business {
 	public void setEmployeeSalary(float theSalary)
 	{
 		employeeSalary = theSalary;
-	} // setbankAccount()
+	} // setEmployeeSalary()
 	
 	public float getEmployeeSalary()
 	{
 		return employeeSalary;
 	} // getEmployeeSalary()
 	
+	public void setTotalEmployeeSalary(float totalSalary)
+	{
+		totalEmployeeSalary = totalSalary;
+	} // setTotalEmployeeSalary()
+	
+	public float getTotalEmployeeSalary()
+	{
+		return totalEmployeeSalary;
+	} // getTotalEmployeeSalary()
+	
 	// Other Methods
+	
+	// The number of employees the business has in entered
+	// the total salary is calculated
+	// using employeeSalary * the number of employees
+	public void payEmployees(int noEmployees)
+	{
+		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
+		
+		// takes the total salary out of the business bank account
+		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
+	} // payEmployees()
 	
 	
 	
