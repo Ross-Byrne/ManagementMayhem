@@ -90,6 +90,8 @@ public class MainClass {
 			// hire 10 employees
 			hireEmployees(employees, 10);
 			
+			System.out.println(employees.size());
+			
 			System.out.println("\nExiting Main Game Loop\n");
 			endGame=99;
 		} // while
