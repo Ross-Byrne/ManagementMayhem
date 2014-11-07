@@ -5,8 +5,10 @@ package GameFiles;
 
 public class GameManager {
 	
-	public String gameDifficulty = "Normal";
-	public boolean isCharacterCreated=false;
+	public String gameDifficulty;
+	public boolean isCharacterCreated = false;
+	public boolean isBusinessSetup = false;
+	public boolean isNewGameCreated = false;
 	
 	// Get and Set Methods
 	
@@ -30,6 +32,26 @@ public class GameManager {
 		return isCharacterCreated;
 	} // getIsCharacterCreated()
 	
+	public void setIsBusinessSetup(boolean isItSetup)
+	{
+		isBusinessSetup = isItSetup;
+	} // setIsBusinessSetup()
+	
+	public boolean getIsBusinessSetup()
+	{
+		return isBusinessSetup;
+	} // getIsBusinessSetup()
+	
+	public void setIsNewGameCreated(boolean isItCreated)
+	{
+		isNewGameCreated = isItCreated;
+	} // setIsNewGameCreated()
+	
+	public boolean getIsNewGameCreated()
+	{
+		return isNewGameCreated;
+	} // getIsNewGameCreated()
+	
 	// Other Methods
 	
 	public void displayStartMessage()
@@ -51,20 +73,17 @@ public class GameManager {
 	
 	public void printCharacterCreateMenu()
 	{
-		System.out.println("\nAll Fields Must Be Complete!\n");
+		System.out.println("\nBoth Fields Must Be Complete!");
 		System.out.println("\n1.) Name Your Character.");
-		System.out.println("\n2.) Select 5 Character Traits.");
-		System.out.println("\n3.) Choose Game Difficulty.");	
-		System.out.println("\n4.) Back To Main Menu.");
+		System.out.println("\n2.) Select 5 Character Traits.");	
+		System.out.println("\n3.) Back To Main Menu.");
 	} // printCharacterCreateMenu()
 	
 	public void printBusinessSetupMenu()
 	{
-		System.out.println("\nAll Fields Must Be Complete!\n");
-		System.out.println("\n1.) Name Your Business.");
-		System.out.println("\n2.) Select 5 Character Traits.");
-		System.out.println("\n3.) Choose Game Difficulty.");	
-		System.out.println("\n4.) Back To Main Menu.");
+		System.out.println("\nAll Fields Must Be Complete!");
+		System.out.println("\n1.) Name Your Business.");	
+		System.out.println("\n2.) Back To Main Menu.");
 		
 	} // printBusinessSetupMenu()
 	
