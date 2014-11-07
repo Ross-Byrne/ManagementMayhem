@@ -9,13 +9,18 @@ public class Business {
 	public float bankAccount;
 	public int goodReputation;
 	public int badReputation;
-	public int buildingSize;
-	public float employeeSalary;
+	public int buildingSize; // no. of rooms
+	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
 	
 	public Business()
 	{
-		
+		setName("");
+		setBankAccount(0);
+		setGoodReputation(0);
+		setBadReputation(0);
+		setBuildingSize(5);
+		setEmployeeSalary(800);
 	} // default constructor
 	
 	// Get and Set Methods

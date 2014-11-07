@@ -58,7 +58,15 @@ public class GameManager {
 		System.out.println("\n4.) Back To Main Menu.");
 	} // printCharacterCreateMenu()
 	
-	
+	public void printBusinessSetupMenu()
+	{
+		System.out.println("\nAll Fields Must Be Complete!\n");
+		System.out.println("\n1.) Name Your Business.");
+		System.out.println("\n2.) Select 5 Character Traits.");
+		System.out.println("\n3.) Choose Game Difficulty.");	
+		System.out.println("\n4.) Back To Main Menu.");
+		
+	} // printBusinessSetupMenu()
 	
 
 } // Class GameManager

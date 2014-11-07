@@ -44,7 +44,8 @@ public class MainClass {
 			case 1:
 				// Start New Game
 				System.out.println("\nStarting new Game!\n");
-				createCharacter(player, business, gameManager, console);
+				
+				startNewGame(player, business, gameManager, console);
 				break;
 			case 2:
 				// Load Game
@@ -108,9 +109,14 @@ public class MainClass {
 	
 	// Methods
 	
-	public static void startNewGame()
+	public static void startNewGame(Player player, Business business, GameManager gameManager, Scanner console)
 	{
 		// Starting a new Game Stuff
+		// Creating A Character
+		createCharacter(player, business, gameManager, console);
+		
+		// Setup Business
+		setUpBusiness(player, business, gameManager, console);
 		
 	} // startNewGame()
 	
@@ -162,20 +168,20 @@ public class MainClass {
 				break;
 			case 3:
 				int difChoice=0;
-				System.out.print("\nChoose Game Difficulty:\n1.) Easy.\n2.) Normal.\n3.) Hard.\n");
+				System.out.print("\nChoose Game Difficulty:\n1.) Easy.\n2.) Normal.\n3.) Hard.\n"); // choosing game difficulty
 				difChoice = console.nextInt();
 				
-				if(difChoice == 1) // if easy
+				if(difChoice == 1) // if easy, business starts with €100,000
 				{
 					gameManager.setGameDifficulty("easy");
 					business.setBankAccount(100000f);
 				}
-				else if (difChoice == 2) // if normal
+				else if (difChoice == 2) // if normal, business starts with €50,000
 				{
 					gameManager.setGameDifficulty("normal");
 					business.setBankAccount(50000);
 				}
-				else // if hard
+				else // if hard, business starts with €10,000
 				{
 					gameManager.setGameDifficulty("hard");
 					business.setBankAccount(10000);
@@ -200,6 +206,17 @@ public class MainClass {
 		} // while
 		
 	} // createCharacter()
+	
+	public static void setUpBusiness(Player player, Business business, GameManager gameManager, Scanner console)
+	{
+		int menuChoice = 0;
+		
+		while(menuChoice != 99)
+		{
+			
+		} // while
+		
+	} // setUpBusiness()
 	
 
 	
