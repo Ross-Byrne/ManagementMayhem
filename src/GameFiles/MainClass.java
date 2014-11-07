@@ -16,22 +16,12 @@ public class MainClass {
 		GameManager gameManager = new GameManager();
 		Player player = new Player();
 		Business business = new Business();
-		
+		List<Employee> employees = new ArrayList<Employee>();
 		
 		// Variables
 		int menuChoice = 0, endGame = 0;
 		
-		// Some start up stuff
-		gameManager.displayStartMessage();
-		
-		business.setBankAccount(1000f);
-		business.setEmployeeSalary(10);
-		System.out.println("Business Bank Account: " + business.getBankAccount());
-		System.out.println("Employee Salary: " + business.getEmployeeSalary());
-		
-		business.payEmployees(10);
-		System.out.println("Employee Salary Costs: " + business.getTotalEmployeeSalary());
-		System.out.println("Business Bank Account: " + business.getBankAccount());
+		System.out.println("\t\tWelcome To Management Mayhem!");
 		
 		while(endGame != 99) //type 5 to exit
 		{
@@ -58,7 +48,7 @@ public class MainClass {
 				break;
 			case 4:
 				// About Game
-				System.out.println("Stuff about the Game!");
+				gameManager.printGameInfo();
 				break;
 			case 5:
 				// Exit
@@ -96,6 +86,9 @@ public class MainClass {
 			System.out.println("\nEntering Main Game Loop\n");
 			
 			// Game stuff!!
+			
+			// hire 10 employees
+			hireEmployees(employees, 10);
 			
 			System.out.println("\nExiting Main Game Loop\n");
 			endGame=99;
@@ -267,7 +260,14 @@ public class MainClass {
 		
 	} // setGameDifficulty
 	
-
+	public static void hireEmployees(List<Employee> employees, int theAmount)
+	{
+		for(int i = 0; i < theAmount; i++)
+		{
+			Employee employee = new Employee();
+			employees.add(employee);
+		}
+	} // hireEmployees()
 	
 	
 	

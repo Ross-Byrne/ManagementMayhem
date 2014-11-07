@@ -9,6 +9,8 @@ public class GameManager {
 	public boolean isCharacterCreated = false;
 	public boolean isBusinessSetup = false;
 	public boolean isNewGameCreated = false;
+	public String[] playerTraitsSelection = { 	"Cheerful", "People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
+												"Greedy", "Spitful", "Alcoholic", "Risk Taker", "Seedy", "Handy Man"};
 	
 	// Get and Set Methods
 	
@@ -54,12 +56,12 @@ public class GameManager {
 	
 	// Other Methods
 	
-	public void displayStartMessage()
+	public void printGameInfo()
 	{
-		System.out.println("Welcome to Management Mayhem!\n"
+		System.out.println("\nWelcome to Management Mayhem!\n"
 				+ "As the sole owner and manager of your business,\n"
 				+ "it is your duty to keep it running at all costs.\n");
-	} // displayStartMessage()
+	} // printGameInfo()
 	
 	public void printMainMenu()
 	{
