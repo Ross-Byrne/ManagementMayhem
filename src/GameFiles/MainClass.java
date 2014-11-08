@@ -27,8 +27,19 @@ public class MainClass {
 		{
 			gameManager.printMainMenu(); // to print main menu
 			
-			System.out.print("\nPlease Enter your Choice: ");
-			menuChoice = console.nextInt();
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nPlease Enter your Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nPlease Enter your Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
 			
 			switch(menuChoice)
 			{
@@ -135,8 +146,19 @@ public class MainClass {
 		{
 			gameManager.printCharacterCreateMenu();
 			
-			System.out.print("\nEnter Option Choice: ");
-			menuChoice = console.nextInt();
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 3); // do..while
 			
 			switch(menuChoice)
 			{
@@ -198,8 +220,19 @@ public class MainClass {
 		{
 			gameManager.printBusinessSetupMenu();
 			
-			System.out.print("\nEnter Option Choice: ");
-			menuChoice = console.nextInt();
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 2); // do..while
 			
 			switch(menuChoice)
 			{
@@ -237,8 +270,22 @@ public class MainClass {
 		// choosing game difficulty
 		System.out.print("\nChoose Game Difficulty:\n"); 
 		System.out.print("\n1.) Easy.\n2.) Normal.\n3.) Hard.\n");
-		System.out.print("\nEnter Option Choice: ");
-		difChoice = console.nextInt();
+		
+		
+		
+		// to make sure the choice entered is in the right range
+		do
+		{
+			System.out.print("\nEnter Option Choice: ");
+		
+			while(!console.hasNextInt()) 
+			{
+				System.out.print("\nEnter Option Choice: ");
+				console.next(); // to advance Scanner past input
+			} // while
+			
+			difChoice = console.nextInt();
+		}while(difChoice < 1 || difChoice > 3); // do..while
 		
 		if(difChoice == 1) // if easy, business starts with €100,000
 		{
