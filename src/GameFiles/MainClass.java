@@ -65,7 +65,7 @@ public class MainClass {
 				break;
 			case 2:
 				// Load Game
-				System.out.println("Loading Game!");
+				/*System.out.println("Loading Game!");
 				
 				String temp1="";
 				while (inSavedGame.hasNextLine())
@@ -73,7 +73,8 @@ public class MainClass {
 				System.out.println(temp1);
 				// if game doesnt exist
 				if(temp1 == "")
-					System.out.println("No Game to Load");
+					System.out.println("No Game to Load");*/
+				loadGame();
 				break;
 			case 3:
 				// Delete Game Save
@@ -141,36 +142,42 @@ public class MainClass {
 				playGame(player, business, gameManager, console);
 				break;
 			case 2:
-				// Load a Game
-				Scanner inSavedGame2 = new Scanner(new FileReader(gameSave)); //inSavedGame2, so you can load a game a second time
-				System.out.println("Loading Game!");
-				String temp2="";
-				while (inSavedGame2.hasNextLine())
-					temp2 = inSavedGame2.nextLine();
-				System.out.println(temp2);
-				// if game doesnt exist
-				if(temp2 == "")
-					System.out.println("No Game to Load");
+				// Save Game
+				saveGame();
 				break;
 			case 3:
+				// Load a Game
+				loadGame();
+				break;
+			case 4:
 				// Delete a Saved Game
 				System.out.println("Deleting a Saved Game!");
 				break;
-			case 4:
-				// Save and Exit
-				System.out.println("Saving And Exiting Game!");
-				PrintWriter outSavedGame = new PrintWriter(gameSave);
-				
-				String test="";
-				test = "Saved Game";
-				outSavedGame.printf("%s",test);
-				outSavedGame.close();
-				endGame = 99; // breaks out of Main Game Loop
-				break;
+			
 			case 5:
-				// Exit without Saving
-				System.out.println("Exiting Without Saving Game!");
-				endGame = 99; // breaks out of Main Game Loop
+				// Exit
+				System.out.println("\nAre you sure you want to quit?\nAny Unsaved progress will be lost!");
+				System.out.println("\n1Quit Game?\n1.) Yes.\n2.) No.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nPlease Enter your Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nPlease Enter your Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					menuChoice = console.nextInt();
+				}while(menuChoice < 1 || menuChoice > 2); // do..while
+			
+				if(menuChoice == 1)
+				{
+					System.out.println("Exiting Game");
+					endGame = 99; // breaks out of Main Game Loop
+				}
 				break;
 			} // switch
 			
@@ -179,7 +186,7 @@ public class MainClass {
 		
 		// Gives a message to user.
 		System.out.println("\n\nGame Ended.\n\n");
-		inSavedGame.close();
+		//inSavedGame.close();
 		
 	} // main()
 	
@@ -464,6 +471,38 @@ public class MainClass {
 		} // while
 		
 	} // playGame
+	
+	public static void saveGame() throws IOException
+	{
+		System.out.println("Saving Game!");
+		
+		PrintWriter outSavedGame = new PrintWriter("SavedGame.txt");
+		
+		String test="";
+		test = "Saved Game";
+		outSavedGame.printf("%s",test);
+		
+		outSavedGame.close();
+	} // saveGame()
+	
+	public static void loadGame() throws IOException
+	{
+		System.out.println("Loading Game!");
+		
+		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
+		String temp2="";
+		
+		while (inSavedGame.hasNextLine())
+			temp2 = inSavedGame.nextLine();
+		
+		System.out.println(temp2);
+		
+		// if game doesnt exist
+		if(temp2 == "")
+			System.out.println("No Game to Load");
+		
+		inSavedGame.close();
+	} // loadGame()
 	
 	
 	
