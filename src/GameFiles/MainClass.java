@@ -17,6 +17,7 @@ public class MainClass {
 		Player player = new Player();
 		Business business = new Business();
 		List<Employee> employees = new ArrayList<Employee>();
+		
 		//Random rnd = new Random();
 		
 		// Variables
@@ -95,22 +96,53 @@ public class MainClass {
 		// This is the Main Game Loop where the game runs
 		while(endGame != 99)
 		{
-			System.out.println("\nEntering Main Game Loop\n");
+			gameManager.printMainGameMenu();			
 			
-			// Game stuff!!
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nPlease Enter your Choice: ");
 			
-			// hire 10 employees
-			hireEmployees(gameManager, employees, 10);
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nPlease Enter your Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
 			
-			printListOfEmployees(employees); 
+			switch(menuChoice)
+			{
+			case 1:
+				// Play the Game
+				System.out.println("Game Is Starting!");
+				playGame(player, business, gameManager, console);
+				break;
+			case 2:
+				// Save the Game
+				System.out.println("Saving Game!");
+				break;
+			case 3:
+				// Load a Game
+				System.out.println("Loading Game!");
+				break;
+			case 4:
+				// Delete a Saved Game
+				System.out.println("Deleting a Saved Game!");
+				break;
+			case 5:
+				// Exit
+				System.out.println("Exiting Game!");
+				endGame = 99; // breaks out of Main Game Loop
+				break;
+			} // switch
 			
-			System.out.println("\nExiting Main Game Loop\n");
-			endGame=99;
 		} // while
 		
 		
 		// Gives a message to user.
-		System.out.println("\n\nProgram Ended\n\n");
+		System.out.println("\n\nGame Ended.\n\n");
 	} // main()
 	
 	// Methods
@@ -342,6 +374,58 @@ public class MainClass {
 		System.out.println("List of Employees: \n" + tempNames);
 	} // printListOfEmployees()
 	
+	public static void playGame(Player player, Business business, GameManager gameManager, Scanner console)
+	{
+		// Playing the Game
+		int menuChoice = 0;
+		
+		while(menuChoice != 99)
+		{
+			gameManager.printGameOptionsMenu();
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			
+			switch(menuChoice)
+			{
+			case 1:
+				// Keep Playing
+				System.out.println("Continue Playing");
+				break;
+			case 2:
+				// Show Player Status
+				System.out.println("Player Status");
+				
+				break;
+			case 3:
+				// Show Business Status
+				System.out.println("Business Status");
+				break;
+			case 4:
+				// Manage The Business
+				System.out.println("Managing The Business");
+				break;
+			case 5:
+				// Back to Game Menu
+				System.out.println("Heading Back To Main Game Menu");
+				menuChoice=99;
+				break;
+			} // switch
+			
+		} // while
+		
+	} // playGame
 	
 	
 

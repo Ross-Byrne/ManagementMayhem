@@ -92,8 +92,26 @@ public class GameManager {
 		System.out.println("\nAll Fields Must Be Complete!");
 		System.out.println("\n1.) Name Your Business.");	
 		System.out.println("\n2.) Back To Main Menu.");
-		
 	} // printBusinessSetupMenu()
 	
+	public void printMainGameMenu()
+	{
+		System.out.println("\n\t\t\tMain Game Menu\n");
+		System.out.println("\t\t\t1.) Play Game.");
+		System.out.println("\t\t\t2.) Save Game.");
+		System.out.println("\t\t\t3.) Load Game.");
+		System.out.println("\t\t\t4.) Delete Game.");
+		System.out.println("\t\t\t5.) Exit Game.\n");
+	} // printMainGameMenu()
+	
+	public void printGameOptionsMenu()
+	{
+		System.out.println("\n\t\t\tOptions\n");
+		System.out.println("\t\t\t1.) Keep Playing.");
+		System.out.println("\t\t\t2.) Show Player Status.");
+		System.out.println("\t\t\t3.) Show Business Status.");
+		System.out.println("\t\t\t4.) Manage The Business.");
+		System.out.println("\t\t\t5.) Back To Main Game Menu.\n");
+	} // printGameMenu()
 
 } // Class GameManager
