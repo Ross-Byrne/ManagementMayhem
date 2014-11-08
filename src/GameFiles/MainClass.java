@@ -19,18 +19,11 @@ public class MainClass {
 		Business business = new Business();
 		List<Employee> employees = new ArrayList<Employee>();
 		
-		//Random rnd = new Random();
-		
-		// Save Game File Objects
+		// Checks if the save file exists, creates it if it doesn't
 		File gameSave = new File("SavedGame.txt");
 		if(!gameSave.exists()) {
 			gameSave.createNewFile();
 		} 
-		
-		Scanner inSavedGame = new Scanner(new FileReader(gameSave));
-		
-		
-		
 		
 		// Variables
 		int menuChoice = 0, endGame = 0;
@@ -65,16 +58,13 @@ public class MainClass {
 				break;
 			case 2:
 				// Load Game
-				/*System.out.println("Loading Game!");
+				loadGame(player, business, gameManager,  employees);
 				
-				String temp1="";
-				while (inSavedGame.hasNextLine())
-					temp1 = inSavedGame.nextLine();
-				System.out.println(temp1);
-				// if game doesnt exist
-				if(temp1 == "")
-					System.out.println("No Game to Load");*/
-				loadGame();
+				// if a game is loaded successfully, break out of loop to enter game loop
+				if(gameManager.getIsGameLoaded() == true)
+				{
+					endGame = 99;
+				}
 				break;
 			case 3:
 				// Delete Game Save
@@ -110,13 +100,18 @@ public class MainClass {
 		// This makes you enter the Main Game Loop.
 		// If the game isn't ready to be played, endGame stays 99 
 		// and the Main Game Loop is Skipped.
-		if(gameManager.getIsNewGameCreated() == true)
+		if(gameManager.getIsNewGameCreated() == true) // if new game is created
+		{
+			endGame = 0;
+		} // if
+		
+		if(gameManager.getIsGameLoaded() == true) // if a game is loaded
 		{
 			endGame = 0;
 		} // if
 		
 		// This is the Main Game Loop where the game runs
-		while(endGame != 99)
+		while(endGame != 99) // type 5 to exit
 		{
 			gameManager.printMainGameMenu();			
 			
@@ -143,11 +138,11 @@ public class MainClass {
 				break;
 			case 2:
 				// Save Game
-				saveGame();
+				saveGame(player, business, gameManager, employees);
 				break;
 			case 3:
 				// Load a Game
-				loadGame();
+				loadGame(player, business, gameManager,  employees);
 				break;
 			case 4:
 				// Delete a Saved Game
@@ -472,34 +467,53 @@ public class MainClass {
 		
 	} // playGame
 	
-	public static void saveGame() throws IOException
+	public static void saveGame(Player player, Business business, GameManager gameManager, 
+			List<Employee> employees) throws IOException
 	{
 		System.out.println("Saving Game!");
 		
 		PrintWriter outSavedGame = new PrintWriter("SavedGame.txt");
 		
-		String test="";
-		test = "Saved Game";
-		outSavedGame.printf("%s",test);
+		// Saving players state
+		outSavedGame.printf("%s%n", player.getName());
+		outSavedGame.printf("%f%n", player.getBankAccount());
+		outSavedGame.printf("%s%n", player.getTraits(1));
+		outSavedGame.printf("%s%n", player.getTraits(2));
+		outSavedGame.printf("%s%n", player.getTraits(3));
+		outSavedGame.printf("%s%n", player.getTraits(4));
+		outSavedGame.printf("%s%n", player.getTraits(5));
+		
 		
 		outSavedGame.close();
 	} // saveGame()
 	
-	public static void loadGame() throws IOException
+	public static void loadGame(Player player, Business business, GameManager gameManager, 
+			List<Employee> employees) throws IOException
 	{
 		System.out.println("Loading Game!");
 		
 		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
-		String temp2="";
 		
-		while (inSavedGame.hasNextLine())
-			temp2 = inSavedGame.nextLine();
+		while (inSavedGame.hasNext())
+		{
+			// Loading players state
+			player.setName(inSavedGame.nextLine());
+			player.setBankAccount(inSavedGame.nextFloat());
+			player.setTraits(1, inSavedGame.next());
+			player.setTraits(2, inSavedGame.next());
+			player.setTraits(3, inSavedGame.next());
+			player.setTraits(4, inSavedGame.next());
+			player.setTraits(5, inSavedGame.next());
+		} // while
 		
-		System.out.println(temp2);
+		gameManager.setIsGameLoaded(true);
 		
 		// if game doesnt exist
-		if(temp2 == "")
+		if(player.getName() == "")
+		{
 			System.out.println("No Game to Load");
+			gameManager.setIsGameLoaded(false);
+		} // if
 		
 		inSavedGame.close();
 	} // loadGame()

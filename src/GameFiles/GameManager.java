@@ -9,6 +9,7 @@ public class GameManager {
 	public boolean isCharacterCreated = false;
 	public boolean isBusinessSetup = false;
 	public boolean isNewGameCreated = false;
+	public boolean isGameLoaded = false;
 	public String[] playerTraitsSelection = { 	"Cheerful", "People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Risk Taker", "Seedy", "Handy Man"};
 	
@@ -59,6 +60,16 @@ public class GameManager {
 	{
 		return isNewGameCreated;
 	} // getIsNewGameCreated()
+	
+	public void setIsGameLoaded(boolean isItLoaded)
+	{
+		isGameLoaded = isItLoaded;
+	} // setIsGameLoaded()
+	
+	public boolean getIsGameLoaded()
+	{
+		return isGameLoaded;
+	} // getIsGameLoaded()
 	
 	// Other Methods
 	
