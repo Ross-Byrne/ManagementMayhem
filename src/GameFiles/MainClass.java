@@ -65,6 +65,10 @@ public class MainClass {
 				{
 					endGame = 99;
 				}
+				else
+				{
+					System.out.println("A Saved Game Couldn't Be Loaded!");
+				}
 				break;
 			case 3:
 				// Delete Game Save
@@ -143,6 +147,9 @@ public class MainClass {
 			case 3:
 				// Load a Game
 				loadGame(player, business, gameManager,  employees);
+				
+				if(gameManager.getIsGameLoaded() == false)
+					System.out.println("A Saved Game Couldn't Be Loaded!");
 				break;
 			case 4:
 				// Delete a Saved Game
@@ -152,7 +159,7 @@ public class MainClass {
 			case 5:
 				// Exit
 				System.out.println("\nAre you sure you want to quit?\nAny Unsaved progress will be lost!");
-				System.out.println("\n1Quit Game?\n1.) Yes.\n2.) No.");
+				System.out.println("\nQuit Game?\n1.) Yes.\n2.) No.");
 				
 				// to make sure the choice entered is in the right range
 				do
@@ -474,7 +481,7 @@ public class MainClass {
 		
 		PrintWriter outSavedGame = new PrintWriter("SavedGame.txt");
 		
-		// Saving players state
+		// Saving players state to save file
 		outSavedGame.printf("%s%n", player.getName());
 		outSavedGame.printf("%f%n", player.getBankAccount());
 		outSavedGame.printf("%s%n", player.getTraits(1));
@@ -483,38 +490,66 @@ public class MainClass {
 		outSavedGame.printf("%s%n", player.getTraits(4));
 		outSavedGame.printf("%s%n", player.getTraits(5));
 		
-		
+		// Saving business' state to save file
+		outSavedGame.printf("%s%n", business.getName());
+		outSavedGame.printf("%f%n", business.getBankAccount());
+		outSavedGame.printf("%d%n", business.getGoodReputation());
+		outSavedGame.printf("%d%n", business.getBadReputation());
+		outSavedGame.printf("%d%n", business.getBuildingSize());
+		outSavedGame.printf("%f%n", business.getEmployeeSalary());
+		outSavedGame.printf("%f%n", business.getTotalEmployeeSalary());
+			
 		outSavedGame.close();
 	} // saveGame()
 	
 	public static void loadGame(Player player, Business business, GameManager gameManager, 
 			List<Employee> employees) throws IOException
-	{
-		System.out.println("Loading Game!");
-		
+	{	
+		gameManager.setIsGameLoaded(false);
 		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
 		
-		while (inSavedGame.hasNext())
-		{
-			// Loading players state
-			player.setName(inSavedGame.nextLine());
-			player.setBankAccount(inSavedGame.nextFloat());
-			player.setTraits(1, inSavedGame.next());
-			player.setTraits(2, inSavedGame.next());
-			player.setTraits(3, inSavedGame.next());
-			player.setTraits(4, inSavedGame.next());
-			player.setTraits(5, inSavedGame.next());
-		} // while
 		
+		// to make sure the file loads the right values (in case file was edited)	
+		// Using ifs for each value
+		// inSavedGame.next(); is to advance Scanner past input
+		
+		// Loading players state from save file
+		if(inSavedGame.hasNextLine()) { player.setName(inSavedGame.nextLine()); } // player.setName()
+		else{ inSavedGame.close(); return; }	
+		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
+		else{ inSavedGame.close(); return; }	
+		if(inSavedGame.hasNext()) { player.setTraits(1, inSavedGame.next()); } // player.setTraits(1)
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNext()) { player.setTraits(2, inSavedGame.next()); } // player.setTraits(2)
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNext()) { player.setTraits(3, inSavedGame.next()); } // player.setTraits(3)
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNext()) { player.setTraits(4, inSavedGame.next()); } // player.setTraits(4)
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNext()) { player.setTraits(5, inSavedGame.next()); } // player.setTraits(5)
+		else{ inSavedGame.close(); return; }
+		
+		// Loading business' state from save file
+		inSavedGame.nextLine(); // flush the buffer
+		if(inSavedGame.hasNextLine()) { business.setName(inSavedGame.nextLine()); } // business.setName()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextFloat()) { business.setBankAccount(inSavedGame.nextFloat()); } // business.setBankAccount
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextInt()) { business.setGoodReputation(inSavedGame.nextInt()); } // business.setGoodReputation()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextInt()) { business.setBadReputation(inSavedGame.nextInt()); } // business.setBadReputation()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextInt()) { business.setBuildingSize(inSavedGame.nextInt()); } // business.setBuildingSize()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextFloat()) { business.setEmployeeSalary(inSavedGame.nextFloat()); } // business.setEmployeeSalary()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextFloat()) { business.setTotalEmployeeSalary(inSavedGame.nextFloat()); } // business.setTotalEmployeeSalary()
+		else{ inSavedGame.close(); return; }
+		
+		// saying the game loaded
 		gameManager.setIsGameLoaded(true);
-		
-		// if game doesnt exist
-		if(player.getName() == "")
-		{
-			System.out.println("No Game to Load");
-			gameManager.setIsGameLoaded(false);
-		} // if
-		
+		System.out.println("Loading Game!");
+
 		inSavedGame.close();
 	} // loadGame()
 	
