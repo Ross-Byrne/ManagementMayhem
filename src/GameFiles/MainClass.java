@@ -17,6 +17,7 @@ public class MainClass {
 		Player player = new Player();
 		Business business = new Business();
 		List<Employee> employees = new ArrayList<Employee>();
+		//Random rnd = new Random();
 		
 		// Variables
 		int menuChoice = 0, endGame = 0;
@@ -99,9 +100,9 @@ public class MainClass {
 			// Game stuff!!
 			
 			// hire 10 employees
-			hireEmployees(employees, 10);
+			hireEmployees(gameManager, employees, 10);
 			
-			System.out.println(employees.size());
+			printListOfEmployees(employees); 
 			
 			System.out.println("\nExiting Main Game Loop\n");
 			endGame=99;
@@ -309,14 +310,37 @@ public class MainClass {
 		
 	} // setGameDifficulty
 	
-	public static void hireEmployees(List<Employee> employees, int theAmount)
+	public static void hireEmployees(GameManager gameManager, List<Employee> employees, int theAmount)
 	{
+		Random rnd = new Random();
+		int rndValue=0;
+		String tempName="";
+		
 		for(int i = 0; i < theAmount; i++)
 		{
-			Employee employee = new Employee();
-			employees.add(employee);
-		}
+			Employee employee = new Employee(); // create employee
+			
+			rndValue = rnd.nextInt(14); // get a random value 
+			tempName = gameManager.randomEmployeeFName[rndValue]; // use value to get random first name
+			
+			rndValue = rnd.nextInt(14); // get another random value
+			tempName += gameManager.randomEmployeeLName[rndValue]; // choose a random last name and add it on to the first name
+			
+			employee.setName(tempName); // name the employee
+			employees.add(employee); // add employee to employees list
+		} // for
 	} // hireEmployees()
+	
+	public static void printListOfEmployees(List<Employee> employees)
+	{
+		String tempNames = "";
+		System.out.println("Number of Employees: " + employees.size() + ".");
+		
+		for(int i = 0; i < employees.size()-1; i++)
+			tempNames += "\n\t" + employees.get(i);
+		
+		System.out.println("List of Employees: \n" + tempNames);
+	} // printListOfEmployees()
 	
 	
 	
