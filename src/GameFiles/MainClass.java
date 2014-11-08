@@ -1,6 +1,7 @@
 package GameFiles;
 
 import java.util.*;
+import java.io.*;
 
 /* This is a game about managing your business.
  * Keep you're business running at all costs. */
@@ -9,7 +10,7 @@ public class MainClass {
 	
 	// Main Method
 	
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException
 	{
 		// Creating Objects
 		Scanner console = new Scanner(System.in);
@@ -19,6 +20,17 @@ public class MainClass {
 		List<Employee> employees = new ArrayList<Employee>();
 		
 		//Random rnd = new Random();
+		
+		// Save Game File Objects
+		File gameSave = new File("SavedGame.txt");
+		if(!gameSave.exists()) {
+			gameSave.createNewFile();
+		} 
+		
+		Scanner inSavedGame = new Scanner(new FileReader(gameSave));
+		
+		
+		
 		
 		// Variables
 		int menuChoice = 0, endGame = 0;
@@ -54,6 +66,14 @@ public class MainClass {
 			case 2:
 				// Load Game
 				System.out.println("Loading Game!");
+				
+				String temp1="";
+				while (inSavedGame.hasNextLine())
+					temp1 = inSavedGame.nextLine();
+				System.out.println(temp1);
+				// if game doesnt exist
+				if(temp1 == "")
+					System.out.println("No Game to Load");
 				break;
 			case 3:
 				// Delete Game Save
@@ -80,7 +100,8 @@ public class MainClass {
 		// Print player info
 		System.out.println("\nThe Player's Info: " + player.displayPlayerInfo());
 		System.out.println("\nBusiness Info: " + "\nBusiness Name: " + business.getName());
-		System.out.println("\nBusiness Bank Account: " + business.getBankAccount());
+		System.out.println("Business Bank Account: " + business.getBankAccount());
+		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
 		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
@@ -120,20 +141,35 @@ public class MainClass {
 				playGame(player, business, gameManager, console);
 				break;
 			case 2:
-				// Save the Game
-				System.out.println("Saving Game!");
+				// Load a Game
+				Scanner inSavedGame2 = new Scanner(new FileReader(gameSave)); //inSavedGame2, so you can load a game a second time
+				System.out.println("Loading Game!");
+				String temp2="";
+				while (inSavedGame2.hasNextLine())
+					temp2 = inSavedGame2.nextLine();
+				System.out.println(temp2);
+				// if game doesnt exist
+				if(temp2 == "")
+					System.out.println("No Game to Load");
 				break;
 			case 3:
-				// Load a Game
-				System.out.println("Loading Game!");
-				break;
-			case 4:
 				// Delete a Saved Game
 				System.out.println("Deleting a Saved Game!");
 				break;
+			case 4:
+				// Save and Exit
+				System.out.println("Saving And Exiting Game!");
+				PrintWriter outSavedGame = new PrintWriter(gameSave);
+				
+				String test="";
+				test = "Saved Game";
+				outSavedGame.printf("%s",test);
+				outSavedGame.close();
+				endGame = 99; // breaks out of Main Game Loop
+				break;
 			case 5:
-				// Exit
-				System.out.println("Exiting Game!");
+				// Exit without Saving
+				System.out.println("Exiting Without Saving Game!");
 				endGame = 99; // breaks out of Main Game Loop
 				break;
 			} // switch
@@ -143,6 +179,8 @@ public class MainClass {
 		
 		// Gives a message to user.
 		System.out.println("\n\nGame Ended.\n\n");
+		inSavedGame.close();
+		
 	} // main()
 	
 	// Methods
@@ -426,6 +464,7 @@ public class MainClass {
 		} // while
 		
 	} // playGame
+	
 	
 	
 
