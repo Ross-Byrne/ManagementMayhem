@@ -18,6 +18,7 @@ public class MainClass {
 		Player player = new Player();
 		Business business = new Business();
 		List<Employee> employees = new ArrayList<Employee>();
+		List<Dealer> dealers = new ArrayList<Dealer>();
 		
 		// Checks if the save file exists, creates it if it doesn't
 		File gameSave = new File("SavedGame.txt");
@@ -58,16 +59,29 @@ public class MainClass {
 				break;
 			case 2:
 				// Load Game
-				loadGame(player, business, gameManager,  employees);
+				loadGame(player, business, gameManager,  employees, dealers);
 				
 				// if a game is loaded successfully, break out of loop to enter game loop
 				if(gameManager.getIsGameLoaded() == true)
 				{
 					endGame = 99;
 				}
-				else
+				else // if loading fails
 				{
 					System.out.println("A Saved Game Couldn't Be Loaded!");
+					// in case loading fails halfway through
+					// set all the values being loaded back to default
+					
+					// Set default business states
+					business.setGoodReputation(0);
+					business.setBadReputation(0);
+					business.setBuildingSize(5);
+					business.setEmployeeSalary(800);
+					business.setTotalEmployeeSalary(0);
+					
+					// set employees and dealers back to default
+					employees.clear();
+					dealers.clear();
 				}
 				break;
 			case 3:
@@ -97,6 +111,15 @@ public class MainClass {
 		System.out.println("\nBusiness Info: " + "\nBusiness Name: " + business.getName());
 		System.out.println("Business Bank Account: " + business.getBankAccount());
 		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
+		
+		if(gameManager.getIsCharacterCreated() == true) // if its a new game, make them
+		{
+			hireEmployees(gameManager, employees, 10);
+			hireDealers(gameManager, dealers, 10);
+		} // if
+		
+		printListOfEmployees(employees);
+		printListOfDealers(dealers);
 		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
@@ -142,11 +165,11 @@ public class MainClass {
 				break;
 			case 2:
 				// Save Game
-				saveGame(player, business, gameManager, employees);
+				saveGame(player, business, gameManager, employees, dealers);
 				break;
 			case 3:
 				// Load a Game
-				loadGame(player, business, gameManager,  employees);
+				loadGame(player, business, gameManager,  employees, dealers);
 				
 				if(gameManager.getIsGameLoaded() == false)
 					System.out.println("A Saved Game Couldn't Be Loaded!");
@@ -400,10 +423,10 @@ public class MainClass {
 			Employee employee = new Employee(); // create employee
 			
 			rndValue = rnd.nextInt(14); // get a random value 
-			tempName = gameManager.randomEmployeeFName[rndValue]; // use value to get random first name
+			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
 			
 			rndValue = rnd.nextInt(14); // get another random value
-			tempName += gameManager.randomEmployeeLName[rndValue]; // choose a random last name and add it on to the first name
+			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
 			
 			employee.setName(tempName); // name the employee
 			employees.add(employee); // add employee to employees list
@@ -413,13 +436,45 @@ public class MainClass {
 	public static void printListOfEmployees(List<Employee> employees)
 	{
 		String tempNames = "";
-		System.out.println("Number of Employees: " + employees.size() + ".");
+		System.out.println("\nNumber of Employees: " + employees.size() + ".");
 		
-		for(int i = 0; i < employees.size()-1; i++)
+		for(int i = 0; i < employees.size(); i++)
 			tempNames += "\n\t" + employees.get(i);
 		
 		System.out.println("List of Employees: \n" + tempNames);
 	} // printListOfEmployees()
+	
+	public static void hireDealers(GameManager gameManager, List<Dealer> dealers, int theAmount)
+	{
+		Random rnd = new Random();
+		int rndValue=0;
+		String tempName="";
+		
+		for(int i = 0; i < theAmount; i++)
+		{
+			Dealer dealer = new Dealer(); // create dealer
+			
+			rndValue = rnd.nextInt(14); // get a random value 
+			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
+			
+			rndValue = rnd.nextInt(14); // get another random value
+			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
+			
+			dealer.setName(tempName); // name the employee
+			dealers.add(dealer); // add dealer to dealers list
+		} // for
+	} // hireDealers()
+	
+	public static void printListOfDealers(List<Dealer> dealers)
+	{
+		String tempNames = "";
+		System.out.println("\nNumber of Dealers: " + dealers.size() + ".");
+		
+		for(int i = 0; i < dealers.size(); i++)
+			tempNames += "\n\t" + dealers.get(i);
+		
+		System.out.println("List of Dealers: \n" + tempNames);
+	} // printListOfDealers()
 	
 	public static void playGame(Player player, Business business, GameManager gameManager, Scanner console)
 	{
@@ -475,7 +530,7 @@ public class MainClass {
 	} // playGame
 	
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees) throws IOException
+			List<Employee> employees, List<Dealer> dealers) throws IOException
 	{
 		System.out.println("Saving Game!");
 		
@@ -498,12 +553,31 @@ public class MainClass {
 		outSavedGame.printf("%d%n", business.getBuildingSize());
 		outSavedGame.printf("%f%n", business.getEmployeeSalary());
 		outSavedGame.printf("%f%n", business.getTotalEmployeeSalary());
+		
+		// Saving Employees (NO of employees and their names)
+		outSavedGame.printf("%d%n", employees.size());
+		
+		for(int i = 0; i < employees.size(); i++)
+		{
+			outSavedGame.printf("%s%n", employees.get(i));
+		} // for
+		
+		// Saving Dealers (NO of dealers and their names)
+		outSavedGame.printf("%d%n", dealers.size());
+		
+		for(int i = 0; i < dealers.size(); i++)
+		{
+			outSavedGame.printf("%s%n", dealers.get(i));
+		} // for
+		
+		// Saving Game Info
+		outSavedGame.printf("%s%n", gameManager.getGameDifficulty());
 			
 		outSavedGame.close();
 	} // saveGame()
 	
 	public static void loadGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees) throws IOException
+			List<Employee> employees, List<Dealer> dealers) throws IOException
 	{	
 		gameManager.setIsGameLoaded(false);
 		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
@@ -546,6 +620,41 @@ public class MainClass {
 		if(inSavedGame.hasNextFloat()) { business.setTotalEmployeeSalary(inSavedGame.nextFloat()); } // business.setTotalEmployeeSalary()
 		else{ inSavedGame.close(); return; }
 		
+		// Loading Employees (NO of employees and their names)
+		int eSize;
+		if(inSavedGame.hasNextInt()) { eSize = inSavedGame.nextInt(); } // getting the no of employees
+		else{ inSavedGame.close(); return; }
+		
+		int i=0;
+		while(inSavedGame.hasNextLine() && i <= eSize)
+		{
+			for(i = 0; i <= eSize; i++)
+			{
+				Employee employee = new Employee(); // create employee
+				employee.setName(inSavedGame.nextLine()); // set their name
+				employees.add(employee);
+			} // for
+		} // while
+		
+		// Loading Dealers (NO of dealers and their names)
+		int dSize=0;
+		if(inSavedGame.hasNextInt()) { dSize = inSavedGame.nextInt(); } // getting the no of dealers
+		else{ inSavedGame.close(); return; }
+		
+		i=0;
+		while(inSavedGame.hasNextLine() && i <= dSize)
+		{
+			for(i = 0; i <= dSize; i++)
+			{
+				Dealer dealer = new Dealer(); // create dealer
+				dealer.setName(inSavedGame.nextLine()); // set their name
+				dealers.add(dealer);
+			} // for
+		} // while
+		
+		// Loading Game Info
+		if(inSavedGame.hasNext()) { gameManager.setGameDifficulty(inSavedGame.next()); } // gameManager.setGameDifficulty()
+		else{ inSavedGame.close(); return; }
 		// saying the game loaded
 		gameManager.setIsGameLoaded(true);
 		System.out.println("Loading Game!");

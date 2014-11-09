@@ -13,10 +13,10 @@ public class GameManager {
 	public String[] playerTraitsSelection = { 	"Cheerful", "People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Risk Taker", "Seedy", "Handy Man"};
 	
-	public String[] randomEmployeeFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
+	public String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
 												"Rachael", "Samantha", "Mary", "Ciara", "Jennifer", "Jane", "Sarah"};
 	
-	public String[] randomEmployeeLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
+	public String[] randomLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
 												" Browne", " Butler", " Byrne", " Daly", " Kelly", " Harrington", " Jameson"};
 	
 	// Get and Set Methods
