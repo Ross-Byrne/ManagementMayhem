@@ -71,6 +71,22 @@ public class GameManager {
 		return isGameLoaded;
 	} // getIsGameLoaded()
 	
+	public String getPlayerTraitsSelection(int index)
+	{	
+		return playerTraitsSelection[index];
+	} // getPlayerTraitsSelection()
+	
+	public String getRandomFName(int index)
+	{	
+		return randomFName[index];
+	} // getRandomFName()
+	
+	public String getRandomLName(int index)
+	{	
+		return randomLName[index];
+	} // getRandomLName()
+	
+	
 	// Other Methods
 	
 	public void printGameInfo()

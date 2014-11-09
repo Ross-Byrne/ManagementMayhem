@@ -106,20 +106,11 @@ public class MainClass {
 			} // if
 		} // while
 		
-		// Print player info
+		// Print Game info
 		System.out.println("\nThe Player's Info: " + player.displayPlayerInfo());
 		System.out.println("\nBusiness Info: " + "\nBusiness Name: " + business.getName());
 		System.out.println("Business Bank Account: " + business.getBankAccount());
 		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
-		
-		if(gameManager.getIsCharacterCreated() == true) // if its a new game, make them
-		{
-			hireEmployees(gameManager, employees, 10);
-			hireDealers(gameManager, dealers, 10);
-		} // if
-		
-		printListOfEmployees(employees);
-		printListOfDealers(dealers);
 		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
@@ -275,22 +266,54 @@ public class MainClass {
 				createStage1 = true; // to show stage is completed
 				break;
 			case 2:
-				System.out.print("\nEnter Characters traits!\n");
+				System.out.print("\nChoose Five Traits For Your Character!\n");
+				System.out.print("\nHere Is The List Of Traits You Have To Choose From: \n\n");
 				
-				System.out.print("\nEnter Characters First Trait: ");
-				player.setTraits(1, console.next());
+				for(int i = 0; i < gameManager.playerTraitsSelection.length; i++)
+				{
+					System.out.printf("%d.) %s%n", i+1, gameManager.getPlayerTraitsSelection(i));
+
+				} // for
 				
-				System.out.print("\nEnter Characters Second Trait: ");
-				player.setTraits(2, console.next());
+				int choice;
+				String tempTrait;
 				
-				System.out.print("\nEnter Characters Third Trait: ");
-				player.setTraits(3, console.next());
+				for(int i = 0; i < 5; i++)
+				{
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.printf("%nChoose Character Trait %d: ", i+1);
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.printf("%nChoose Character Trait %d: ", i+1);
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 12); // do..while
+					
+					tempTrait = gameManager.getPlayerTraitsSelection(choice-1);
+						
+					player.setTraits(i, tempTrait);
+					System.out.println("\nTrait Chosen: " + tempTrait);
+				} // for
 				
-				System.out.print("\nEnter Characters Fourth Trait: ");
-				player.setTraits(4, console.next());
+				/*System.out.print("\nChoose Characters First Trait: ");
+				tempIndex = console.nextInt();
 				
-				System.out.print("\nEnter Characters Fifth Trait: ");
-				player.setTraits(5, console.next());
+				System.out.print("\nChoose Characters Second Trait: ");
+				player.setTraits(2, gameManager.getPlayerTraitsSelection(console.nextInt()));
+				
+				System.out.print("\nChoose Characters Third Trait: ");
+				player.setTraits(3, gameManager.getPlayerTraitsSelection(console.nextInt()));
+				
+				System.out.print("\nChoose Characters Fourth Trait: ");
+				player.setTraits(4, gameManager.getPlayerTraitsSelection(console.nextInt()));
+				
+				System.out.print("\nChoose Characters Fifth Trait: ");
+				player.setTraits(5, gameManager.getPlayerTraitsSelection(console.nextInt()));*/
 				
 				createStage2 = true; // to show stage is completed
 				break;
@@ -455,10 +478,10 @@ public class MainClass {
 			Dealer dealer = new Dealer(); // create dealer
 			
 			rndValue = rnd.nextInt(14); // get a random value 
-			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
+			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name
 			
 			rndValue = rnd.nextInt(14); // get another random value
-			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
+			tempName += gameManager.getRandomLName(rndValue); // choose a random last name and add it on to the first name
 			
 			dealer.setName(tempName); // name the employee
 			dealers.add(dealer); // add dealer to dealers list
@@ -539,11 +562,11 @@ public class MainClass {
 		// Saving players state to save file
 		outSavedGame.printf("%s%n", player.getName());
 		outSavedGame.printf("%f%n", player.getBankAccount());
+		outSavedGame.printf("%s%n", player.getTraits(0));
 		outSavedGame.printf("%s%n", player.getTraits(1));
 		outSavedGame.printf("%s%n", player.getTraits(2));
 		outSavedGame.printf("%s%n", player.getTraits(3));
 		outSavedGame.printf("%s%n", player.getTraits(4));
-		outSavedGame.printf("%s%n", player.getTraits(5));
 		
 		// Saving business' state to save file
 		outSavedGame.printf("%s%n", business.getName());
@@ -592,6 +615,8 @@ public class MainClass {
 		else{ inSavedGame.close(); return; }	
 		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
 		else{ inSavedGame.close(); return; }	
+		if(inSavedGame.hasNext()) { player.setTraits(0, inSavedGame.next()); } // player.setTraits(0)
+		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNext()) { player.setTraits(1, inSavedGame.next()); } // player.setTraits(1)
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNext()) { player.setTraits(2, inSavedGame.next()); } // player.setTraits(2)
@@ -599,8 +624,6 @@ public class MainClass {
 		if(inSavedGame.hasNext()) { player.setTraits(3, inSavedGame.next()); } // player.setTraits(3)
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNext()) { player.setTraits(4, inSavedGame.next()); } // player.setTraits(4)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNext()) { player.setTraits(5, inSavedGame.next()); } // player.setTraits(5)
 		else{ inSavedGame.close(); return; }
 		
 		// Loading business' state from save file

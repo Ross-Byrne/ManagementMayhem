@@ -42,20 +42,15 @@ public class Player extends Person {
 	
 	public void setTraits(int index, String trait)
 	{
-		// user enters trait number (1 - 5), -1 to convert it to 0 indexing
-		traits[index - 1] = trait;
+		traits[index] = trait;
 	} // setTraits()
 	
 	// getTraits() is overloaded
-	// if a number is entered, that number trait is returned
 	public String getTraits(int index)
 	{
 		String trait="";
 		
-		if (index > 0 || index < 5)
-			trait = traits[index - 1];
-		else
-			System.out.println("Error - traits are 1 - 5");
+		trait = traits[index];
 	
 		return trait;
 	} // getTraits()
