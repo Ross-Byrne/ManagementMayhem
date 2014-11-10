@@ -108,8 +108,7 @@ public class MainClass {
 		
 		// Print Game info
 		System.out.println("\nThe Player's Info: " + player.displayPlayerInfo());
-		System.out.println("\nBusiness Info: " + "\nBusiness Name: " + business.getName());
-		System.out.println("Business Bank Account: " + business.getBankAccount());
+		System.out.println("\nBusiness Info: " + business.displayBusinessInfo());
 		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
 		
 		// If the game is ready to be played because
@@ -118,13 +117,9 @@ public class MainClass {
 		// This makes you enter the Main Game Loop.
 		// If the game isn't ready to be played, endGame stays 99 
 		// and the Main Game Loop is Skipped.
-		if(gameManager.getIsNewGameCreated() == true) // if new game is created
-		{
-			endGame = 0;
-		} // if
-		
-		if(gameManager.getIsGameLoaded() == true) // if a game is loaded
-		{
+		if(gameManager.getIsNewGameCreated() == true || 
+				gameManager.getIsGameLoaded() == true) 	// if new game is created
+		{												// or if game is loaded
 			endGame = 0;
 		} // if
 		
@@ -152,7 +147,7 @@ public class MainClass {
 			case 1:
 				// Play the Game
 				System.out.println("Game Is Starting!");
-				playGame(player, business, gameManager, console);
+				playGame(player, business, gameManager, employees, dealers, console);
 				break;
 			case 2:
 				// Save Game
@@ -499,7 +494,8 @@ public class MainClass {
 		System.out.println("List of Dealers: \n" + tempNames);
 	} // printListOfDealers()
 	
-	public static void playGame(Player player, Business business, GameManager gameManager, Scanner console)
+	public static void playGame(Player player, Business business, GameManager gameManager,
+			List<Employee> employees, List<Dealer> dealers, Scanner console)
 	{
 		// Playing the Game
 		int menuChoice = 0;
@@ -530,16 +526,18 @@ public class MainClass {
 				break;
 			case 2:
 				// Show Player Status
-				System.out.println("Player Status:");
+				System.out.println("\nPlayer Status:");
 				System.out.println(player.displayPlayerInfo());
 				break;
 			case 3:
 				// Show Business Status
-				System.out.println("Business Status");
+				System.out.println("\nBusiness Status:");
+				System.out.println(business.displayBusinessInfo());
 				break;
 			case 4:
 				// Manage The Business
-				System.out.println("Managing The Business");
+				manageBusiness(player, gameManager, business, 
+						employees, dealers, console);
 				break;
 			case 5:
 				// Back to Game Menu
@@ -551,6 +549,57 @@ public class MainClass {
 		} // while
 		
 	} // playGame
+	
+	public static void manageBusiness(Player player, GameManager gameManager, Business business, 
+			List<Employee> employees, List<Dealer> dealers, Scanner console)
+	{
+		int menuChoice = 0;
+		
+		while(menuChoice != 99)
+		{
+			gameManager.printManageBusinessMenu();
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			
+			switch(menuChoice)
+			{
+			case 1:
+				// Manage Employees
+				System.out.println("Manage Employees");
+				break;
+			case 2:
+				// Manage The Building
+				System.out.println("Manage The Building");
+				break;
+			case 3:
+				// Manage Operations
+				System.out.println("Manage Operations");
+				break;
+			case 4:
+				// Show Profits/Expenses
+				System.out.println("Show Profits/Expenses");
+				break;
+			case 5:
+				// Back to Game Menu
+				System.out.println("Heading Back To Game Menu");
+				menuChoice=99;
+				break;
+			} // switch
+			
+		} // while
+	} // manageBusiness()
 	
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
 			List<Employee> employees, List<Dealer> dealers) throws IOException

@@ -19,7 +19,7 @@ public class Player extends Person {
 		setName(theName);
 	}
 	
-	// Methods
+	// Get Set Methods
 	public void setName(String theName)
 	{
 		name = theName;
@@ -69,13 +69,13 @@ public class Player extends Person {
 	
 	
 	
-	// toString Method
+	// Other Methods
 	public String displayPlayerInfo()
 	{
 		String str="";
 		
 		str += "\nName: " + getName() +
-				"\nBank Account: " + getBankAccount() +
+				"\nPersonal Bank Account: " + getBankAccount() +
 				"\nTraits: " + getTraits();
 		
 		return str;

@@ -107,7 +107,19 @@ public class Business {
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployees()
 	
-	
-	
+	public String displayBusinessInfo()
+	{
+		String str="";
+		
+		str += "\nName: " + getName() +
+				"\nBank Account: " + getBankAccount() +
+				"\nGood Reputation: " + getGoodReputation() +
+				"\nBad Reputation: " + getBadReputation() +
+				"\nRooms In The Building: " + getBuildingSize() +
+				"\nEmployee Salary Per Month: " + getEmployeeSalary() +
+				"\nTotal Salary Paid Per Month: " + getTotalEmployeeSalary();
+		
+		return str;
+	} // displayBusinessInfo()
 
 }

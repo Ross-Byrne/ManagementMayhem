@@ -134,11 +134,21 @@ public class GameManager {
 	public void printGameOptionsMenu()
 	{
 		System.out.println("\n\t\t\tOptions\n");
-		System.out.println("\t\t\t1.) Keep Playing.");
+		System.out.println("\t\t\t1.) Continue Playing.");
 		System.out.println("\t\t\t2.) Show Player Status.");
 		System.out.println("\t\t\t3.) Show Business Status.");
 		System.out.println("\t\t\t4.) Manage The Business.");
 		System.out.println("\t\t\t5.) Back To Main Game Menu.\n");
 	} // printGameMenu()
+	
+	public void printManageBusinessMenu()
+	{
+		System.out.println("\n\t\t\tManage The Business\n");
+		System.out.println("\t\t\t1.) Manage Employees.");
+		System.out.println("\t\t\t2.) Manage The Building.");
+		System.out.println("\t\t\t3.) Manage Operations.");
+		System.out.println("\t\t\t4.) Show Profits/Expenses.");
+		System.out.println("\t\t\t5.) Back To Game Menu.\n");
+	} // printManageBusinessMenu()
 
 } // Class GameManager
