@@ -530,8 +530,8 @@ public class MainClass {
 				break;
 			case 2:
 				// Show Player Status
-				System.out.println("Player Status");
-				
+				System.out.println("Player Status:");
+				System.out.println(player.displayPlayerInfo());
 				break;
 			case 3:
 				// Show Business Status
@@ -561,12 +561,12 @@ public class MainClass {
 		
 		// Saving players state to save file
 		outSavedGame.printf("%s%n", player.getName());
-		outSavedGame.printf("%f%n", player.getBankAccount());
 		outSavedGame.printf("%s%n", player.getTraits(0));
 		outSavedGame.printf("%s%n", player.getTraits(1));
 		outSavedGame.printf("%s%n", player.getTraits(2));
 		outSavedGame.printf("%s%n", player.getTraits(3));
 		outSavedGame.printf("%s%n", player.getTraits(4));
+		outSavedGame.printf("%f%n", player.getBankAccount());
 		
 		// Saving business' state to save file
 		outSavedGame.printf("%s%n", business.getName());
@@ -616,8 +616,6 @@ public class MainClass {
 		// Loading players state from save file
 		if(inSavedGame.hasNextLine()) { player.setName(inSavedGame.nextLine()); } // player.setName()
 		else{ inSavedGame.close(); return; }	
-		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
-		else{ inSavedGame.close(); return; }	
 		if(inSavedGame.hasNextLine()) { player.setTraits(0, inSavedGame.nextLine()); } // player.setTraits(0)
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNextLine()) { player.setTraits(1, inSavedGame.nextLine()); } // player.setTraits(1)
@@ -627,6 +625,8 @@ public class MainClass {
 		if(inSavedGame.hasNextLine()) { player.setTraits(3, inSavedGame.nextLine()); } // player.setTraits(3)
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNextLine()) { player.setTraits(4, inSavedGame.nextLine()); } // player.setTraits(4)
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
 		else{ inSavedGame.close(); return; }
 		
 		// Loading business' state from save file
