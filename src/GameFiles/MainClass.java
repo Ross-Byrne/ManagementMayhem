@@ -277,6 +277,7 @@ public class MainClass {
 				
 				int choice;
 				String tempTrait;
+				int[] choiceRecord = {0,0,0,0,0};
 				
 				for(int i = 0; i < 5; i++)
 				{
@@ -292,28 +293,27 @@ public class MainClass {
 						} // while
 						
 						choice = console.nextInt();
+						
+						// to make sure only one of each trait is picked...
+						for(int j = 0; j < 5; j++)
+						{
+							if(choiceRecord[j] == choice) 	// the trait picked is checked against other traits picked
+							{							  	// if the triat has alreadly been picked,
+								System.out.printf("'%s' has Already been Chosen, Pick a Different Trait.%n", gameManager.getPlayerTraitsSelection(choice-1)); 
+								choice = 99;				// choice is set to 99, so your asked to pick a trait again
+							} // if						  
+						} // for
 					}while(choice < 1 || choice > 12); // do..while
+					
+					// to make sure only one of each trait is picked
+					// choice is put into choiceRecord
+					choiceRecord[i] = choice;
 					
 					tempTrait = gameManager.getPlayerTraitsSelection(choice-1);
 						
 					player.setTraits(i, tempTrait);
 					System.out.println("\nTrait Chosen: " + tempTrait);
 				} // for
-				
-				/*System.out.print("\nChoose Characters First Trait: ");
-				tempIndex = console.nextInt();
-				
-				System.out.print("\nChoose Characters Second Trait: ");
-				player.setTraits(2, gameManager.getPlayerTraitsSelection(console.nextInt()));
-				
-				System.out.print("\nChoose Characters Third Trait: ");
-				player.setTraits(3, gameManager.getPlayerTraitsSelection(console.nextInt()));
-				
-				System.out.print("\nChoose Characters Fourth Trait: ");
-				player.setTraits(4, gameManager.getPlayerTraitsSelection(console.nextInt()));
-				
-				System.out.print("\nChoose Characters Fifth Trait: ");
-				player.setTraits(5, gameManager.getPlayerTraitsSelection(console.nextInt()));*/
 				
 				createStage2 = true; // to show stage is completed
 				break;
@@ -605,6 +605,9 @@ public class MainClass {
 		gameManager.setIsGameLoaded(false);
 		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
 		
+		// before loading a save file, the current values for employees and dealers must be cleared
+		employees.clear();
+		dealers.clear();
 		
 		// to make sure the file loads the right values (in case file was edited)	
 		// Using ifs for each value
@@ -615,19 +618,19 @@ public class MainClass {
 		else{ inSavedGame.close(); return; }	
 		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
 		else{ inSavedGame.close(); return; }	
-		if(inSavedGame.hasNext()) { player.setTraits(0, inSavedGame.next()); } // player.setTraits(0)
+		if(inSavedGame.hasNextLine()) { player.setTraits(0, inSavedGame.nextLine()); } // player.setTraits(0)
 		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNext()) { player.setTraits(1, inSavedGame.next()); } // player.setTraits(1)
+		if(inSavedGame.hasNextLine()) { player.setTraits(1, inSavedGame.nextLine()); } // player.setTraits(1)
 		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNext()) { player.setTraits(2, inSavedGame.next()); } // player.setTraits(2)
+		if(inSavedGame.hasNextLine()) { player.setTraits(2, inSavedGame.nextLine()); } // player.setTraits(2)
 		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNext()) { player.setTraits(3, inSavedGame.next()); } // player.setTraits(3)
+		if(inSavedGame.hasNextLine()) { player.setTraits(3, inSavedGame.nextLine()); } // player.setTraits(3)
 		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNext()) { player.setTraits(4, inSavedGame.next()); } // player.setTraits(4)
+		if(inSavedGame.hasNextLine()) { player.setTraits(4, inSavedGame.nextLine()); } // player.setTraits(4)
 		else{ inSavedGame.close(); return; }
 		
 		// Loading business' state from save file
-		inSavedGame.nextLine(); // flush the buffer
+		inSavedGame.nextLine(); // Flush the buffer
 		if(inSavedGame.hasNextLine()) { business.setName(inSavedGame.nextLine()); } // business.setName()
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNextFloat()) { business.setBankAccount(inSavedGame.nextFloat()); } // business.setBankAccount
@@ -647,9 +650,9 @@ public class MainClass {
 		int eSize;
 		if(inSavedGame.hasNextInt()) { eSize = inSavedGame.nextInt(); } // getting the no of employees
 		else{ inSavedGame.close(); return; }
-		
+	
 		int i=0;
-		while(inSavedGame.hasNextLine() && i <= eSize)
+		while(inSavedGame.hasNextLine() && i < eSize)
 		{
 			for(i = 0; i <= eSize; i++)
 			{
@@ -664,10 +667,10 @@ public class MainClass {
 		if(inSavedGame.hasNextInt()) { dSize = inSavedGame.nextInt(); } // getting the no of dealers
 		else{ inSavedGame.close(); return; }
 		
-		i=0;
-		while(inSavedGame.hasNextLine() && i <= dSize)
+		int j=0;
+		while(inSavedGame.hasNextLine() && j < dSize)
 		{
-			for(i = 0; i <= dSize; i++)
+			for(j = 0; j <= dSize; j++)
 			{
 				Dealer dealer = new Dealer(); // create dealer
 				dealer.setName(inSavedGame.nextLine()); // set their name
