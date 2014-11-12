@@ -99,10 +99,13 @@ public class Business {
 	// The number of employees the business has in entered
 	// the total salary is calculated
 	// using employeeSalary * the number of employees
-	public void payEmployees(int noEmployees)
+	public void payEmployees(int noEmployees) throws Exception
 	{
 		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
-		
+		if(getTotalEmployeeSalary() > getBankAccount())
+		{
+			throw new Exception("Cannot Pay Total Salary of " + getTotalEmployeeSalary() + ". Not Enough Funds.");
+		}
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployees()

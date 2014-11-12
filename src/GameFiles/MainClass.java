@@ -111,6 +111,9 @@ public class MainClass {
 		System.out.println("\nBusiness Info: " + business.displayBusinessInfo());
 		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
 		
+		/*hireEmployees(gameManager, employees, 10);
+		hireDealers(gameManager, dealers, 10);*/
+		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
 		// endGame is set to 0.
@@ -523,6 +526,16 @@ public class MainClass {
 			case 1:
 				// Keep Playing
 				System.out.println("Continue Playing");
+				try
+				{
+					business.payEmployees(employees.size());
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					// do more stuff here
+				}
+				System.out.println("Employees Have been paid for the month.");
 				break;
 			case 2:
 				// Show Player Status
@@ -578,6 +591,70 @@ public class MainClass {
 			case 1:
 				// Manage Employees
 				System.out.println("Manage Employees");
+				System.out.println("\n1.) Hire Employees");
+				System.out.println("\n2.) Fire Employees");
+				System.out.println("\n3.) View List Of your Employees");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					menuChoice = console.nextInt();
+				}while(menuChoice < 1 || menuChoice > 5); // do..while
+				
+				switch(menuChoice)
+				{
+				case 1: // hire Employees
+					int amount=0;
+					System.out.println("Hire Employees");
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter the amount of Employees you want to hire: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter the amount of Employees you want to hire: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						amount = console.nextInt();
+					}while(amount < 1 || amount > 9999999); // do..while
+					hireEmployees(gameManager, employees, amount);
+					break;
+				case 2: // fire Employees
+					amount=0;
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter the amount of Employees you want to Fire: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter the amount of Employees you want to Fire: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						amount = console.nextInt();
+					}while(amount < 1 || amount > employees.size()); // do..while
+			
+						employees.remove(amount);
+					
+					break;
+				case 3: // View List of Employees
+					printListOfEmployees(employees);
+					break;
+				} // switch
+				
 				break;
 			case 2:
 				// Manage The Building
@@ -696,19 +773,20 @@ public class MainClass {
 		else{ inSavedGame.close(); return; }
 		
 		// Loading Employees (NO of employees and their names)
-		int eSize;
+		int eSize=0;
 		if(inSavedGame.hasNextInt()) { eSize = inSavedGame.nextInt(); } // getting the no of employees
 		else{ inSavedGame.close(); return; }
-	
+		
 		int i=0;
 		while(inSavedGame.hasNextLine() && i < eSize)
 		{
-			for(i = 0; i <= eSize; i++)
-			{
+			inSavedGame.nextLine(); // Flush the buffer
+			for(i = 0; i < eSize; i++)
+			{	
 				Employee employee = new Employee(); // create employee
 				employee.setName(inSavedGame.nextLine()); // set their name
 				employees.add(employee);
-			} // for
+			}
 		} // while
 		
 		// Loading Dealers (NO of dealers and their names)
@@ -719,7 +797,8 @@ public class MainClass {
 		int j=0;
 		while(inSavedGame.hasNextLine() && j < dSize)
 		{
-			for(j = 0; j <= dSize; j++)
+			inSavedGame.nextLine(); // Flush the buffer
+			for(j = 0; j < dSize; j++)
 			{
 				Dealer dealer = new Dealer(); // create dealer
 				dealer.setName(inSavedGame.nextLine()); // set their name
