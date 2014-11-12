@@ -554,13 +554,14 @@ public class MainClass {
 				try
 				{
 					business.payEmployees(employees.size());
+					System.out.printf("\n%d Employees Have been paid for the month.", employees.size());
 				}
 				catch(Exception e)
 				{
 					System.out.println(e.getMessage());
 					// do more stuff here
 				}
-				System.out.printf("\n%d Employees Have been paid for the month.", employees.size());
+				
 				break;
 			case 2:
 				// Show Player Status
