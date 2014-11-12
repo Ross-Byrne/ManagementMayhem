@@ -10,6 +10,7 @@ public class Business {
 	public int goodReputation;
 	public int badReputation;
 	public int buildingSize; // no. of rooms
+	public int maxEmployees;
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
 	
@@ -19,7 +20,8 @@ public class Business {
 		setBankAccount(0);
 		setGoodReputation(0);
 		setBadReputation(0);
-		setBuildingSize(5);
+		setBuildingSize(3);
+		setMaxEmployees(0);
 		setEmployeeSalary(800);
 	} // default constructor
 	
@@ -74,6 +76,19 @@ public class Business {
 		return buildingSize;
 	} // getBuildingSize()
 	
+	public void setMaxEmployees(int theAmount)
+	{
+		maxEmployees = theAmount;
+	} // setMaxEmployees()
+	
+	public int getMaxEmployees()
+	{
+		// the maximum number of employees the business can have
+		// is 10 employees per room
+		setMaxEmployees(getBuildingSize() * 10);
+		return maxEmployees;
+	} // getMaxEmployees()
+	
 	public void setEmployeeSalary(float theSalary)
 	{
 		employeeSalary = theSalary;
@@ -119,8 +134,7 @@ public class Business {
 				"\nGood Reputation: " + getGoodReputation() +
 				"\nBad Reputation: " + getBadReputation() +
 				"\nRooms In The Building: " + getBuildingSize() +
-				"\nEmployee Salary Per Month: " + getEmployeeSalary() +
-				"\nTotal Salary Paid Per Month: " + getTotalEmployeeSalary();
+				"\nEmployee Salary Per Month: " + getEmployeeSalary();
 		
 		return str;
 	} // displayBusinessInfo()

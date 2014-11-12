@@ -86,7 +86,6 @@ public class GameManager {
 		return randomLName[index];
 	} // getRandomLName()
 	
-	
 	// Other Methods
 	
 	public void printGameInfo()
@@ -108,17 +107,17 @@ public class GameManager {
 	
 	public void printCharacterCreateMenu()
 	{
-		System.out.println("\nBoth Fields Must Be Complete!");
-		System.out.println("\n1.) Name Your Character.");
-		System.out.println("\n2.) Select 5 Character Traits.");	
-		System.out.println("\n3.) Back To Main Menu.");
+		System.out.println("\n\t\t\tBoth Fields Must Be Complete!\n");
+		System.out.println("\t\t\t1.) Name Your Character.");
+		System.out.println("\t\t\t2.) Select 5 Character Traits.");	
+		System.out.println("\t\t\t3.) Back To Main Menu.");
 	} // printCharacterCreateMenu()
 	
 	public void printBusinessSetupMenu()
 	{
-		System.out.println("\nAll Fields Must Be Complete!");
-		System.out.println("\n1.) Name Your Business.");	
-		System.out.println("\n2.) Back To Main Menu.");
+		System.out.println("\n\t\t\tAll Fields Must Be Complete!\n");
+		System.out.println("\t\t\t1.) Name Your Business.");	
+		System.out.println("\t\t\t2.) Back To Main Menu.");
 	} // printBusinessSetupMenu()
 	
 	public void printMainGameMenu()

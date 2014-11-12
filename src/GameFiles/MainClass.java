@@ -75,7 +75,7 @@ public class MainClass {
 					// Set default business states
 					business.setGoodReputation(0);
 					business.setBadReputation(0);
-					business.setBuildingSize(5);
+					business.setBuildingSize(3);
 					business.setEmployeeSalary(800);
 					business.setTotalEmployeeSalary(0);
 					
@@ -106,13 +106,15 @@ public class MainClass {
 			} // if
 		} // while
 		
-		// Print Game info
-		System.out.println("\nThe Player's Info: " + player.displayPlayerInfo());
-		System.out.println("\nBusiness Info: " + business.displayBusinessInfo());
-		System.out.println("\nGame Info: \nGame Difficulty: " + gameManager.getGameDifficulty());
+		// Setting up default number of employes to 3
+		hireEmployees(gameManager, employees, 3);
 		
-		/*hireEmployees(gameManager, employees, 10);
-		hireDealers(gameManager, dealers, 10);*/
+		// Print Game info
+		System.out.println("\nPlayer Info: \n" + player.displayPlayerInfo());
+		System.out.println("\nBusiness Info: \n" + business.displayBusinessInfo());
+		System.out.printf("Number Of Employees: %d", employees.size());
+		System.out.println("\n\nGame Info: \n\nGame Difficulty: " + gameManager.getGameDifficulty());
+		
 		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
@@ -264,14 +266,14 @@ public class MainClass {
 				createStage1 = true; // to show stage is completed
 				break;
 			case 2:
-				System.out.print("\nChoose Five Traits For Your Character!\n");
-				System.out.print("\nHere Is The List Of Traits You Have To Choose From: \n\n");
+				System.out.print("\n\t\t\tChoose Five Traits For Your Character!\n");
 				
 				for(int i = 0; i < gameManager.playerTraitsSelection.length; i++)
 				{
-					System.out.printf("%d.) %s%n", i+1, gameManager.getPlayerTraitsSelection(i));
+					System.out.printf("\n\t\t\t%d.) %s", i+1, gameManager.getPlayerTraitsSelection(i));
 
 				} // for
+				System.out.println();
 				
 				int choice;
 				String tempTrait;
@@ -392,10 +394,8 @@ public class MainClass {
 		int difChoice=0;
 		
 		// choosing game difficulty
-		System.out.print("\nChoose Game Difficulty:\n"); 
-		System.out.print("\n1.) Easy.\n2.) Normal.\n3.) Hard.\n");
-		
-		
+		System.out.print("\n\t\t\tChoose Game Difficulty:\n"); 
+		System.out.print("\n\t\t\t1.) Easy.\n\t\t\t2.) Normal.\n\t\t\t3.) Hard.\n");
 		
 		// to make sure the choice entered is in the right range
 		do
@@ -470,7 +470,6 @@ public class MainClass {
 	public static void printListOfEmployees(List<Employee> employees)
 	{
 		String tempNames = "";
-		System.out.println("\nNumber of Employees: " + employees.size() + ".");
 		
 		for(int i = 0; i < employees.size(); i++)
 			tempNames += "\n\t" + employees.get(i);
@@ -561,7 +560,7 @@ public class MainClass {
 					System.out.println(e.getMessage());
 					// do more stuff here
 				}
-				System.out.println("Employees Have been paid for the month.");
+				System.out.printf("\n%d Employees Have been paid for the month.", employees.size());
 				break;
 			case 2:
 				// Show Player Status
@@ -572,6 +571,7 @@ public class MainClass {
 				// Show Business Status
 				System.out.println("\nBusiness Status:");
 				System.out.println(business.displayBusinessInfo());
+				System.out.printf("\n%d Out Of %d Employees.\n", employees.size(), business.getMaxEmployees());
 				printListOfEmployees(employees);
 				break;
 			case 4:
@@ -617,7 +617,7 @@ public class MainClass {
 			{
 			case 1:
 				// Manage Employees
-				manageEmployees(gameManager, employees, dealers, console);
+				manageEmployees(gameManager, business, employees, dealers, console);
 				break;
 			case 2:
 				// Manage The Building
@@ -641,17 +641,19 @@ public class MainClass {
 		} // while
 	} // manageBusiness()
 	
-	public static void manageEmployees(GameManager gameManager,List<Employee> employees, List<Dealer> dealers, Scanner console)
+	public static void manageEmployees(GameManager gameManager, Business business, List<Employee> employees, List<Dealer> dealers, Scanner console)
 	{
 		int menuChoice = 0;
 		
 		while(menuChoice != 99)
 		{
-			System.out.println("Manage Employees");
-			System.out.println("\n1.) Hire Employees");
-			System.out.println("\n2.) Fire Employees");
-			System.out.println("\n3.) View List Of your Employees");
-			System.out.println("\n4.) Back To Manage The Business.");
+			System.out.printf("%n\t\t\tYou Currently Have %d Out Of The %d Employees You Can Hire.", employees.size(), business.getMaxEmployees());
+			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
+			System.out.println("\n\t\t\tManage Employees\n");
+			System.out.println("\t\t\t1.) Hire Employees");
+			System.out.println("\t\t\t2.) Fire Employees");
+			System.out.println("\t\t\t3.) View List Of your Employees");
+			System.out.println("\t\t\t4.) Back To Manage The Business.");
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -685,7 +687,7 @@ public class MainClass {
 					} // while
 					
 					amount = console.nextInt();
-				}while(amount < 1 || amount > 9999999); // do..while
+				}while(amount < 1 || amount > business.getMaxEmployees()); // do..while
 				hireEmployees(gameManager, employees, amount);
 				break;
 			case 2: // fire Employees
