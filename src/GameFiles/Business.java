@@ -84,8 +84,8 @@ public class Business {
 	public int getMaxEmployees()
 	{
 		// the maximum number of employees the business can have
-		// is 10 employees per room
-		setMaxEmployees(getBuildingSize() * 10);
+		// is 5 employees per room
+		setMaxEmployees(getBuildingSize() * 5);
 		return maxEmployees;
 	} // getMaxEmployees()
 	

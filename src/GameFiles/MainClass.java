@@ -688,7 +688,27 @@ public class MainClass {
 					} // while
 					
 					amount = console.nextInt();
-				}while(amount < 1 || amount > business.getMaxEmployees()); // do..while
+					
+					if(business.getMaxEmployees() == employees.size())
+					{
+						System.out.printf("\n\t\t\tYou Have %d Out Of %d Employees!", employees.size(), business.getMaxEmployees());
+						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
+						break;
+					} // if
+					
+					if(amount > (business.getMaxEmployees() - employees.size()))
+					{
+						System.out.printf("\n\t\t\tYou Can Only Hire %d More Employees!", (business.getMaxEmployees() - employees.size()));
+						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
+					} // if
+					
+					if(amount == 0)
+					{
+						break;
+					}
+					
+				}while(amount < 1 || amount > (business.getMaxEmployees() - employees.size())); // do..while
+				
 				hireEmployees(gameManager, employees, amount);
 				break;
 			case 2: // fire Employees
