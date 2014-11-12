@@ -454,6 +454,19 @@ public class MainClass {
 		} // for
 	} // hireEmployees()
 	
+	public static void fireEmployees(GameManager gameManager, List<Employee> employees, int theAmount)
+	{
+		if(theAmount == employees.size()) // if the amount is = to all employees, clear list
+		{
+			employees.clear();
+		}
+		else // remove the number entered
+		{
+			while(theAmount > 0)
+				employees.remove(theAmount--);
+		} // if else
+	} // fireEmployees()
+	
 	public static void printListOfEmployees(List<Employee> employees)
 	{
 		String tempNames = "";
@@ -462,7 +475,7 @@ public class MainClass {
 		for(int i = 0; i < employees.size(); i++)
 			tempNames += "\n\t" + employees.get(i);
 		
-		System.out.println("List of Employees: \n" + tempNames);
+		System.out.println("Employees: " + tempNames);
 	} // printListOfEmployees()
 	
 	public static void hireDealers(GameManager gameManager, List<Dealer> dealers, int theAmount)
@@ -485,6 +498,19 @@ public class MainClass {
 			dealers.add(dealer); // add dealer to dealers list
 		} // for
 	} // hireDealers()
+	
+	public static void fireDealers(GameManager gameManager, List<Dealer> dealers, int theAmount)
+	{
+		if(theAmount == dealers.size()) // if the amount is = to all dealers, clear list
+		{
+			dealers.clear();
+		}
+		else // remove the number entered
+		{
+			while(theAmount > 0)
+				dealers.remove(theAmount--);
+		} // if else
+	} // fireDealers()
 	
 	public static void printListOfDealers(List<Dealer> dealers)
 	{
@@ -546,6 +572,7 @@ public class MainClass {
 				// Show Business Status
 				System.out.println("\nBusiness Status:");
 				System.out.println(business.displayBusinessInfo());
+				printListOfEmployees(employees);
 				break;
 			case 4:
 				// Manage The Business
@@ -590,71 +617,7 @@ public class MainClass {
 			{
 			case 1:
 				// Manage Employees
-				System.out.println("Manage Employees");
-				System.out.println("\n1.) Hire Employees");
-				System.out.println("\n2.) Fire Employees");
-				System.out.println("\n3.) View List Of your Employees");
-				
-				// to make sure the choice entered is in the right range
-				do
-				{
-					System.out.print("\nEnter Option Choice: ");
-				
-					while(!console.hasNextInt()) 
-					{
-						System.out.print("\nEnter Option Choice: ");
-						console.next(); // to advance Scanner past input
-					} // while
-					
-					menuChoice = console.nextInt();
-				}while(menuChoice < 1 || menuChoice > 5); // do..while
-				
-				switch(menuChoice)
-				{
-				case 1: // hire Employees
-					int amount=0;
-					System.out.println("Hire Employees");
-					
-					// to make sure the choice entered is in the right range
-					do
-					{
-						System.out.print("\nEnter the amount of Employees you want to hire: ");
-					
-						while(!console.hasNextInt()) 
-						{
-							System.out.print("\nEnter the amount of Employees you want to hire: ");
-							console.next(); // to advance Scanner past input
-						} // while
-						
-						amount = console.nextInt();
-					}while(amount < 1 || amount > 9999999); // do..while
-					hireEmployees(gameManager, employees, amount);
-					break;
-				case 2: // fire Employees
-					amount=0;
-					
-					// to make sure the choice entered is in the right range
-					do
-					{
-						System.out.print("\nEnter the amount of Employees you want to Fire: ");
-					
-						while(!console.hasNextInt()) 
-						{
-							System.out.print("\nEnter the amount of Employees you want to Fire: ");
-							console.next(); // to advance Scanner past input
-						} // while
-						
-						amount = console.nextInt();
-					}while(amount < 1 || amount > employees.size()); // do..while
-			
-						employees.remove(amount);
-					
-					break;
-				case 3: // View List of Employees
-					printListOfEmployees(employees);
-					break;
-				} // switch
-				
+				manageEmployees(gameManager, employees, dealers, console);
 				break;
 			case 2:
 				// Manage The Building
@@ -677,6 +640,84 @@ public class MainClass {
 			
 		} // while
 	} // manageBusiness()
+	
+	public static void manageEmployees(GameManager gameManager,List<Employee> employees, List<Dealer> dealers, Scanner console)
+	{
+		int menuChoice = 0;
+		
+		while(menuChoice != 99)
+		{
+			System.out.println("Manage Employees");
+			System.out.println("\n1.) Hire Employees");
+			System.out.println("\n2.) Fire Employees");
+			System.out.println("\n3.) View List Of your Employees");
+			System.out.println("\n4.) Back To Manage The Business.");
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			
+			switch(menuChoice)
+			{
+			case 1: // hire Employees
+				int amount=0;
+				System.out.println("Hire Employees");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter the amount of Employees you want to hire: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter the amount of Employees you want to hire: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					amount = console.nextInt();
+				}while(amount < 1 || amount > 9999999); // do..while
+				hireEmployees(gameManager, employees, amount);
+				break;
+			case 2: // fire Employees
+				amount=0;
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter the amount of Employees you want to Fire: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter the amount of Employees you want to Fire: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					amount = console.nextInt();
+				}while(amount < 1 || amount > employees.size()); // do..while
+		
+				fireEmployees(gameManager, employees, amount);
+				
+				break;
+			case 3: // View List of Employees
+				printListOfEmployees(employees);
+				break;
+			case 4: // go back
+				System.out.println("Going Back.");
+				menuChoice = 99;
+				break;
+			} // switch
+		} // while
+	} // manageEmployees()
 	
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
 			List<Employee> employees, List<Dealer> dealers) throws IOException
