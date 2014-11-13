@@ -11,6 +11,7 @@ public class Business {
 	public int badReputation;
 	public int buildingSize; // no. of rooms
 	public float buildingUpgradeCost;
+	public float buildingMaintenance;
 	public int maxEmployees;
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
@@ -20,10 +21,11 @@ public class Business {
 	{
 		setName("");
 		setBankAccount(0);
-		setGoodReputation(0);
+		setGoodReputation(25); // 25 because of 1000 for maintenance
 		setBadReputation(0);
 		setBuildingSize(3);
 		setBuildingUpgradeCost(getBuildingSize() *1000);
+		setBuildingMaintenance(1000);
 		setMaxEmployees(0);
 		setEmployeeSalary(800);
 		setBusinessAge(0);
@@ -90,6 +92,16 @@ public class Business {
 		setBuildingUpgradeCost(getBuildingSize() * 1000);
 		return buildingUpgradeCost;
 	} // getBuildingUpgradeCost()
+	
+	public void setBuildingMaintenance(float theCost)
+	{
+		buildingMaintenance = theCost;
+	} // setBuildingMaintenance()
+	
+	public float getBuildingMaintenance()
+	{
+		return buildingMaintenance;
+	} // getBuildingMaintenance()
 	
 	public void setMaxEmployees(int theAmount)
 	{
@@ -180,6 +192,7 @@ public class Business {
 				"\nGood Reputation: " + getGoodReputation() +
 				"\nBad Reputation: " + getBadReputation() +
 				"\nRooms In The Building: " + getBuildingSize() +
+				"\nBuilding Maintenance: €" + getBuildingMaintenance() +
 				"\nEmployee Salary Per Month: €" + getEmployeeSalary();
 		
 		return str;

@@ -102,7 +102,7 @@ public class MainClass {
 			// to continue on to play.
 			if(gameManager.getIsNewGameCreated() == true)
 			{
-				// Setting up default number of employes to 3
+				// Setting up default number of employees to 3
 				hireEmployees(gameManager, employees, 3);
 				
 				endGame = 99;
@@ -554,7 +554,7 @@ public class MainClass {
 				{
 					gameManager.printGameOverMessage(); // prints GAME OVER Message
 					
-					menuChoice = 99; // to exit
+					break; // to exit
 				} // if
 				
 				// The Business Monthly Incomes
@@ -609,7 +609,7 @@ public class MainClass {
 						{
 							gameManager.printGameOverMessage();
 							
-							menuChoice = 99;
+							break;
 						}
 						else
 						{
@@ -791,8 +791,8 @@ public class MainClass {
 					
 					if(amount > employees.size())
 					{
-						System.out.printf("\n\t\t\tYou Cannot Fire %d Emplopyees!", amount);
-						System.out.printf("\n\t\t\tYou Only Have %d Emplopyees!\n", employees.size());
+						System.out.printf("\n\t\t\tYou Cannot Fire %d Employees!", amount);
+						System.out.printf("\n\t\t\tYou Only Have %d Employees!\n", employees.size());
 					} // if
 					
 					if(amount == 0)
@@ -826,7 +826,7 @@ public class MainClass {
 		
 		while(menuChoice != 99)
 		{	
-			System.out.printf("%n\t\t\tYour Building Has %d Rooms In It.", business.getBuildingSize());
+			System.out.printf("%n\t\t\tYour Building Has %d Rooms In It And A Maintenance Bill Of €%.2f A Month.", business.getBuildingSize(), business.getBuildingMaintenance());
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
 			
 			System.out.println("\n\t\t\tManage The Building\n");
@@ -854,10 +854,12 @@ public class MainClass {
 				int upgrade = 0;
 				
 				System.out.println("\n\t\t\tWould You Like To Upgrade The Building By 1 Room?");
-				System.out.printf("\t\t\tThe Upgrade Will Cost €%.2f\n.", business.getBuildingUpgradeCost());
+				System.out.printf("\t\t\tThe Upgrade Will Cost €%.2f", business.getBuildingUpgradeCost());
+				System.out.printf("\n\t\t\tBusiness Account Balance is: €%.2f\n", business.getBankAccount());
 				
 				System.out.println("\n\t\t\t1.) Yes.");
-				System.out.println("\t\t\t1.) No.");
+				System.out.println("\t\t\t2.) No.");
+				
 				// to make sure the choice entered is in the right range
 				do
 				{
@@ -889,6 +891,77 @@ public class MainClass {
 				}
 				break;
 			case 2: // set Maintenance Level
+				int choice=0;
+				
+				System.out.println("\n\t\t\tThe Level Of Maintenance Your Building Gets Effects Your Reputation");
+				System.out.printf("\t\t\tYour Current Maintenance Bill Is €%.2f A Month.", business.getBuildingMaintenance());
+				
+				System.out.println("\n\n\t\t\tSet Level Of Maintenance Your Building Gets.");
+				
+				System.out.println("\n\t\t\t1.) None - €0.");
+				System.out.println("\t\t\t2.) Low - €500.");
+				System.out.println("\t\t\t3.) Medium - €1000.");
+				System.out.println("\t\t\t4.) High - €1500.");
+				System.out.println("\t\t\t5.) Back To Manage The Business.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					choice = console.nextInt();
+				}while(choice < 1 || choice > 5); // do..while
+				
+				float oldMaintenanceCost=0;
+				oldMaintenanceCost = business.getBuildingMaintenance(); // to make sure player doesn't keep changing 
+																		// maintenance to endless get reputation
+				if(choice != 5) // if exiting, do nothing
+				{
+					if(oldMaintenanceCost == 0)
+					{
+						business.setBadReputation(business.getBadReputation() - 50);
+					}
+					else if(oldMaintenanceCost == 500)
+					{
+						business.setBadReputation(business.getBadReputation() - 25);
+					}
+					else if(oldMaintenanceCost == 1000)
+					{
+						business.setGoodReputation(business.getGoodReputation() - 25);
+					}
+					else if(oldMaintenanceCost == 1500)
+					{
+						business.setGoodReputation(business.getGoodReputation() - 50);
+					} // if
+				} // if
+				
+				switch(choice)
+				{
+				case 1: // no maintenance
+					business.setBuildingMaintenance(0); // sets maintenance cost
+					business.setBadReputation(business.getBadReputation() + 50); // get +50 bad rep
+					break;
+				case 2: // low maintenance
+					business.setBuildingMaintenance(500); // sets maintenance cost
+					business.setBadReputation(business.getBadReputation() + 25); // get +25 bad rep
+					break;
+				case 3: // medium maintenance
+					business.setBuildingMaintenance(1000); // sets maintenance cost
+					business.setGoodReputation(business.getGoodReputation() + 25); // get +25 good rep
+					break;
+				case 4: // high maintenance
+					business.setBuildingMaintenance(1500); // sets maintenance cost
+					business.setGoodReputation(business.getGoodReputation() + 50); // get +50 good rep
+					break;
+				case 5: // go back
+					break;
+				} // switch
 				break;
 			case 3: // go back
 				System.out.println("Going Back.");
@@ -922,6 +995,8 @@ public class MainClass {
 		outSavedGame.printf("%d%n", business.getBuildingSize());
 		outSavedGame.printf("%f%n", business.getEmployeeSalary());
 		outSavedGame.printf("%f%n", business.getTotalEmployeeSalary());
+		outSavedGame.printf("%f%n", business.getBuildingMaintenance());
+		outSavedGame.printf("%d%n", business.getBusinessAge());
 		
 		// Saving Employees (NO of employees and their names)
 		outSavedGame.printf("%d%n", employees.size());
@@ -990,6 +1065,10 @@ public class MainClass {
 		if(inSavedGame.hasNextFloat()) { business.setEmployeeSalary(inSavedGame.nextFloat()); } // business.setEmployeeSalary()
 		else{ inSavedGame.close(); return; }
 		if(inSavedGame.hasNextFloat()) { business.setTotalEmployeeSalary(inSavedGame.nextFloat()); } // business.setTotalEmployeeSalary()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextFloat()) { business.setBuildingMaintenance(inSavedGame.nextFloat()); } // business.setBuildingMaintenance()
+		else{ inSavedGame.close(); return; }
+		if(inSavedGame.hasNextInt()) { business.setBusinessAge(inSavedGame.nextInt()); } // business.setBusinessAge()
 		else{ inSavedGame.close(); return; }
 		
 		// Loading Employees (NO of employees and their names)
