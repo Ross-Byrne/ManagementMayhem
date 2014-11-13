@@ -10,6 +10,7 @@ public class Business {
 	public int goodReputation;
 	public int badReputation;
 	public int buildingSize; // no. of rooms
+	public float buildingUpgradeCost;
 	public int maxEmployees;
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
@@ -21,6 +22,7 @@ public class Business {
 		setGoodReputation(0);
 		setBadReputation(0);
 		setBuildingSize(3);
+		setBuildingUpgradeCost(getBuildingSize() *1000);
 		setMaxEmployees(0);
 		setEmployeeSalary(800);
 	} // default constructor
@@ -76,6 +78,17 @@ public class Business {
 		return buildingSize;
 	} // getBuildingSize()
 	
+	public void setBuildingUpgradeCost(float theCost)
+	{
+		buildingUpgradeCost = theCost;
+	} // setBuildingUpgradeCost()
+	
+	public float getBuildingUpgradeCost()
+	{
+		setBuildingUpgradeCost(getBuildingSize() * 1000);
+		return buildingUpgradeCost;
+	} // getBuildingUpgradeCost()
+	
 	public void setMaxEmployees(int theAmount)
 	{
 		maxEmployees = theAmount;
@@ -124,6 +137,26 @@ public class Business {
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployees()
+	
+	public void payEmployeesAnyway(int noEmployees)
+	{
+		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
+		
+		// takes the total salary out of the business bank account
+		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
+	} // payEmployeesAnyway()
+	
+	public void upgradeBuilding() throws Exception
+	{
+		if(getBuildingUpgradeCost() > getBankAccount())
+		{
+			throw new Exception("\nCannot Upgrade Building For €" + getBuildingUpgradeCost() + ". Not Enough Funds.");
+		} // if
+		
+		setBuildingSize(getBuildingSize() + 1); // increase building size by 1
+	
+		setBankAccount(getBankAccount() - getBuildingUpgradeCost());
+	} // upgradeBuilding()
 	
 	public String displayBusinessInfo()
 	{

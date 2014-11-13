@@ -174,8 +174,8 @@ public class MainClass {
 			
 			case 5:
 				// Exit
-				System.out.println("\nAre you sure you want to quit?\nAny Unsaved progress will be lost!");
-				System.out.println("\nQuit Game?\n1.) Yes.\n2.) No.");
+				System.out.println("\n\t\t\tAre you sure you want to quit?\n\t\t\tAny Unsaved progress will be lost!");
+				System.out.println("\n\t\t\tQuit Game?\n\n\t\t\t1.) Yes.\n\t\t\t2.) No.");
 				
 				// to make sure the choice entered is in the right range
 				do
@@ -553,16 +553,80 @@ public class MainClass {
 			case 1:
 				// Keep Playing
 				System.out.println("Continue Playing");
+				
+				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
+				{
+					System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");
+					System.out.println("\t\t\tAs You Have Proven To Be Unable To Pay The Bank Back");
+					System.out.println("\t\t\tThe Bank Is Liquidating Your Business!");
+					System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
+					System.out.println("\t\t\tBut It's: GAME OVER!");
+					
+					menuChoice = 99;
+				} // if
+				
 				try
 				{
 					business.payEmployees(employees.size());
 					System.out.printf("\n%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", employees.size(), business.getTotalEmployeeSalary());
+					System.out.printf("The Business Bank Account Balance is €%.2f\n", business.getBankAccount());
 				}
 				catch(Exception e)
 				{
+					System.out.println("\nThe Business Bank Account Balance is: €" + business.getBankAccount());
+					// Message saying the money cannot be paid
 					System.out.println(e.getMessage());
-					// do more stuff here
-				}
+					
+					System.out.println("\n\t\t\tIf You Want To Avoid Becoming In Debt To The Bank");
+					System.out.println("\t\t\tYou Will Have To Fire Some Employees.");
+					System.out.println("\t\t\tThe Bank Will Only Tolerate €10,000 Of Debt.");
+					
+					System.out.println("\n\t\t\t1.) Fire Some Employees.");
+					System.out.println("\t\t\t2.) Continue On And Become In Debt.");
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter Option Choice: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						menuChoice = console.nextInt();
+					}while(menuChoice < 1 || menuChoice > 2); // do..while
+					
+					if(menuChoice == 1)
+					{
+						System.out.println("\nTo Continue Playing, Go to 'Manage The Business' and Then 'Manage Employees'");
+						System.out.println("And Fire Some Employees");
+					}
+					else
+					{
+						
+						business.payEmployeesAnyway(employees.size());
+						
+						if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
+						{
+							System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");
+							System.out.println("\t\t\tAs You Have Proven To Be Unable To Pay The Bank Back");
+							System.out.println("\t\t\tThe Bank Is Liquidating Your Business!");
+							System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
+							System.out.println("\t\t\tBut It's: GAME OVER!");
+							
+							menuChoice = 99;
+						}
+						else
+						{
+							System.out.println("\nYou Are Now In Debt. The Bank Will Only Tolerate €10,000 of Debt.");
+							System.out.println("Your Business Bank Account Balance Is Now: €" + business.getBankAccount());
+						} // if
+					} // if
+					
+					
+				} // try catch
 				
 				break;
 			case 2:
@@ -623,7 +687,7 @@ public class MainClass {
 				break;
 			case 2:
 				// Manage The Building
-				System.out.println("Manage The Building");
+				manageBuilding(business, console);
 				break;
 			case 3:
 				// Manage Operations
@@ -655,9 +719,9 @@ public class MainClass {
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
 			
 			System.out.println("\n\t\t\tManage Employees\n");
-			System.out.println("\t\t\t1.) Hire Employees");
-			System.out.println("\t\t\t2.) Fire Employees");
-			System.out.println("\t\t\t3.) View List Of your Employees");
+			System.out.println("\t\t\t1.) Hire Employees.");
+			System.out.println("\t\t\t2.) Fire Employees.");
+			System.out.println("\t\t\t3.) View List Of your Employees.");
 			System.out.println("\t\t\t4.) Back To Manage The Business.");
 			
 			// to make sure the choice entered is in the right range
@@ -672,7 +736,7 @@ public class MainClass {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			}while(menuChoice < 1 || menuChoice > 4); // do..while
 			
 			switch(menuChoice)
 			{
@@ -760,9 +824,87 @@ public class MainClass {
 			} // switch
 		} // while
 	} // manageEmployees()
+	
+	public static void manageBuilding(Business business, Scanner console)
+	{
+		System.out.println("Manage The Building");
+		
+		int menuChoice = 0;
+		
+		while(menuChoice != 99)
+		{	
+			System.out.printf("%n\t\t\tYour Building Has %d Rooms In It.", business.getBuildingSize());
+			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
+			
+			System.out.println("\n\t\t\tManage The Building\n");
+			System.out.println("\t\t\t1.) Upgrade Size Of Building.");
+			System.out.println("\t\t\t2.) Set Maintenance Level.");
+			System.out.println("\t\t\t3.) Back To Manage The Business.");
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 3); // do..while
+			
+			switch(menuChoice)
+			{
+			case 1: // Add rooms
+				int upgrade = 0;
+				
+				System.out.println("\n\t\t\tWould You Like To Upgrade The Building By 1 Room?");
+				System.out.printf("\t\t\tThe Upgrade Will Cost €%.2f\n.", business.getBuildingUpgradeCost());
+				
+				System.out.println("\n\t\t\t1.) Yes.");
+				System.out.println("\t\t\t1.) No.");
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					upgrade = console.nextInt();
+				}while(upgrade < 1 || upgrade > 2); // do..while
+				
+				if(upgrade == 1) // if upgrading
+				{
+					try
+					{
+						business.upgradeBuilding();
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+					} // try catch
+				}
+				else // exit
+				{
+					break;
+				}
+				break;
+			case 2: // set Maintenance Level
+				break;
+			case 3: // go back
+				System.out.println("Going Back.");
+				menuChoice = 99;
+				break;
+			} // switch
+		} // while
+	} // manageBuilding
 
-	
-	
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
 			List<Employee> employees, List<Dealer> dealers) throws IOException
 	{
