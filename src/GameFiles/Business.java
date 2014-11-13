@@ -14,6 +14,7 @@ public class Business {
 	public int maxEmployees;
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
+	public int businessAge; // in months
 	
 	public Business()
 	{
@@ -25,6 +26,7 @@ public class Business {
 		setBuildingUpgradeCost(getBuildingSize() *1000);
 		setMaxEmployees(0);
 		setEmployeeSalary(800);
+		setBusinessAge(0);
 	} // default constructor
 	
 	// Get and Set Methods
@@ -122,6 +124,16 @@ public class Business {
 		return totalEmployeeSalary;
 	} // getTotalEmployeeSalary()
 	
+	public void setBusinessAge(int theAge)
+	{
+		businessAge = theAge;
+	} // setBusinessAge()
+	
+	public int getBusinessAge()
+	{
+		return businessAge;
+	} // getBusinessAge()
+	
 	// Other Methods
 	
 	// The number of employees the business has in entered
@@ -132,7 +144,7 @@ public class Business {
 		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
 		if(getTotalEmployeeSalary() > getBankAccount())
 		{
-			throw new Exception("Cannot Pay Total Salary of €" + getTotalEmployeeSalary() + ". Not Enough Funds.");
+			throw new Exception("\nCannot Pay Total Salary of €" + getTotalEmployeeSalary() + ". Not Enough Funds.");
 		}
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
@@ -163,6 +175,7 @@ public class Business {
 		String str="";
 		
 		str += "\nName: " + getName() +
+				"\nBusiness Age: " + getBusinessAge() + " Months" +
 				"\nBank Account: €" + getBankAccount() +
 				"\nGood Reputation: " + getGoodReputation() +
 				"\nBad Reputation: " + getBadReputation() +

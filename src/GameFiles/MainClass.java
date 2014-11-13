@@ -109,15 +109,6 @@ public class MainClass {
 			} // if
 		} // while
 		
-
-		
-		// Print Game info
-		System.out.println("\nPlayer Info: \n" + player.displayPlayerInfo());
-		System.out.println("\nBusiness Info: \n" + business.displayBusinessInfo());
-		System.out.printf("Number Of Employees: %d", employees.size());
-		System.out.println("\n\nGame Info: \n\nGame Difficulty: " + gameManager.getGameDifficulty());
-		
-		
 		// If the game is ready to be played because
 		// a New Game was made or a Game Was Loaded,
 		// endGame is set to 0.
@@ -125,8 +116,13 @@ public class MainClass {
 		// If the game isn't ready to be played, endGame stays 99 
 		// and the Main Game Loop is Skipped.
 		if(gameManager.getIsNewGameCreated() == true || 
-				gameManager.getIsGameLoaded() == true) 	// if new game is created
-		{												// or if game is loaded
+				gameManager.getIsGameLoaded() == true) 	// if new game is created or a game is loaded
+		{	
+			// Print Game info
+			System.out.println("\nPlayer Info: \n" + player.displayPlayerInfo());
+			System.out.println("\nBusiness Info: \n" + business.displayBusinessInfo());
+			System.out.printf("Number Of Employees: %d", employees.size());
+			System.out.println("\n\nGame Info: \n\nGame Difficulty: " + gameManager.getGameDifficulty());
 			endGame = 0;
 		} // if
 		
@@ -556,24 +552,25 @@ public class MainClass {
 				
 				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
 				{
-					System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");
-					System.out.println("\t\t\tAs You Have Proven To Be Unable To Pay The Bank Back");
-					System.out.println("\t\t\tThe Bank Is Liquidating Your Business!");
-					System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
-					System.out.println("\t\t\tBut It's: GAME OVER!");
+					gameManager.printGameOverMessage(); // prints GAME OVER Message
 					
-					menuChoice = 99;
+					menuChoice = 99; // to exit
 				} // if
 				
-				try
+				// The Business Monthly Incomes
+					
+				// stuff here *********
+				
+				// Business monthly costs - paying employees, maintenance etc
+				try 
 				{
 					business.payEmployees(employees.size());
 					System.out.printf("\n%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", employees.size(), business.getTotalEmployeeSalary());
-					System.out.printf("The Business Bank Account Balance is €%.2f\n", business.getBankAccount());
+					System.out.printf("The Business Bank Account Balance is €%.2f.\n", business.getBankAccount());
 				}
 				catch(Exception e)
 				{
-					System.out.println("\nThe Business Bank Account Balance is: €" + business.getBankAccount());
+					System.out.printf("\nThe Business Bank Account Balance is: €%.2f.", business.getBankAccount());
 					// Message saying the money cannot be paid
 					System.out.println(e.getMessage());
 					
@@ -602,19 +599,15 @@ public class MainClass {
 					{
 						System.out.println("\nTo Continue Playing, Go to 'Manage The Business' and Then 'Manage Employees'");
 						System.out.println("And Fire Some Employees");
+						break; // exit to menu, do not progress a month.
 					}
 					else
 					{
-						
 						business.payEmployeesAnyway(employees.size());
 						
 						if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
 						{
-							System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");
-							System.out.println("\t\t\tAs You Have Proven To Be Unable To Pay The Bank Back");
-							System.out.println("\t\t\tThe Bank Is Liquidating Your Business!");
-							System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
-							System.out.println("\t\t\tBut It's: GAME OVER!");
+							gameManager.printGameOverMessage();
 							
 							menuChoice = 99;
 						}
@@ -624,10 +617,10 @@ public class MainClass {
 							System.out.println("Your Business Bank Account Balance Is Now: €" + business.getBankAccount());
 						} // if
 					} // if
-					
-					
 				} // try catch
 				
+				business.setBusinessAge(business.getBusinessAge() + 1); // business age in months +1
+				System.out.println("\nBusiness Age: " + business.getBusinessAge() + " Months.");
 				break;
 			case 2:
 				// Show Player Status

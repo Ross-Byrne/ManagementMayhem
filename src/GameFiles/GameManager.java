@@ -149,5 +149,14 @@ public class GameManager {
 		System.out.println("\t\t\t4.) Show Profits/Expenses.");
 		System.out.println("\t\t\t5.) Back To Game Menu.\n");
 	} // printManageBusinessMenu()
+	
+	public void printGameOverMessage()
+	{
+		System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");
+		System.out.println("\t\t\tAs You Have Proven To Be Unable To Pay The Bank Back");
+		System.out.println("\t\t\tThe Bank Is Liquidating Your Business!");
+		System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
+		System.out.println("\t\t\tBut It's: GAME OVER!");
+	} // printGameOverMessage()
 
 } // Class GameManager
