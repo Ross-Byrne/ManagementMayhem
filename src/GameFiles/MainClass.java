@@ -102,12 +102,14 @@ public class MainClass {
 			// to continue on to play.
 			if(gameManager.getIsNewGameCreated() == true)
 			{
+				// Setting up default number of employes to 3
+				hireEmployees(gameManager, employees, 3);
+				
 				endGame = 99;
 			} // if
 		} // while
 		
-		// Setting up default number of employes to 3
-		hireEmployees(gameManager, employees, 3);
+
 		
 		// Print Game info
 		System.out.println("\nPlayer Info: \n" + player.displayPlayerInfo());
@@ -554,7 +556,7 @@ public class MainClass {
 				try
 				{
 					business.payEmployees(employees.size());
-					System.out.printf("\n%d Employees Have been paid for the month.", employees.size());
+					System.out.printf("\n%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", employees.size(), business.getTotalEmployeeSalary());
 				}
 				catch(Exception e)
 				{
@@ -572,8 +574,7 @@ public class MainClass {
 				// Show Business Status
 				System.out.println("\nBusiness Status:");
 				System.out.println(business.displayBusinessInfo());
-				System.out.printf("\n%d Out Of %d Employees.\n", employees.size(), business.getMaxEmployees());
-				printListOfEmployees(employees);
+				System.out.printf("%d Out Of %d Employees.\n", employees.size(), business.getMaxEmployees());
 				break;
 			case 4:
 				// Manage The Business
@@ -647,9 +648,12 @@ public class MainClass {
 		int menuChoice = 0;
 		
 		while(menuChoice != 99)
-		{
-			System.out.printf("%n\t\t\tYou Currently Have %d Out Of The %d Employees You Can Hire.", employees.size(), business.getMaxEmployees());
+		{	
+			int noOfEmployeesAllowed = (business.getMaxEmployees() - employees.size()); // the no. of employees you can hire
+			
+			System.out.printf("%n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", employees.size(), business.getMaxEmployees());
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
+			
 			System.out.println("\n\t\t\tManage Employees\n");
 			System.out.println("\t\t\t1.) Hire Employees");
 			System.out.println("\t\t\t2.) Fire Employees");
@@ -678,7 +682,7 @@ public class MainClass {
 				
 				// to make sure the choice entered is in the right range
 				do
-				{
+				{					
 					System.out.print("\nEnter the amount of Employees you want to hire: ");
 				
 					while(!console.hasNextInt()) 
@@ -689,25 +693,26 @@ public class MainClass {
 					
 					amount = console.nextInt();
 					
-					if(business.getMaxEmployees() == employees.size())
+					if(noOfEmployeesAllowed == 0)
 					{
 						System.out.printf("\n\t\t\tYou Have %d Out Of %d Employees!", employees.size(), business.getMaxEmployees());
 						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
-						break;
-					} // if
-					
-					if(amount > (business.getMaxEmployees() - employees.size()))
+						amount = 0;
+					}
+					 
+					if(amount > noOfEmployeesAllowed)
 					{
 						System.out.printf("\n\t\t\tYou Can Only Hire %d More Employees!", (business.getMaxEmployees() - employees.size()));
 						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
 					} // if
 					
-					if(amount == 0)
+					if(amount == 0) // if don't want to hire anyone
 					{
 						break;
 					}
 					
-				}while(amount < 1 || amount > (business.getMaxEmployees() - employees.size())); // do..while
+					
+				}while( amount < 1 || amount > noOfEmployeesAllowed); // do..while
 				
 				hireEmployees(gameManager, employees, amount);
 				break;
@@ -726,12 +731,26 @@ public class MainClass {
 					} // while
 					
 					amount = console.nextInt();
+					
+					if(amount > employees.size())
+					{
+						System.out.printf("\n\t\t\tYou Cannot Fire %d Emplopyees!", amount);
+						System.out.printf("\n\t\t\tYou Only Have %d Emplopyees!\n", employees.size());
+					} // if
+					
+					if(amount == 0)
+					{
+						break;
+					} // if
+					
+					
 				}while(amount < 1 || amount > employees.size()); // do..while
 		
 				fireEmployees(gameManager, employees, amount);
 				
 				break;
 			case 3: // View List of Employees
+				System.out.printf("\nYou Have %d Employees.\n", employees.size());
 				printListOfEmployees(employees);
 				break;
 			case 4: // go back
@@ -741,6 +760,8 @@ public class MainClass {
 			} // switch
 		} // while
 	} // manageEmployees()
+
+	
 	
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
 			List<Employee> employees, List<Dealer> dealers) throws IOException

@@ -75,7 +75,7 @@ public class Player extends Person {
 		String str="";
 		
 		str += "\nName: " + getName() +
-				"\nPersonal Bank Account: " + getBankAccount() +
+				"\nPersonal Bank Account: €" + getBankAccount() +
 				"\nTraits: " + getTraits();
 		
 		return str;

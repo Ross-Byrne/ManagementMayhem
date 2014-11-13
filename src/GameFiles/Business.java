@@ -119,7 +119,7 @@ public class Business {
 		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
 		if(getTotalEmployeeSalary() > getBankAccount())
 		{
-			throw new Exception("Cannot Pay Total Salary of " + getTotalEmployeeSalary() + ". Not Enough Funds.");
+			throw new Exception("Cannot Pay Total Salary of €" + getTotalEmployeeSalary() + ". Not Enough Funds.");
 		}
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
@@ -130,11 +130,11 @@ public class Business {
 		String str="";
 		
 		str += "\nName: " + getName() +
-				"\nBank Account: " + getBankAccount() +
+				"\nBank Account: €" + getBankAccount() +
 				"\nGood Reputation: " + getGoodReputation() +
 				"\nBad Reputation: " + getBadReputation() +
 				"\nRooms In The Building: " + getBuildingSize() +
-				"\nEmployee Salary Per Month: " + getEmployeeSalary();
+				"\nEmployee Salary Per Month: €" + getEmployeeSalary();
 		
 		return str;
 	} // displayBusinessInfo()
