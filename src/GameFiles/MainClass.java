@@ -18,7 +18,8 @@ public class MainClass {
 		Player player = new Player();
 		Business business = new Business();
 		List<Employee> employees = new ArrayList<Employee>();
-		List<Dealer> dealers = new ArrayList<Dealer>();
+		// Polymorphism
+		List<Employee> dealers = new ArrayList<Employee>();
 		
 		// Checks if the save file exists, creates it if it doesn't
 		File gameSave = new File("SavedGame.txt");
@@ -65,23 +66,6 @@ public class MainClass {
 				if(gameManager.getIsGameLoaded() == true)
 				{
 					endGame = 99;
-				}
-				else // if loading fails
-				{
-					System.out.println("A Saved Game Couldn't Be Loaded!");
-					// in case loading fails halfway through
-					// set all the values being loaded back to default
-					
-					// Set default business states
-					business.setGoodReputation(0);
-					business.setBadReputation(0);
-					business.setBuildingSize(3);
-					business.setEmployeeSalary(800);
-					business.setTotalEmployeeSalary(0);
-					
-					// set employees and dealers back to default
-					employees.clear();
-					dealers.clear();
 				}
 				break;
 			case 3:
@@ -159,9 +143,6 @@ public class MainClass {
 			case 3:
 				// Load a Game
 				loadGame(player, business, gameManager,  employees, dealers);
-				
-				if(gameManager.getIsGameLoaded() == false)
-					System.out.println("A Saved Game Couldn't Be Loaded!");
 				break;
 			case 4:
 				// Delete a Saved Game
@@ -475,7 +456,7 @@ public class MainClass {
 		System.out.println("Employees: " + tempNames);
 	} // printListOfEmployees()
 	
-	public static void hireDealers(GameManager gameManager, List<Dealer> dealers, int theAmount)
+	public static void hireDealers(GameManager gameManager, List<Employee> dealers, int theAmount)
 	{
 		Random rnd = new Random();
 		int rndValue=0;
@@ -483,7 +464,7 @@ public class MainClass {
 		
 		for(int i = 0; i < theAmount; i++)
 		{
-			Dealer dealer = new Dealer(); // create dealer
+			Dealer dealer = new Dealer(); // create dealer - Polymorphism
 			
 			rndValue = rnd.nextInt(14); // get a random value 
 			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name
@@ -496,7 +477,7 @@ public class MainClass {
 		} // for
 	} // hireDealers()
 	
-	public static void fireDealers(GameManager gameManager, List<Dealer> dealers, int theAmount)
+	public static void fireDealers(GameManager gameManager, List<Employee> dealers, int theAmount)
 	{
 		if(theAmount == dealers.size()) // if the amount is = to all dealers, clear list
 		{
@@ -509,7 +490,7 @@ public class MainClass {
 		} // if else
 	} // fireDealers()
 	
-	public static void printListOfDealers(List<Dealer> dealers)
+	public static void printListOfDealers(List<Employee> dealers)
 	{
 		String tempNames = "";
 		System.out.println("\nNumber of Dealers: " + dealers.size() + ".");
@@ -521,7 +502,7 @@ public class MainClass {
 	} // printListOfDealers()
 	
 	public static void playGame(Player player, Business business, GameManager gameManager,
-			List<Employee> employees, List<Dealer> dealers, Scanner console)
+			List<Employee> employees, List<Employee> dealers, Scanner console)
 	{
 		// Playing the Game
 		int menuChoice = 0;
@@ -564,8 +545,12 @@ public class MainClass {
 				// Business monthly costs - paying employees, maintenance etc
 				try 
 				{
+					business.payMaintenance();
 					business.payEmployees(employees.size());
+					
+					System.out.printf("\nThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.\n", business.getBuildingMaintenance());
 					System.out.printf("\n%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", employees.size(), business.getTotalEmployeeSalary());
+					
 					System.out.printf("The Business Bank Account Balance is €%.2f.\n", business.getBankAccount());
 				}
 				catch(Exception e)
@@ -575,10 +560,10 @@ public class MainClass {
 					System.out.println(e.getMessage());
 					
 					System.out.println("\n\t\t\tIf You Want To Avoid Becoming In Debt To The Bank");
-					System.out.println("\t\t\tYou Will Have To Fire Some Employees.");
+					System.out.println("\t\t\tYou Will Have To Fire Some Employees Or Reduce Building's Maintenance Level.");
 					System.out.println("\t\t\tThe Bank Will Only Tolerate €10,000 Of Debt.");
 					
-					System.out.println("\n\t\t\t1.) Fire Some Employees.");
+					System.out.println("\n\t\t\t1.) Fire Some Employees Or Reduce Building's Maintenance Level.");
 					System.out.println("\t\t\t2.) Continue On And Become In Debt.");
 					
 					// to make sure the choice entered is in the right range
@@ -597,8 +582,9 @@ public class MainClass {
 					
 					if(menuChoice == 1)
 					{
-						System.out.println("\nTo Continue Playing, Go to 'Manage The Business' and Then 'Manage Employees'");
-						System.out.println("And Fire Some Employees");
+						System.out.println("\nTo Continue Playing, Go to 'Manage The Business'.");
+						System.out.println("Then Go To 'Manage Employees' And Fire Some Employees.");
+						System.out.println("Or Go To 'Manage Building' And Change Building Maintenance Level.");
 						break; // exit to menu, do not progress a month.
 					}
 					else
@@ -650,7 +636,7 @@ public class MainClass {
 	} // playGame
 	
 	public static void manageBusiness(Player player, GameManager gameManager, Business business, 
-			List<Employee> employees, List<Dealer> dealers, Scanner console)
+			List<Employee> employees, List<Employee> dealers, Scanner console)
 	{
 		int menuChoice = 0;
 		
@@ -700,7 +686,7 @@ public class MainClass {
 		} // while
 	} // manageBusiness()
 	
-	public static void manageEmployees(GameManager gameManager, Business business, List<Employee> employees, List<Dealer> dealers, Scanner console)
+	public static void manageEmployees(GameManager gameManager, Business business, List<Employee> employees, List<Employee> dealers, Scanner console)
 	{
 		int menuChoice = 0;
 		
@@ -972,7 +958,7 @@ public class MainClass {
 	} // manageBuilding
 
 	public static void saveGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees, List<Dealer> dealers) throws IOException
+			List<Employee> employees, List<Employee> dealers) throws IOException
 	{
 		System.out.println("Saving Game!");
 		
@@ -1021,7 +1007,7 @@ public class MainClass {
 	} // saveGame()
 	
 	public static void loadGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees, List<Dealer> dealers) throws IOException
+			List<Employee> employees, List<Employee> dealers) throws IOException
 	{	
 		gameManager.setIsGameLoaded(false);
 		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
@@ -1031,91 +1017,98 @@ public class MainClass {
 		dealers.clear();
 		
 		// to make sure the file loads the right values (in case file was edited)	
-		// Using ifs for each value
-		// inSavedGame.next(); is to advance Scanner past input
+		// try to load them, if it fails, set values
 		
-		// Loading players state from save file
-		if(inSavedGame.hasNextLine()) { player.setName(inSavedGame.nextLine()); } // player.setName()
-		else{ inSavedGame.close(); return; }	
-		if(inSavedGame.hasNextLine()) { player.setTraits(0, inSavedGame.nextLine()); } // player.setTraits(0)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextLine()) { player.setTraits(1, inSavedGame.nextLine()); } // player.setTraits(1)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextLine()) { player.setTraits(2, inSavedGame.nextLine()); } // player.setTraits(2)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextLine()) { player.setTraits(3, inSavedGame.nextLine()); } // player.setTraits(3)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextLine()) { player.setTraits(4, inSavedGame.nextLine()); } // player.setTraits(4)
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextFloat()) { player.setBankAccount(inSavedGame.nextFloat()); } // player.setBankAccount()
-		else{ inSavedGame.close(); return; }
-		
-		// Loading business' state from save file
-		inSavedGame.nextLine(); // Flush the buffer
-		if(inSavedGame.hasNextLine()) { business.setName(inSavedGame.nextLine()); } // business.setName()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextFloat()) { business.setBankAccount(inSavedGame.nextFloat()); } // business.setBankAccount
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextInt()) { business.setGoodReputation(inSavedGame.nextInt()); } // business.setGoodReputation()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextInt()) { business.setBadReputation(inSavedGame.nextInt()); } // business.setBadReputation()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextInt()) { business.setBuildingSize(inSavedGame.nextInt()); } // business.setBuildingSize()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextFloat()) { business.setEmployeeSalary(inSavedGame.nextFloat()); } // business.setEmployeeSalary()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextFloat()) { business.setTotalEmployeeSalary(inSavedGame.nextFloat()); } // business.setTotalEmployeeSalary()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextFloat()) { business.setBuildingMaintenance(inSavedGame.nextFloat()); } // business.setBuildingMaintenance()
-		else{ inSavedGame.close(); return; }
-		if(inSavedGame.hasNextInt()) { business.setBusinessAge(inSavedGame.nextInt()); } // business.setBusinessAge()
-		else{ inSavedGame.close(); return; }
-		
-		// Loading Employees (NO of employees and their names)
-		int eSize=0;
-		if(inSavedGame.hasNextInt()) { eSize = inSavedGame.nextInt(); } // getting the no of employees
-		else{ inSavedGame.close(); return; }
-		
-		int i=0;
-		while(inSavedGame.hasNextLine() && i < eSize)
+		try
 		{
-			inSavedGame.nextLine(); // Flush the buffer
-			for(i = 0; i < eSize; i++)
-			{	
-				Employee employee = new Employee(); // create employee
-				employee.setName(inSavedGame.nextLine()); // set their name
-				employees.add(employee);
-			}
-		} // while
-		
-		// Loading Dealers (NO of dealers and their names)
-		int dSize=0;
-		if(inSavedGame.hasNextInt()) { dSize = inSavedGame.nextInt(); } // getting the no of dealers
-		else{ inSavedGame.close(); return; }
-		
-		int j=0;
-		while(inSavedGame.hasNextLine() && j < dSize)
-		{
-			inSavedGame.nextLine(); // Flush the buffer
-			for(j = 0; j < dSize; j++)
-			{
-				Dealer dealer = new Dealer(); // create dealer
-				dealer.setName(inSavedGame.nextLine()); // set their name
-				dealers.add(dealer);
-			} // for
-		} // while
-		
-		// Loading Game Info
-		if(inSavedGame.hasNext()) { gameManager.setGameDifficulty(inSavedGame.next()); } // gameManager.setGameDifficulty()
-		else{ inSavedGame.close(); return; }
-		// saying the game loaded
-		gameManager.setIsGameLoaded(true);
-		System.out.println("Loading Game!");
+			// Loading players state from save file
+			player.setName(inSavedGame.nextLine());	
+			player.setTraits(0, inSavedGame.nextLine());
+			player.setTraits(1, inSavedGame.nextLine()); 
+			player.setTraits(2, inSavedGame.nextLine()); 
+			player.setTraits(3, inSavedGame.nextLine()); 
+			player.setTraits(4, inSavedGame.nextLine()); 
+			player.setBankAccount(inSavedGame.nextFloat());
 
-		inSavedGame.close();
+			// Loading business' state from save file
+			inSavedGame.nextLine(); // Flush the buffer
+			business.setName(inSavedGame.nextLine());
+			business.setBankAccount(inSavedGame.nextFloat());
+			business.setGoodReputation(inSavedGame.nextInt());
+			business.setBadReputation(inSavedGame.nextInt());
+			business.setBuildingSize(inSavedGame.nextInt());
+			business.setEmployeeSalary(inSavedGame.nextFloat());
+			business.setTotalEmployeeSalary(inSavedGame.nextFloat());
+			business.setBuildingMaintenance(inSavedGame.nextFloat());
+			business.setBusinessAge(inSavedGame.nextInt());
+
+			// Loading Employees (NO of employees and their names)
+			int eSize=0;
+			int i=0;
+			
+			eSize = inSavedGame.nextInt(); // getting the no of employees
+		
+			while(inSavedGame.hasNextLine() && i < eSize)
+			{
+				inSavedGame.nextLine(); // Flush the buffer
+				for(i = 0; i < eSize; i++)
+				{	
+					Employee employee = new Employee(); // create employee
+					employee.setName(inSavedGame.nextLine()); // set their name
+					employees.add(employee);
+				}
+			} // while
+			
+			// Loading Dealers (NO of dealers and their names)
+			int dSize=0;
+			int j=0;
+
+			dSize = inSavedGame.nextInt(); // getting the no of dealers
+	
+			while(inSavedGame.hasNextLine() && j < dSize)
+			{
+				inSavedGame.nextLine(); // Flush the buffer
+				for(j = 0; j < dSize; j++)
+				{
+					Dealer dealer = new Dealer(); // create dealer
+					dealer.setName(inSavedGame.nextLine()); // set their name
+					dealers.add(dealer);
+				} // for
+			} // while
+			
+			// Loading Game Info
+			gameManager.setGameDifficulty(inSavedGame.next());
+
+			// saying the game loaded
+			gameManager.setIsGameLoaded(true);
+			System.out.println("Loading Game!");
+	
+			inSavedGame.close();
+		}
+		catch(Exception e)
+		{
+			inSavedGame.close();
+			
+			// saying game didn't load
+			gameManager.setIsGameLoaded(false);
+			
+			System.out.println("A Saved Game Couldn't Be Loaded!");
+			
+			// set all the values being loaded back to default
+			
+			// Set default business states
+			business.setGoodReputation(25);
+			business.setBadReputation(0);
+			business.setBuildingSize(3);
+			business.setEmployeeSalary(800);
+			business.setTotalEmployeeSalary(0);
+			business.setBuildingMaintenance(1000);
+			business.setBusinessAge(0);
+			
+			// set employees and dealers back to default
+			employees.clear();
+			dealers.clear();
+		} // try catch
 	} // loadGame()
-	
-	
-	
 
 } // Class MainClass

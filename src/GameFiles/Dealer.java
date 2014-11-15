@@ -1,6 +1,6 @@
 package GameFiles;
 
-public class Dealer extends Person {
+public class Dealer extends Employee {
 
 	// Constructors
 	public Dealer()

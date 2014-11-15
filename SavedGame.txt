@@ -6,17 +6,17 @@ Greedy
 Seedy
 0.000000
 Prestige World Wide
-33200.000000
+50000.000000
 25
 0
 3
 800.000000
-2400.000000
+0.000000
 1000.000000
-7
+0
 3
-John Kelly
-Jim Jameson
-Mike Jones
+John Power
+Tom Browne
+Rachael Butler
 0
 Normal

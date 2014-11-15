@@ -25,7 +25,7 @@ public class Business {
 		setBadReputation(0);
 		setBuildingSize(3);
 		setBuildingUpgradeCost(getBuildingSize() *1000);
-		setBuildingMaintenance(1000);
+		setBuildingMaintenance(1000); // medium maintenance level
 		setMaxEmployees(0);
 		setEmployeeSalary(800);
 		setBusinessAge(0);
@@ -151,12 +151,12 @@ public class Business {
 	// The number of employees the business has in entered
 	// the total salary is calculated
 	// using employeeSalary * the number of employees
-	public void payEmployees(int noEmployees) throws Exception
+	public void payEmployees(int noEmployees) throws BankAccountBalanceException
 	{
 		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
 		if(getTotalEmployeeSalary() > getBankAccount())
 		{
-			throw new Exception("\nCannot Pay Total Salary of €" + getTotalEmployeeSalary() + ". Not Enough Funds.");
+			throw new BankAccountBalanceException("\nInsufficient Bank Account Funds.");
 		}
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
@@ -170,11 +170,22 @@ public class Business {
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployeesAnyway()
 	
-	public void upgradeBuilding() throws Exception
+	// to pay the buildings monthly maintenance bill
+	public void payMaintenance() throws BankAccountBalanceException
+	{
+		if(getBuildingMaintenance() > getBankAccount())
+		{
+			throw new  BankAccountBalanceException("\nInsufficient Bank Account Funds.");
+		}
+		// takes the Maintenance out of the business bank account
+		setBankAccount((getBankAccount() - getBuildingMaintenance()));
+	} // payMaintenance()
+	
+	public void upgradeBuilding() throws BankAccountBalanceException
 	{
 		if(getBuildingUpgradeCost() > getBankAccount())
 		{
-			throw new Exception("\nCannot Upgrade Building For €" + getBuildingUpgradeCost() + ". Not Enough Funds.");
+			throw new BankAccountBalanceException("\nInsufficient Bank Account Funds.");
 		} // if
 		
 		setBuildingSize(getBuildingSize() + 1); // increase building size by 1
