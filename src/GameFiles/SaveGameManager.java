@@ -1,8 +1,6 @@
 package GameFiles;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /* Class to manage the saving and loading of the game */

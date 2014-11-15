@@ -16,9 +16,8 @@ public class MenuManager {
 		System.out.println("\n\t\t\tMain Menu\n");
 		System.out.println("\t\t\t1.) Start New Game.");
 		System.out.println("\t\t\t2.) Load Game.");
-		System.out.println("\t\t\t3.) Delete Game Save.");
-		System.out.println("\t\t\t4.) About Game.");
-		System.out.println("\t\t\t5.) Exit.\n");
+		System.out.println("\t\t\t3.) About Game.");
+		System.out.println("\t\t\t4.) Exit.\n");
 	} // printMainMenu()
 	
 	public void printCharacterCreateMenu()
@@ -40,10 +39,9 @@ public class MenuManager {
 	{
 		System.out.println("\n\t\t\tMain Game Menu\n");
 		System.out.println("\t\t\t1.) Play Game.");
-		System.out.println("\t\t\t2.) Save Game");
+		System.out.println("\t\t\t2.) Save Game.");
 		System.out.println("\t\t\t3.) Load Game.");
-		System.out.println("\t\t\t4.) Delete Game.");
-		System.out.println("\t\t\t5.) Exit Game.\n");
+		System.out.println("\t\t\t4.) Exit Game.\n");
 	} // printMainGameMenu()
 	
 	public void printGameOptionsMenu()

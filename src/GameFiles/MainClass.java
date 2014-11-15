@@ -31,7 +31,7 @@ public class MainClass {
 		
 		System.out.println("\t\t\tWelcome To Management Mayhem!");
 		
-		while(endGame != 99) //type 5 to exit
+		while(endGame != 99)
 		{
 			menuManager.printMainMenu(); // to print main menu
 			
@@ -47,7 +47,7 @@ public class MainClass {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			}while(menuChoice < 1 || menuChoice > 4); // do..while
 			
 			switch(menuChoice)
 			{
@@ -68,14 +68,10 @@ public class MainClass {
 				}
 				break;
 			case 3:
-				// Delete Game Save
-				System.out.println("Deleting Saved Game!");
-				break;
-			case 4:
 				// About Game
 				menuManager.printGameInfo();
 				break;
-			case 5:
+			case 4:
 				// Exit
 				endGame = 99;
 				break;
@@ -126,7 +122,7 @@ public class MainClass {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			}while(menuChoice < 1 || menuChoice > 4); // do..while
 			
 			switch(menuChoice)
 			{
@@ -144,11 +140,6 @@ public class MainClass {
 				saveGameManager.loadGame(player, business, gameManager);
 				break;
 			case 4:
-				// Delete a Saved Game
-				System.out.println("Deleting a Saved Game!");
-				break;
-			
-			case 5:
 				// Exit
 				menuManager.printQuitGameMenu();
 				
@@ -438,98 +429,7 @@ public class MainClass {
 			case 1:
 				// Keep Playing
 				System.out.println("Continue Playing");
-				
-				float monthlyCosts = 0;
-				
-				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
-				{
-					menuManager.printGameOverMessage(); // prints GAME OVER Message
-					
-					break; // to exit
-				} // if
-				
-				// The Business Monthly Incomes
-					
-				// stuff here *********
-				
-				// Business monthly costs - paying employees, maintenance etc
-				try 
-				{
-					business.payMaintenance();
-					business.payEmployees(business.employees.size());
-					
-					System.out.printf("\n\t\t\tThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.", business.getBuildingMaintenance());
-					System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
-							business.employees.size(), business.getTotalEmployeeSalary());
-					
-					monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary();
-					
-					System.out.printf("\n\t\t\tThe Business Pays A Total Cost Of €%.2f This Month.\n", monthlyCosts);
-					System.out.printf("\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
-				}
-				catch(Exception e)
-				{
-					monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary(); // get monthly cost
-					
-					System.out.printf("\n\t\t\tThe Business Bank Account Balance is: €%.2f.", business.getBankAccount());
-					System.out.printf("\n\t\t\tThe Monthly Costs Are €%.2f.", monthlyCosts);
-					// Message saying the money cannot be paid
-					System.out.println(e.getMessage());
-					
-					System.out.println("\n\t\t\tIf You Want To Avoid Becoming In Debt To The Bank");
-					System.out.println("\t\t\tYou Will Have To Fire Some Employees Or Reduce Building's Maintenance Level.");
-					System.out.println("\t\t\tThe Bank Will Only Tolerate €10,000 Of Debt.");
-					
-					System.out.println("\n\t\t\t1.) Fire Some Employees Or Reduce Building's Maintenance Level.");
-					System.out.println("\t\t\t2.) Continue On And Become In Debt.");
-					
-					// to make sure the choice entered is in the right range
-					do
-					{
-						System.out.print("\nEnter Option Choice: ");
-					
-						while(!console.hasNextInt()) 
-						{
-							System.out.print("\nEnter Option Choice: ");
-							console.next(); // to advance Scanner past input
-						} // while
-						
-						menuChoice = console.nextInt();
-					}while(menuChoice < 1 || menuChoice > 2); // do..while
-					
-					if(menuChoice == 1)
-					{
-						System.out.println("\n\t\t\tTo Continue Playing, Go to 'Manage The Business'.");
-						System.out.println("\t\t\tThen Go To 'Manage Employees' And Fire Some Employees.");
-						System.out.println("\t\t\tOr Go To 'Manage Building' And Change Building Maintenance Level.");
-						break; // exit to menu, do not progress a month.
-					}
-					else
-					{
-						business.payEmployeesAnyway(business.employees.size());
-						
-						if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
-						{
-							menuManager.printGameOverMessage();
-							
-							break;
-						}
-						else
-						{
-							System.out.println("\n\t\t\tYou Are Now In Debt. The Bank Will Only Tolerate €10,000 of Debt.");
-							System.out.println("\n\t\t\tBecause Your In Debt, You Cannot Afford To Pay For Building Maintenance.");
-							System.out.println("\t\t\tYour Building's Maintenance Level Has Been Reduced To 'None'.");
-							business.setBuildingMaintenanceLevel(1); // set to none
-							
-							System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
-									business.employees.size(), business.getTotalEmployeeSalary());
-							System.out.println("\t\t\tYour Business Bank Account Balance Is Now: €" + business.getBankAccount());
-						} // if
-					} // if
-				} // try catch
-				
-				business.setBusinessAge(business.getBusinessAge() + 1); // business age in months +1
-				System.out.println("\n\t\t\tBusiness Age: " + business.getBusinessAge() + " Months.");
+				continuePlaying(player, business, gameManager, menuManager, console);
 				break;
 			case 2:
 				// Show Player Status
@@ -556,6 +456,103 @@ public class MainClass {
 		} // while
 		
 	} // playGame
+	
+	public static void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
+	{
+		int menuChoice = 0;
+		
+		float monthlyCosts = 0;
+		
+		if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
+		{
+			menuManager.printGameOverMessage(); // prints GAME OVER Message
+			
+			return; // to exit
+		} // if
+		
+		// The Business Monthly Incomes
+			
+		// stuff here *********
+		
+		// Business monthly costs - paying employees, maintenance etc
+		try 
+		{
+			business.payMaintenance();
+			business.payEmployees(business.employees.size());
+			
+			System.out.printf("\n\t\t\tThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.", business.getBuildingMaintenance());
+			System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
+					business.employees.size(), business.getTotalEmployeeSalary());
+			
+			monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary();
+			
+			System.out.printf("\n\t\t\tThe Business Pays A Total Cost Of €%.2f This Month.\n", monthlyCosts);
+			System.out.printf("\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
+		}
+		catch(Exception e)
+		{
+			monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary(); // get monthly cost
+			
+			System.out.printf("\n\t\t\tThe Business Bank Account Balance is: €%.2f.", business.getBankAccount());
+			System.out.printf("\n\t\t\tThe Monthly Costs Are €%.2f.", monthlyCosts);
+			// Message saying the money cannot be paid
+			System.out.println(e.getMessage());
+			
+			System.out.println("\n\t\t\tIf You Want To Avoid Becoming In Debt To The Bank");
+			System.out.println("\t\t\tYou Will Have To Fire Some Employees Or Reduce Building's Maintenance Level.");
+			System.out.println("\t\t\tThe Bank Will Only Tolerate €10,000 Of Debt.");
+			
+			System.out.println("\n\t\t\t1.) Fire Some Employees Or Reduce Building's Maintenance Level.");
+			System.out.println("\t\t\t2.) Continue On And Become In Debt.");
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > 2); // do..while
+			
+			if(menuChoice == 1)
+			{
+				System.out.println("\n\t\t\tTo Continue Playing, Go to 'Manage The Business'.");
+				System.out.println("\t\t\tThen Go To 'Manage Employees' And Fire Some Employees.");
+				System.out.println("\t\t\tOr Go To 'Manage Building' And Change Building Maintenance Level.");
+				return; // exit to menu, do not progress a month.
+			}
+			else
+			{
+				business.payEmployeesAnyway(business.employees.size());
+				
+				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
+				{
+					menuManager.printGameOverMessage();
+					
+					return;
+				}
+				else
+				{
+					System.out.println("\n\t\t\tYou Are Now In Debt. The Bank Will Only Tolerate €10,000 of Debt.");
+					System.out.println("\n\t\t\tBecause Your In Debt, You Cannot Afford To Pay For Building Maintenance.");
+					System.out.println("\t\t\tYour Building's Maintenance Level Has Been Reduced To 'None'.");
+					business.setBuildingMaintenanceLevel(1); // set to none
+					
+					System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
+							business.employees.size(), business.getTotalEmployeeSalary());
+					System.out.println("\t\t\tYour Business Bank Account Balance Is Now: €" + business.getBankAccount());
+				} // if
+			} // if
+		} // try catch
+		
+		business.setBusinessAge(business.getBusinessAge() + 1); // business age in months +1
+		System.out.println("\n\t\t\tBusiness Age: " + business.getBusinessAge() + " Months.");
+	} // continuePlaying()
 	
 	public static void manageBusiness(Player player, GameManager gameManager, MenuManager menuManager, Business business, Scanner console)
 	{
