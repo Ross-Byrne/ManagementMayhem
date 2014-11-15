@@ -23,7 +23,7 @@ public class Dealer extends Employee {
 		return name;
 	} // getName()
 	
-	public String toString()
+	public String toString() // used when saving dealers
 	{
 		return getName();
 	} // toString()

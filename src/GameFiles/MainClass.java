@@ -14,12 +14,11 @@ public class MainClass {
 	{
 		// Creating Objects
 		Scanner console = new Scanner(System.in);
+		SaveGameManager saveGameManager = new SaveGameManager();
 		GameManager gameManager = new GameManager();
+		MenuManager menuManager = new MenuManager();
 		Player player = new Player();
 		Business business = new Business();
-		List<Employee> employees = new ArrayList<Employee>();
-		// Polymorphism
-		List<Employee> dealers = new ArrayList<Employee>();
 		
 		// Checks if the save file exists, creates it if it doesn't
 		File gameSave = new File("SavedGame.txt");
@@ -30,11 +29,11 @@ public class MainClass {
 		// Variables
 		int menuChoice = 0, endGame = 0;
 		
-		System.out.println("\t\tWelcome To Management Mayhem!");
+		System.out.println("\t\t\tWelcome To Management Mayhem!");
 		
 		while(endGame != 99) //type 5 to exit
 		{
-			gameManager.printMainMenu(); // to print main menu
+			menuManager.printMainMenu(); // to print main menu
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -56,11 +55,11 @@ public class MainClass {
 				// Start New Game
 				System.out.println("Starting new Game!");
 				
-				startNewGame(player, business, gameManager, console);
+				startNewGame(player, business, gameManager, menuManager, console);
 				break;
 			case 2:
 				// Load Game
-				loadGame(player, business, gameManager,  employees, dealers);
+				saveGameManager.loadGame(player, business, gameManager);
 				
 				// if a game is loaded successfully, break out of loop to enter game loop
 				if(gameManager.getIsGameLoaded() == true)
@@ -74,7 +73,7 @@ public class MainClass {
 				break;
 			case 4:
 				// About Game
-				gameManager.printGameInfo();
+				menuManager.printGameInfo();
 				break;
 			case 5:
 				// Exit
@@ -87,7 +86,7 @@ public class MainClass {
 			if(gameManager.getIsNewGameCreated() == true)
 			{
 				// Setting up default number of employees to 3
-				hireEmployees(gameManager, employees, 3);
+				business.hireEmployees(gameManager, 3);
 				
 				endGame = 99;
 			} // if
@@ -105,7 +104,7 @@ public class MainClass {
 			// Print Game info
 			System.out.println("\nPlayer Info: \n" + player.displayPlayerInfo());
 			System.out.println("\nBusiness Info: \n" + business.displayBusinessInfo());
-			System.out.printf("Number Of Employees: %d", employees.size());
+			System.out.printf("Number Of Employees: %d", business.employees.size());
 			System.out.println("\n\nGame Info: \n\nGame Difficulty: " + gameManager.getGameDifficulty());
 			endGame = 0;
 		} // if
@@ -113,7 +112,7 @@ public class MainClass {
 		// This is the Main Game Loop where the game runs
 		while(endGame != 99) // type 5 to exit
 		{
-			gameManager.printMainGameMenu();			
+			menuManager.printMainGameMenu();			
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -134,15 +133,15 @@ public class MainClass {
 			case 1:
 				// Play the Game
 				System.out.println("Game Is Starting!");
-				playGame(player, business, gameManager, employees, dealers, console);
+				playGame(player, business, gameManager, menuManager, console);
 				break;
 			case 2:
 				// Save Game
-				saveGame(player, business, gameManager, employees, dealers);
+				saveGameManager.saveGame(player, business, gameManager);
 				break;
 			case 3:
 				// Load a Game
-				loadGame(player, business, gameManager,  employees, dealers);
+				saveGameManager.loadGame(player, business, gameManager);
 				break;
 			case 4:
 				// Delete a Saved Game
@@ -151,8 +150,7 @@ public class MainClass {
 			
 			case 5:
 				// Exit
-				System.out.println("\n\t\t\tAre you sure you want to quit?\n\t\t\tAny Unsaved progress will be lost!");
-				System.out.println("\n\t\t\tQuit Game?\n\n\t\t\t1.) Yes.\n\t\t\t2.) No.");
+				menuManager.printQuitGameMenu();
 				
 				// to make sure the choice entered is in the right range
 				do
@@ -187,16 +185,16 @@ public class MainClass {
 	
 	// Methods
 	
-	public static void startNewGame(Player player, Business business, GameManager gameManager, Scanner console)
+	public static void startNewGame(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
 		// Starting a new Game Stuff
 		// Creating A Character
-		createCharacter(player, business, gameManager, console);
+		createCharacter(player, business, gameManager, menuManager, console);
 		
 		// Setup Business if character is created
 		if(gameManager.getIsCharacterCreated() == true)
 		{
-			setUpBusiness(player, business, gameManager, console);
+			setUpBusiness(player, business, gameManager, menuManager, console);
 		}
 		
 		// If the business has been setup, Set Game Difficulty
@@ -207,7 +205,7 @@ public class MainClass {
 		
 	} // startNewGame()
 	
-	public static void createCharacter(Player player, Business business, GameManager gameManager, Scanner console)
+	public static void createCharacter(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
 		int menuChoice = 0;
 		boolean createStage1, createStage2;
@@ -217,7 +215,7 @@ public class MainClass {
 		
 		while(menuChoice != 99)
 		{
-			gameManager.printCharacterCreateMenu();
+			menuManager.printCharacterCreateMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -314,7 +312,7 @@ public class MainClass {
 		
 	} // createCharacter()
 	
-	public static void setUpBusiness(Player player, Business business, GameManager gameManager, Scanner console)
+	public static void setUpBusiness(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
 		int menuChoice = 0;
 		boolean createStage1 = false;
@@ -323,7 +321,7 @@ public class MainClass {
 				
 		while(menuChoice != 99)
 		{
-			gameManager.printBusinessSetupMenu();
+			menuManager.printBusinessSetupMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -412,104 +410,14 @@ public class MainClass {
 		
 	} // setGameDifficulty
 	
-	public static void hireEmployees(GameManager gameManager, List<Employee> employees, int theAmount)
-	{
-		Random rnd = new Random();
-		int rndValue=0;
-		String tempName="";
-		
-		for(int i = 0; i < theAmount; i++)
-		{
-			Employee employee = new Employee(); // create employee
-			
-			rndValue = rnd.nextInt(14); // get a random value 
-			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
-			
-			rndValue = rnd.nextInt(14); // get another random value
-			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
-			
-			employee.setName(tempName); // name the employee
-			employees.add(employee); // add employee to employees list
-		} // for
-	} // hireEmployees()
-	
-	public static void fireEmployees(GameManager gameManager, List<Employee> employees, int theAmount)
-	{
-		if(theAmount == employees.size()) // if the amount is = to all employees, clear list
-		{
-			employees.clear();
-		}
-		else // remove the number entered
-		{
-			while(theAmount > 0)
-				employees.remove(theAmount--);
-		} // if else
-	} // fireEmployees()
-	
-	public static void printListOfEmployees(List<Employee> employees)
-	{
-		String tempNames = "";
-		
-		for(int i = 0; i < employees.size(); i++)
-			tempNames += "\n\t" + employees.get(i);
-		
-		System.out.println("Employees: " + tempNames);
-	} // printListOfEmployees()
-	
-	public static void hireDealers(GameManager gameManager, List<Employee> dealers, int theAmount)
-	{
-		Random rnd = new Random();
-		int rndValue=0;
-		String tempName="";
-		
-		for(int i = 0; i < theAmount; i++)
-		{
-			Dealer dealer = new Dealer(); // create dealer - Polymorphism
-			
-			rndValue = rnd.nextInt(14); // get a random value 
-			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name
-			
-			rndValue = rnd.nextInt(14); // get another random value
-			tempName += gameManager.getRandomLName(rndValue); // choose a random last name and add it on to the first name
-			
-			dealer.setName(tempName); // name the employee
-			dealers.add(dealer); // add dealer to dealers list
-		} // for
-	} // hireDealers()
-	
-	public static void fireDealers(GameManager gameManager, List<Employee> dealers, int theAmount)
-	{
-		if(theAmount == dealers.size()) // if the amount is = to all dealers, clear list
-		{
-			dealers.clear();
-		}
-		else // remove the number entered
-		{
-			while(theAmount > 0)
-				dealers.remove(theAmount--);
-		} // if else
-	} // fireDealers()
-	
-	public static void printListOfDealers(List<Employee> dealers)
-	{
-		String tempNames = "";
-		System.out.println("\nNumber of Dealers: " + dealers.size() + ".");
-		
-		for(int i = 0; i < dealers.size(); i++)
-			tempNames += "\n\t" + dealers.get(i);
-		
-		System.out.println("List of Dealers: \n" + tempNames);
-	} // printListOfDealers()
-	
-	public static void playGame(Player player, Business business, GameManager gameManager,
-			List<Employee> employees, List<Employee> dealers, Scanner console)
+	public static void playGame(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
 		// Playing the Game
 		int menuChoice = 0;
 		
 		while(menuChoice != 99)
 		{
-			gameManager.printGameOptionsMenu();
+			menuManager.printGameOptionsMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -531,9 +439,11 @@ public class MainClass {
 				// Keep Playing
 				System.out.println("Continue Playing");
 				
+				float monthlyCosts = 0;
+				
 				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
 				{
-					gameManager.printGameOverMessage(); // prints GAME OVER Message
+					menuManager.printGameOverMessage(); // prints GAME OVER Message
 					
 					break; // to exit
 				} // if
@@ -546,16 +456,23 @@ public class MainClass {
 				try 
 				{
 					business.payMaintenance();
-					business.payEmployees(employees.size());
+					business.payEmployees(business.employees.size());
 					
-					System.out.printf("\nThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.\n", business.getBuildingMaintenance());
-					System.out.printf("\n%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", employees.size(), business.getTotalEmployeeSalary());
+					System.out.printf("\n\t\t\tThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.", business.getBuildingMaintenance());
+					System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
+							business.employees.size(), business.getTotalEmployeeSalary());
 					
-					System.out.printf("The Business Bank Account Balance is €%.2f.\n", business.getBankAccount());
+					monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary();
+					
+					System.out.printf("\n\t\t\tThe Business Pays A Total Cost Of €%.2f This Month.\n", monthlyCosts);
+					System.out.printf("\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
 				}
 				catch(Exception e)
 				{
-					System.out.printf("\nThe Business Bank Account Balance is: €%.2f.", business.getBankAccount());
+					monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary(); // get monthly cost
+					
+					System.out.printf("\n\t\t\tThe Business Bank Account Balance is: €%.2f.", business.getBankAccount());
+					System.out.printf("\n\t\t\tThe Monthly Costs Are €%.2f.", monthlyCosts);
 					// Message saying the money cannot be paid
 					System.out.println(e.getMessage());
 					
@@ -582,31 +499,37 @@ public class MainClass {
 					
 					if(menuChoice == 1)
 					{
-						System.out.println("\nTo Continue Playing, Go to 'Manage The Business'.");
-						System.out.println("Then Go To 'Manage Employees' And Fire Some Employees.");
-						System.out.println("Or Go To 'Manage Building' And Change Building Maintenance Level.");
+						System.out.println("\n\t\t\tTo Continue Playing, Go to 'Manage The Business'.");
+						System.out.println("\t\t\tThen Go To 'Manage Employees' And Fire Some Employees.");
+						System.out.println("\t\t\tOr Go To 'Manage Building' And Change Building Maintenance Level.");
 						break; // exit to menu, do not progress a month.
 					}
 					else
 					{
-						business.payEmployeesAnyway(employees.size());
+						business.payEmployeesAnyway(business.employees.size());
 						
 						if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
 						{
-							gameManager.printGameOverMessage();
+							menuManager.printGameOverMessage();
 							
 							break;
 						}
 						else
 						{
-							System.out.println("\nYou Are Now In Debt. The Bank Will Only Tolerate €10,000 of Debt.");
-							System.out.println("Your Business Bank Account Balance Is Now: €" + business.getBankAccount());
+							System.out.println("\n\t\t\tYou Are Now In Debt. The Bank Will Only Tolerate €10,000 of Debt.");
+							System.out.println("\n\t\t\tBecause Your In Debt, You Cannot Afford To Pay For Building Maintenance.");
+							System.out.println("\t\t\tYour Building's Maintenance Level Has Been Reduced To 'None'.");
+							business.setBuildingMaintenanceLevel(1); // set to none
+							
+							System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
+									business.employees.size(), business.getTotalEmployeeSalary());
+							System.out.println("\t\t\tYour Business Bank Account Balance Is Now: €" + business.getBankAccount());
 						} // if
 					} // if
 				} // try catch
 				
 				business.setBusinessAge(business.getBusinessAge() + 1); // business age in months +1
-				System.out.println("\nBusiness Age: " + business.getBusinessAge() + " Months.");
+				System.out.println("\n\t\t\tBusiness Age: " + business.getBusinessAge() + " Months.");
 				break;
 			case 2:
 				// Show Player Status
@@ -617,12 +540,11 @@ public class MainClass {
 				// Show Business Status
 				System.out.println("\nBusiness Status:");
 				System.out.println(business.displayBusinessInfo());
-				System.out.printf("%d Out Of %d Employees.\n", employees.size(), business.getMaxEmployees());
+				System.out.printf("%d Out Of %d Employees.\n", business.employees.size(), business.getMaxEmployees());
 				break;
 			case 4:
 				// Manage The Business
-				manageBusiness(player, gameManager, business, 
-						employees, dealers, console);
+				manageBusiness(player, gameManager, menuManager, business, console);
 				break;
 			case 5:
 				// Back to Game Menu
@@ -635,14 +557,13 @@ public class MainClass {
 		
 	} // playGame
 	
-	public static void manageBusiness(Player player, GameManager gameManager, Business business, 
-			List<Employee> employees, List<Employee> dealers, Scanner console)
+	public static void manageBusiness(Player player, GameManager gameManager, MenuManager menuManager, Business business, Scanner console)
 	{
 		int menuChoice = 0;
 		
 		while(menuChoice != 99)
 		{
-			gameManager.printManageBusinessMenu();
+			menuManager.printManageBusinessMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -662,11 +583,11 @@ public class MainClass {
 			{
 			case 1:
 				// Manage Employees
-				manageEmployees(gameManager, business, employees, dealers, console);
+				manageEmployees(gameManager, menuManager, business, console);
 				break;
 			case 2:
 				// Manage The Building
-				manageBuilding(business, console);
+				manageBuilding(business, menuManager, console);
 				break;
 			case 3:
 				// Manage Operations
@@ -686,22 +607,18 @@ public class MainClass {
 		} // while
 	} // manageBusiness()
 	
-	public static void manageEmployees(GameManager gameManager, Business business, List<Employee> employees, List<Employee> dealers, Scanner console)
+	public static void manageEmployees(GameManager gameManager, MenuManager menuManager, Business business, Scanner console)
 	{
 		int menuChoice = 0;
 		
 		while(menuChoice != 99)
 		{	
-			int noOfEmployeesAllowed = (business.getMaxEmployees() - employees.size()); // the no. of employees you can hire
+			int noOfEmployeesAllowed = (business.getMaxEmployees() - business.employees.size()); // the no. of employees you can hire
 			
-			System.out.printf("%n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", employees.size(), business.getMaxEmployees());
+			System.out.printf("%n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", business.employees.size(), business.getMaxEmployees());
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
 			
-			System.out.println("\n\t\t\tManage Employees\n");
-			System.out.println("\t\t\t1.) Hire Employees.");
-			System.out.println("\t\t\t2.) Fire Employees.");
-			System.out.println("\t\t\t3.) View List Of your Employees.");
-			System.out.println("\t\t\t4.) Back To Manage The Business.");
+			menuManager.printManageEmployeesMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -738,14 +655,14 @@ public class MainClass {
 					
 					if(noOfEmployeesAllowed == 0)
 					{
-						System.out.printf("\n\t\t\tYou Have %d Out Of %d Employees!", employees.size(), business.getMaxEmployees());
+						System.out.printf("\n\t\t\tYou Have %d Out Of %d Employees!", business.employees.size(), business.getMaxEmployees());
 						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
 						amount = 0;
 					}
 					 
 					if(amount > noOfEmployeesAllowed)
 					{
-						System.out.printf("\n\t\t\tYou Can Only Hire %d More Employees!", (business.getMaxEmployees() - employees.size()));
+						System.out.printf("\n\t\t\tYou Can Only Hire %d More Employees!", (business.getMaxEmployees() - business.employees.size()));
 						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
 					} // if
 					
@@ -757,7 +674,7 @@ public class MainClass {
 					
 				}while( amount < 1 || amount > noOfEmployeesAllowed); // do..while
 				
-				hireEmployees(gameManager, employees, amount);
+				business.hireEmployees(gameManager, amount);
 				break;
 			case 2: // fire Employees
 				amount=0;
@@ -775,10 +692,10 @@ public class MainClass {
 					
 					amount = console.nextInt();
 					
-					if(amount > employees.size())
+					if(amount > business.employees.size())
 					{
 						System.out.printf("\n\t\t\tYou Cannot Fire %d Employees!", amount);
-						System.out.printf("\n\t\t\tYou Only Have %d Employees!\n", employees.size());
+						System.out.printf("\n\t\t\tYou Only Have %d Employees!\n", business.employees.size());
 					} // if
 					
 					if(amount == 0)
@@ -787,14 +704,14 @@ public class MainClass {
 					} // if
 					
 					
-				}while(amount < 1 || amount > employees.size()); // do..while
+				}while(amount < 1 || amount > business.employees.size()); // do..while
 		
-				fireEmployees(gameManager, employees, amount);
+				business.fireEmployees(gameManager, amount);
 				
 				break;
 			case 3: // View List of Employees
-				System.out.printf("\nYou Have %d Employees.\n", employees.size());
-				printListOfEmployees(employees);
+				System.out.printf("\nYou Have %d Employees.\n", business.employees.size());
+				business.printListOfEmployees();
 				break;
 			case 4: // go back
 				System.out.println("Going Back.");
@@ -804,7 +721,7 @@ public class MainClass {
 		} // while
 	} // manageEmployees()
 	
-	public static void manageBuilding(Business business, Scanner console)
+	public static void manageBuilding(Business business, MenuManager menuManager, Scanner console)
 	{
 		System.out.println("Manage The Building");
 		
@@ -812,13 +729,11 @@ public class MainClass {
 		
 		while(menuChoice != 99)
 		{	
-			System.out.printf("%n\t\t\tYour Building Has %d Rooms In It And A Maintenance Bill Of €%.2f A Month.", business.getBuildingSize(), business.getBuildingMaintenance());
+			System.out.printf("%n\t\t\tYour Building Has %d Rooms In It And A Maintenance Bill Of €%.2f A Month.", 
+					business.getBuildingSize(), business.getBuildingMaintenance());
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
 			
-			System.out.println("\n\t\t\tManage The Building\n");
-			System.out.println("\t\t\t1.) Upgrade Size Of Building.");
-			System.out.println("\t\t\t2.) Set Maintenance Level.");
-			System.out.println("\t\t\t3.) Back To Manage The Business.");
+			menuManager.printManageTheBuildingMenu();
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -882,13 +797,7 @@ public class MainClass {
 				System.out.println("\n\t\t\tThe Level Of Maintenance Your Building Gets Effects Your Reputation");
 				System.out.printf("\t\t\tYour Current Maintenance Bill Is €%.2f A Month.", business.getBuildingMaintenance());
 				
-				System.out.println("\n\n\t\t\tSet Level Of Maintenance Your Building Gets.");
-				
-				System.out.println("\n\t\t\t1.) None - €0.");
-				System.out.println("\t\t\t2.) Low - €500.");
-				System.out.println("\t\t\t3.) Medium - €1000.");
-				System.out.println("\t\t\t4.) High - €1500.");
-				System.out.println("\t\t\t5.) Back To Manage The Business.");
+				menuManager.printSetMaintenanceLevelMenu();
 				
 				// to make sure the choice entered is in the right range
 				do
@@ -904,50 +813,12 @@ public class MainClass {
 					choice = console.nextInt();
 				}while(choice < 1 || choice > 5); // do..while
 				
-				float oldMaintenanceCost=0;
-				oldMaintenanceCost = business.getBuildingMaintenance(); // to make sure player doesn't keep changing 
-																		// maintenance to endless get reputation
-				if(choice != 5) // if exiting, do nothing
+				if(choice != 5)
 				{
-					if(oldMaintenanceCost == 0)
-					{
-						business.setBadReputation(business.getBadReputation() - 50);
-					}
-					else if(oldMaintenanceCost == 500)
-					{
-						business.setBadReputation(business.getBadReputation() - 25);
-					}
-					else if(oldMaintenanceCost == 1000)
-					{
-						business.setGoodReputation(business.getGoodReputation() - 25);
-					}
-					else if(oldMaintenanceCost == 1500)
-					{
-						business.setGoodReputation(business.getGoodReputation() - 50);
-					} // if
+					// set the maintenance level
+					business.setBuildingMaintenanceLevel(choice);
 				} // if
-				
-				switch(choice)
-				{
-				case 1: // no maintenance
-					business.setBuildingMaintenance(0); // sets maintenance cost
-					business.setBadReputation(business.getBadReputation() + 50); // get +50 bad rep
-					break;
-				case 2: // low maintenance
-					business.setBuildingMaintenance(500); // sets maintenance cost
-					business.setBadReputation(business.getBadReputation() + 25); // get +25 bad rep
-					break;
-				case 3: // medium maintenance
-					business.setBuildingMaintenance(1000); // sets maintenance cost
-					business.setGoodReputation(business.getGoodReputation() + 25); // get +25 good rep
-					break;
-				case 4: // high maintenance
-					business.setBuildingMaintenance(1500); // sets maintenance cost
-					business.setGoodReputation(business.getGoodReputation() + 50); // get +50 good rep
-					break;
-				case 5: // go back
-					break;
-				} // switch
+				// if 5, its exits
 				break;
 			case 3: // go back
 				System.out.println("Going Back.");
@@ -956,159 +827,5 @@ public class MainClass {
 			} // switch
 		} // while
 	} // manageBuilding
-
-	public static void saveGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees, List<Employee> dealers) throws IOException
-	{
-		System.out.println("Saving Game!");
-		
-		PrintWriter outSavedGame = new PrintWriter("SavedGame.txt");
-		
-		// Saving players state to save file
-		outSavedGame.printf("%s%n", player.getName());
-		outSavedGame.printf("%s%n", player.getTraits(0));
-		outSavedGame.printf("%s%n", player.getTraits(1));
-		outSavedGame.printf("%s%n", player.getTraits(2));
-		outSavedGame.printf("%s%n", player.getTraits(3));
-		outSavedGame.printf("%s%n", player.getTraits(4));
-		outSavedGame.printf("%f%n", player.getBankAccount());
-		
-		// Saving business' state to save file
-		outSavedGame.printf("%s%n", business.getName());
-		outSavedGame.printf("%f%n", business.getBankAccount());
-		outSavedGame.printf("%d%n", business.getGoodReputation());
-		outSavedGame.printf("%d%n", business.getBadReputation());
-		outSavedGame.printf("%d%n", business.getBuildingSize());
-		outSavedGame.printf("%f%n", business.getEmployeeSalary());
-		outSavedGame.printf("%f%n", business.getTotalEmployeeSalary());
-		outSavedGame.printf("%f%n", business.getBuildingMaintenance());
-		outSavedGame.printf("%d%n", business.getBusinessAge());
-		
-		// Saving Employees (NO of employees and their names)
-		outSavedGame.printf("%d%n", employees.size());
-		
-		for(int i = 0; i < employees.size(); i++)
-		{
-			outSavedGame.printf("%s%n", employees.get(i));
-		} // for
-		
-		// Saving Dealers (NO of dealers and their names)
-		outSavedGame.printf("%d%n", dealers.size());
-		
-		for(int i = 0; i < dealers.size(); i++)
-		{
-			outSavedGame.printf("%s%n", dealers.get(i));
-		} // for
-		
-		// Saving Game Info
-		outSavedGame.printf("%s%n", gameManager.getGameDifficulty());
-			
-		outSavedGame.close();
-	} // saveGame()
-	
-	public static void loadGame(Player player, Business business, GameManager gameManager, 
-			List<Employee> employees, List<Employee> dealers) throws IOException
-	{	
-		gameManager.setIsGameLoaded(false);
-		Scanner inSavedGame = new Scanner(new FileReader("SavedGame.txt"));
-		
-		// before loading a save file, the current values for employees and dealers must be cleared
-		employees.clear();
-		dealers.clear();
-		
-		// to make sure the file loads the right values (in case file was edited)	
-		// try to load them, if it fails, set values
-		
-		try
-		{
-			// Loading players state from save file
-			player.setName(inSavedGame.nextLine());	
-			player.setTraits(0, inSavedGame.nextLine());
-			player.setTraits(1, inSavedGame.nextLine()); 
-			player.setTraits(2, inSavedGame.nextLine()); 
-			player.setTraits(3, inSavedGame.nextLine()); 
-			player.setTraits(4, inSavedGame.nextLine()); 
-			player.setBankAccount(inSavedGame.nextFloat());
-
-			// Loading business' state from save file
-			inSavedGame.nextLine(); // Flush the buffer
-			business.setName(inSavedGame.nextLine());
-			business.setBankAccount(inSavedGame.nextFloat());
-			business.setGoodReputation(inSavedGame.nextInt());
-			business.setBadReputation(inSavedGame.nextInt());
-			business.setBuildingSize(inSavedGame.nextInt());
-			business.setEmployeeSalary(inSavedGame.nextFloat());
-			business.setTotalEmployeeSalary(inSavedGame.nextFloat());
-			business.setBuildingMaintenance(inSavedGame.nextFloat());
-			business.setBusinessAge(inSavedGame.nextInt());
-
-			// Loading Employees (NO of employees and their names)
-			int eSize=0;
-			int i=0;
-			
-			eSize = inSavedGame.nextInt(); // getting the no of employees
-		
-			while(inSavedGame.hasNextLine() && i < eSize)
-			{
-				inSavedGame.nextLine(); // Flush the buffer
-				for(i = 0; i < eSize; i++)
-				{	
-					Employee employee = new Employee(); // create employee
-					employee.setName(inSavedGame.nextLine()); // set their name
-					employees.add(employee);
-				}
-			} // while
-			
-			// Loading Dealers (NO of dealers and their names)
-			int dSize=0;
-			int j=0;
-
-			dSize = inSavedGame.nextInt(); // getting the no of dealers
-	
-			while(inSavedGame.hasNextLine() && j < dSize)
-			{
-				inSavedGame.nextLine(); // Flush the buffer
-				for(j = 0; j < dSize; j++)
-				{
-					Dealer dealer = new Dealer(); // create dealer
-					dealer.setName(inSavedGame.nextLine()); // set their name
-					dealers.add(dealer);
-				} // for
-			} // while
-			
-			// Loading Game Info
-			gameManager.setGameDifficulty(inSavedGame.next());
-
-			// saying the game loaded
-			gameManager.setIsGameLoaded(true);
-			System.out.println("Loading Game!");
-	
-			inSavedGame.close();
-		}
-		catch(Exception e)
-		{
-			inSavedGame.close();
-			
-			// saying game didn't load
-			gameManager.setIsGameLoaded(false);
-			
-			System.out.println("A Saved Game Couldn't Be Loaded!");
-			
-			// set all the values being loaded back to default
-			
-			// Set default business states
-			business.setGoodReputation(25);
-			business.setBadReputation(0);
-			business.setBuildingSize(3);
-			business.setEmployeeSalary(800);
-			business.setTotalEmployeeSalary(0);
-			business.setBuildingMaintenance(1000);
-			business.setBusinessAge(0);
-			
-			// set employees and dealers back to default
-			employees.clear();
-			dealers.clear();
-		} // try catch
-	} // loadGame()
 
 } // Class MainClass

@@ -23,7 +23,7 @@ public class Employee extends Person {
 		return name;
 	} // getName()
 	
-	public String toString()
+	public String toString() // used when saving employees
 	{
 		return getName();
 	} // toString()

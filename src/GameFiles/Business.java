@@ -1,5 +1,9 @@
 package GameFiles;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /* This class handles all the info about the player's business. */
 
 public class Business {
@@ -16,6 +20,11 @@ public class Business {
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
 	public int businessAge; // in months
+	
+	// Employees
+	List<Employee> employees = new ArrayList<Employee>();
+	// Polymorphism
+	List<Employee> dealers = new ArrayList<Employee>();
 	
 	public Business()
 	{
@@ -93,6 +102,49 @@ public class Business {
 		return buildingUpgradeCost;
 	} // getBuildingUpgradeCost()
 	
+	public void setBuildingMaintenanceLevel(int theLevel)
+	{
+		float oldMaintenanceCost=0;
+		oldMaintenanceCost = getBuildingMaintenance(); // to make sure player doesn't keep changing 
+														// maintenance to endless get reputation
+		if(oldMaintenanceCost == 0)
+		{
+			setBadReputation(getBadReputation() - 50);
+		}
+		else if(oldMaintenanceCost == 500)
+		{
+			setBadReputation(getBadReputation() - 25);
+		}
+		else if(oldMaintenanceCost == 1000)
+		{
+			setGoodReputation(getGoodReputation() - 25);
+		}
+		else if(oldMaintenanceCost == 1500)
+		{
+			setGoodReputation(getGoodReputation() - 50);
+		} // if
+		
+		switch(theLevel)
+		{
+		case 1: // no maintenance
+			setBuildingMaintenance(0); // sets maintenance cost
+			setBadReputation(getBadReputation() + 50); // get +50 bad rep
+			break;
+		case 2: // low maintenance
+			setBuildingMaintenance(500); // sets maintenance cost
+			setBadReputation(getBadReputation() + 25); // get +25 bad rep
+			break;
+		case 3: // medium maintenance
+			setBuildingMaintenance(1000); // sets maintenance cost
+			setGoodReputation(getGoodReputation() + 25); // get +25 good rep
+			break;
+		case 4: // high maintenance
+			setBuildingMaintenance(1500); // sets maintenance cost
+			setGoodReputation(getGoodReputation() + 50); // get +50 good rep
+			break;
+		} // switch
+	} // setBuildingMaintenanceLevel()
+	
 	public void setBuildingMaintenance(float theCost)
 	{
 		buildingMaintenance = theCost;
@@ -156,7 +208,7 @@ public class Business {
 		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
 		if(getTotalEmployeeSalary() > getBankAccount())
 		{
-			throw new BankAccountBalanceException("\nInsufficient Bank Account Funds.");
+			throw new BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
 		}
 		// takes the total salary out of the business bank account
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
@@ -170,12 +222,101 @@ public class Business {
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployeesAnyway()
 	
+	public void hireEmployees(GameManager gameManager, int theAmount)
+	{
+		Random rnd = new Random();
+		int rndValue=0;
+		String tempName="";
+		
+		for(int i = 0; i < theAmount; i++)
+		{
+			Employee employee = new Employee(); // create employee
+			
+			rndValue = rnd.nextInt(14); // get a random value 
+			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
+			
+			rndValue = rnd.nextInt(14); // get another random value
+			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
+			
+			employee.setName(tempName); // name the employee
+			employees.add(employee); // add employee to employees list
+		} // for
+	} // hireEmployees()
+	
+	public void fireEmployees(GameManager gameManager, int theAmount)
+	{
+		if(theAmount == employees.size()) // if the amount is = to all employees, clear list
+		{
+			employees.clear();
+		}
+		else // remove the number entered
+		{
+			while(theAmount > 0)
+				employees.remove(theAmount--);
+		} // if else
+	} // fireEmployees()
+	
+	public void printListOfEmployees()
+	{
+		String tempNames = "";
+		
+		for(int i = 0; i < employees.size(); i++)
+			tempNames += "\n\t" + employees.get(i);
+		
+		System.out.println("Employees: " + tempNames);
+	} // printListOfEmployees()
+	
+	public void hireDealers(GameManager gameManager, int theAmount)
+	{
+		Random rnd = new Random();
+		int rndValue=0;
+		String tempName="";
+		
+		for(int i = 0; i < theAmount; i++)
+		{
+			Dealer dealer = new Dealer(); // create dealer - Polymorphism
+			
+			rndValue = rnd.nextInt(14); // get a random value 
+			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name
+			
+			rndValue = rnd.nextInt(14); // get another random value
+			tempName += gameManager.getRandomLName(rndValue); // choose a random last name and add it on to the first name
+			
+			dealer.setName(tempName); // name the employee
+			dealers.add(dealer); // add dealer to dealers list
+		} // for
+	} // hireDealers()
+	
+	public void fireDealers(GameManager gameManager, int theAmount)
+	{
+		if(theAmount == dealers.size()) // if the amount is = to all dealers, clear list
+		{
+			dealers.clear();
+		}
+		else // remove the number entered
+		{
+			while(theAmount > 0)
+				dealers.remove(theAmount--);
+		} // if else
+	} // fireDealers()
+	
+	public void printListOfDealers()
+	{
+		String tempNames = "";
+		System.out.println("\nNumber of Dealers: " + dealers.size() + ".");
+		
+		for(int i = 0; i < dealers.size(); i++)
+			tempNames += "\n\t" + dealers.get(i);
+		
+		System.out.println("List of Dealers: \n" + tempNames);
+	} // printListOfDealers()
+	
 	// to pay the buildings monthly maintenance bill
 	public void payMaintenance() throws BankAccountBalanceException
 	{
 		if(getBuildingMaintenance() > getBankAccount())
 		{
-			throw new  BankAccountBalanceException("\nInsufficient Bank Account Funds.");
+			throw new  BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
 		}
 		// takes the Maintenance out of the business bank account
 		setBankAccount((getBankAccount() - getBuildingMaintenance()));
@@ -185,7 +326,7 @@ public class Business {
 	{
 		if(getBuildingUpgradeCost() > getBankAccount())
 		{
-			throw new BankAccountBalanceException("\nInsufficient Bank Account Funds.");
+			throw new BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
 		} // if
 		
 		setBuildingSize(getBuildingSize() + 1); // increase building size by 1
