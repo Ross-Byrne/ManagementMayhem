@@ -20,6 +20,9 @@ public class Business {
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
 	public int businessAge; // in months
+	public int productivityBonus;
+	public int equipmentUpgrades; // + 10% productivity bonus per upgrade
+	public float moneyEarned;
 	
 	// Employees
 	List<Employee> employees = new ArrayList<Employee>();
@@ -38,6 +41,8 @@ public class Business {
 		setMaxEmployees(0);
 		setEmployeeSalary(800);
 		setBusinessAge(0);
+		setProductivityBonus(0);
+		setEquipmentUpgrades(0);
 	} // default constructor
 	
 	// Get and Set Methods
@@ -227,8 +232,12 @@ public class Business {
 		totalEmployeeSalary = totalSalary;
 	} // setTotalEmployeeSalary()
 	
+	// the total salary is calculated
+	// using employeeSalary * the number of employees
 	public float getTotalEmployeeSalary()
 	{
+		setTotalEmployeeSalary((employees.size() * getEmployeeSalary()));
+		
 		return totalEmployeeSalary;
 	} // getTotalEmployeeSalary()
 	
@@ -242,14 +251,66 @@ public class Business {
 		return businessAge;
 	} // getBusinessAge()
 	
+	public void setProductivityBonus(int theBonus)
+	{
+		productivityBonus = theBonus;
+	} // setProductivityBonus()
+	
+	public int getProductivityBonus()
+	{
+		int bonus = 0;
+		
+		bonus += employees.size() * (getGoodReputation() / 5); // adds 1% bonus for each 5 good rep, per employee
+		
+		bonus -= employees.size() * (getBadReputation() / 5); // adds -1% bonus for each 5 Bad Rep, per employee
+
+		bonus += (getEquipmentUpgrades() * 10); // Adds 10% bonus for each equipment upgrade
+		
+		setProductivityBonus(bonus);
+		
+		return productivityBonus;
+	} // getProductivityBonus()
+	
+	public void setEquipmentUpgrades(int theNumber)
+	{
+		equipmentUpgrades = theNumber;
+	} // setEquipmentUpgrades()
+	
+	public int getEquipmentUpgrades()
+	{
+		return equipmentUpgrades;
+	} // getEquipmentUpgrades()
+	
+	public void setMoneyEarned(float theAmount)
+	{
+		moneyEarned = theAmount;
+	} // setMoneyEarned()
+	
+	public float getMoneyEarned()
+	{
+		return moneyEarned;
+	} // getMoneyEarned()
+	
 	// Other Methods
 	
-	// The number of employees the business has in entered
-	// the total salary is calculated
-	// using employeeSalary * the number of employees
-	public void payEmployees(int noEmployees) throws BankAccountBalanceException
+	// generates money for business
+	// by producing products + selling them
+	public void produceProducts()
 	{
-		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
+		float bonus = 0;
+		
+		setMoneyEarned(employees.size() * 1000); // business makes €1000 per employee a month
+		
+		bonus = ((float)getProductivityBonus() / 100); // getting the productivity bonus %
+		
+		setMoneyEarned(getMoneyEarned() + (getMoneyEarned() * bonus)); // Adding the productivity bonus on to money earned
+		
+		setBankAccount(getBankAccount() + getMoneyEarned()); // adds money earned into bank account
+	} // produceProducts()
+	
+	// pays employees for the month
+	public void payEmployees() throws BankAccountBalanceException
+	{
 		if(getTotalEmployeeSalary() > getBankAccount())
 		{
 			throw new BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
@@ -258,11 +319,10 @@ public class Business {
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployees()
 	
-	public void payEmployeesAnyway(int noEmployees)
+	public void payEmployeesAnyway()
 	{
-		setTotalEmployeeSalary((noEmployees * getEmployeeSalary()));
-		
 		// takes the total salary out of the business bank account
+		// Even when the business is in debt
 		setBankAccount((getBankAccount() - getTotalEmployeeSalary()));
 	} // payEmployeesAnyway()
 	
@@ -389,7 +449,9 @@ public class Business {
 				"\nBad Reputation: " + getBadReputation() +
 				"\nRooms In The Building: " + getBuildingSize() +
 				"\nBuilding Maintenance: €" + getBuildingMaintenance() +
-				"\nEmployee Salary Per Month: €" + getEmployeeSalary();
+				"\nEmployee Salary Per Month: €" + getEmployeeSalary() +
+				"\nBusiness Productivity Bonus: " + getProductivityBonus() + "%";
+		
 		
 		return str;
 	} // displayBusinessInfo()

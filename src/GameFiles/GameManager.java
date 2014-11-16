@@ -11,14 +11,16 @@ public class GameManager {
 	public boolean isBusinessSetup = false;
 	public boolean isNewGameCreated = false;
 	public boolean isGameLoaded = false;
+	public boolean canHireDealers = false;
+	public boolean canBuildMethLab = false;
 	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	
 	public String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
-												"Rachael", "Samantha", "Mary", "Ciara", "Jennifer", "Jane", "Sarah"};
+										"Rachael", "Samantha", "Mary", "Ciara", "Jennifer", "Jane", "Sarah"};
 	
 	public String[] randomLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
-												" Browne", " Butler", " Byrne", " Daly", " Kelly", " Harrington", " Jameson"};
+										" Browne", " Butler", " Byrne", " Daly", " Kelly", " Harrington", " Jameson"};
 	
 	// Get and Set Methods
 	
@@ -71,6 +73,26 @@ public class GameManager {
 	{
 		return isGameLoaded;
 	} // getIsGameLoaded()
+	
+	public void setCanHireDealers(boolean canHire)
+	{
+		canHireDealers = canHire;
+	} // setCanHireDealers()
+	
+	public boolean getCanHireDealers()
+	{
+		return canHireDealers;
+	} // getCanHireDealers()
+	
+	public void setCanBuildMethLab(boolean canBuild)
+	{
+		canBuildMethLab = canBuild;
+	} // setCanBuildMethLab()
+	
+	public boolean getCanBuildMethLab()
+	{
+		return canBuildMethLab;
+	} // getCanBuildMethLab()
 	
 	public String getPlayerTraitsSelection(int index)
 	{	

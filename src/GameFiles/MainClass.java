@@ -477,7 +477,7 @@ public class MainClass {
 	public static void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
 		int menuChoice = 0;
-		
+		float monthlyIncome = 0;
 		float monthlyCosts = 0;
 		
 		if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
@@ -487,15 +487,20 @@ public class MainClass {
 			return; // to exit
 		} // if
 		
-		// The Business Monthly Incomes
-			
-		// stuff here *********
+		// The Business Monthly Incomes - producing products etc.
+		System.out.printf("\n\t\t\t********** The Business Monthly Incomes **********\n");
+		business.produceProducts();
 		
+		monthlyIncome += business.getMoneyEarned();
+		
+		System.out.printf("\n\t\t\tThe Business Products Generate A Total Of €%.2f This Month.\n", monthlyIncome);
+			
 		// Business monthly costs - paying employees, maintenance etc
+		System.out.printf("\n\n\t\t\t********** The Business Monthly Costs **********\n");
 		try 
 		{
 			business.payMaintenance();
-			business.payEmployees(business.employees.size());
+			business.payEmployees();
 			
 			System.out.printf("\n\t\t\tThe Building's Maintenance Bill Of €%.2f Has Been Paid For The Month.", business.getBuildingMaintenance());
 			System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
@@ -504,7 +509,9 @@ public class MainClass {
 			monthlyCosts = business.getBuildingMaintenance() + business.getTotalEmployeeSalary();
 			
 			System.out.printf("\n\t\t\tThe Business Pays A Total Cost Of €%.2f This Month.\n", monthlyCosts);
-			System.out.printf("\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
+			
+			System.out.printf("\n\n\t\t\t********** The Business Account Balance **********\n");
+			System.out.printf("\n\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
 		}
 		catch(Exception e)
 		{
@@ -545,7 +552,7 @@ public class MainClass {
 			}
 			else
 			{
-				business.payEmployeesAnyway(business.employees.size());
+				business.payEmployeesAnyway();
 				
 				if(business.getBankAccount() <= -10000) // if the business is -10,000 or more in debt
 				{
@@ -562,6 +569,8 @@ public class MainClass {
 					
 					System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
 							business.employees.size(), business.getTotalEmployeeSalary());
+					
+					System.out.printf("\n\n\t\t\t********** The Business Account Balance **********\n");
 					System.out.println("\t\t\tYour Business Bank Account Balance Is Now: €" + business.getBankAccount());
 				} // if
 			} // if
