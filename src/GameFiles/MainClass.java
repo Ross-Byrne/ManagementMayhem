@@ -263,21 +263,38 @@ public class MainClass {
 						choice = console.nextInt();
 						
 						// to make sure only one of each trait is picked...
-						for(int j = 0; j < 5; j++)
+						if(choice > 0 && choice < 11)
 						{
-							if(choiceRecord[j] == choice) 	// the trait picked is checked against other traits picked
-							{							  	// if the triat has alreadly been picked,
-								System.out.printf("'%s' has Already been Chosen, Pick a Different Trait.%n", gameManager.getPlayerTraitsSelection(choice-1)); 
-								choice = 99;				// choice is set to 99, so your asked to pick a trait again
-							} // if						  
-						} // for
-					}while(choice < 1 || choice > 12); // do..while
+							for(int j = 0; j < 5; j++)
+							{
+								if(choiceRecord[j] == choice) 	// the trait picked is checked against other traits picked
+								{							  	// if the triat has alreadly been picked,
+									System.out.printf("'%s' has Already been Chosen, Pick a Different Trait.%n", gameManager.getPlayerTraitsSelection(choice-1)); 
+									choice = 99; // exit
+								} // if
+							} // for
+						} // if
+						
+						
+					}while(choice < 1 || choice > 10); // do..while
+					
+					
+					
 					
 					// to make sure only one of each trait is picked
 					// choice is put into choiceRecord
 					choiceRecord[i] = choice;
 					
 					tempTrait = gameManager.getPlayerTraitsSelection(choice-1);
+					
+					if(choice < 6) // if a good trait
+					{
+						business.setGoodReputation(business.getGoodReputation() + 5);
+					}
+					else // if a bad trait
+					{
+						business.setBadReputation(business.getBadReputation() + 5);
+					}
 						
 					player.setTraits(i, tempTrait);
 					System.out.println("\nTrait Chosen: " + tempTrait);
@@ -629,7 +646,7 @@ public class MainClass {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 4); // do..while
+			}while(menuChoice < 1 || menuChoice > 5); // do..while
 			
 			switch(menuChoice)
 			{
@@ -710,7 +727,36 @@ public class MainClass {
 				System.out.printf("\nYou Have %d Employees.\n", business.employees.size());
 				business.printListOfEmployees();
 				break;
-			case 4: // go back
+			case 4: // set employee Salary
+				int choice = 0;
+				
+				System.out.println("\n\t\t\tThe Salary Your Employees Get Paid Effects Your Reputation");
+				System.out.printf("\t\t\tYour Employees Current Salary Is €%.2f A Month Each.", business.getEmployeeSalary());
+				
+				menuManager.printSetEmployeeSalaryMenu();
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					choice = console.nextInt();
+				}while(choice < 1 || choice > 5); // do..while
+				
+				if(choice != 5)
+				{
+					// set the Salary level
+					business.setEmployeeSalaryLevel(choice);
+				} // if
+				// if 5, its exits
+				break;
+			case 5: // go back
 				System.out.println("Going Back.");
 				menuChoice = 99;
 				break;

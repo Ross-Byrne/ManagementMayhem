@@ -1,5 +1,7 @@
 package GameFiles;
 
+//import java.util.*;
+
 /* This class is to manage the game */
 
 public class GameManager {
@@ -9,8 +11,8 @@ public class GameManager {
 	public boolean isBusinessSetup = false;
 	public boolean isNewGameCreated = false;
 	public boolean isGameLoaded = false;
-	public String[] playerTraitsSelection = { 	"Cheerful", "People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
-												"Greedy", "Spitful", "Alcoholic", "Risk Taker", "Seedy", "Handy Man"};
+	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
+												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	
 	public String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
 												"Rachael", "Samantha", "Mary", "Ciara", "Jennifer", "Jane", "Sarah"};

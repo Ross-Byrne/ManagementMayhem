@@ -31,7 +31,7 @@ public class Business {
 		setName("");
 		setBankAccount(0);
 		setGoodReputation(25); // 25 because of 1000 for maintenance
-		setBadReputation(0);
+		setBadReputation(25); // because salary is 800
 		setBuildingSize(3);
 		setBuildingUpgradeCost(getBuildingSize() *1000);
 		setBuildingMaintenance(1000); // medium maintenance level
@@ -168,6 +168,50 @@ public class Business {
 		return maxEmployees;
 	} // getMaxEmployees()
 	
+	public void setEmployeeSalaryLevel(int theLevel)
+	{
+		float oldSalary=0;
+		oldSalary = getEmployeeSalary(); // to make sure player doesn't keep changing 
+										// Salary to endless get reputation
+		if(oldSalary == 400)
+		{
+			setBadReputation(getBadReputation() - 50);
+		}
+		else if(oldSalary == 800)
+		{
+			setBadReputation(getBadReputation() - 25);
+		}
+		else if(oldSalary == 1000)
+		{
+			setGoodReputation(getGoodReputation() - 25);
+		}
+		else if(oldSalary == 1200)
+		{
+			setGoodReputation(getGoodReputation() - 50);
+		} // if
+		
+		switch(theLevel)
+		{
+		case 1: // Low
+			setEmployeeSalary(400); // sets Salary
+			setBadReputation(getBadReputation() + 50); // get +50 bad rep
+			break;
+		case 2: // medium
+			setEmployeeSalary(800);
+			setBadReputation(getBadReputation() + 25); // get +25 bad rep
+			break;
+		case 3: // good
+			setEmployeeSalary(1000);
+			setGoodReputation(getGoodReputation() + 25); // get +25 good rep
+			break;
+		case 4: // Great
+			setEmployeeSalary(1200);
+			setGoodReputation(getGoodReputation() + 50); // get +50 good rep
+			break;
+		} // switch
+	} // setEmployeeSalaryLevel()
+	
+	// to set Salary Directly
 	public void setEmployeeSalary(float theSalary)
 	{
 		employeeSalary = theSalary;

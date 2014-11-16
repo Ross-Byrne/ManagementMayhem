@@ -70,8 +70,19 @@ public class MenuManager {
 		System.out.println("\t\t\t1.) Hire Employees.");
 		System.out.println("\t\t\t2.) Fire Employees.");
 		System.out.println("\t\t\t3.) View List Of your Employees.");
-		System.out.println("\t\t\t4.) Back To Manage The Business.");
+		System.out.println("\t\t\t4.) Set Salary For Employees.");
+		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printManageEmployeesMenu()
+	
+	public void printSetEmployeeSalaryMenu()
+	{
+		System.out.println("\n\n\t\t\tSet The Salary Of Your Employees.");
+		System.out.println("\n\t\t\t1.) Low - €400.");
+		System.out.println("\t\t\t2.) Medium - €800.");
+		System.out.println("\t\t\t3.) Good - €1000.");
+		System.out.println("\t\t\t4.) Great - €1200.");
+		System.out.println("\t\t\t5.) Back To Manage Employees.");
+	} // printSetEmployeeSalaryMenu()
 	
 	public void printManageTheBuildingMenu()
 	{

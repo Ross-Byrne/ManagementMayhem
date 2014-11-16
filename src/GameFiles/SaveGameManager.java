@@ -147,7 +147,7 @@ public class SaveGameManager {
 			
 			// Set default business states
 			business.setGoodReputation(25);
-			business.setBadReputation(0);
+			business.setBadReputation(25);
 			business.setBuildingSize(3);
 			business.setEmployeeSalary(800);
 			business.setTotalEmployeeSalary(0);
