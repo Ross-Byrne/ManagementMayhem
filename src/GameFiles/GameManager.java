@@ -13,6 +13,7 @@ public class GameManager {
 	public boolean isGameLoaded = false;
 	public boolean canHireDealers = false;
 	public boolean canBuildMethLab = false;
+	public boolean AppliedForGrant = false;
 	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	

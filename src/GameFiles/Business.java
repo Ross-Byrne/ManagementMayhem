@@ -289,7 +289,9 @@ public class Business {
 	
 	public float getEquipmentUpgradeCost()
 	{
-		setEquipmentUpgradeCost(getEquipmentUpgrades() * 5000); // each upgrade cost 5000 more then the last
+		// the equipment upgrades +1 is to get the cost of the next upgrade, not the number 
+		// of upgrades the business already has.
+		setEquipmentUpgradeCost((getEquipmentUpgrades() + 1) * 20000); // each upgrade cost 20000 more then the last
 		return equipmentUpgradeCost;
 	} // getEquipmentUpgradeCost()
 	

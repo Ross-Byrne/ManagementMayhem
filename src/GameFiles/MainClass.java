@@ -891,7 +891,7 @@ public class MainClass {
 		while(menuChoice != 99)
 		{	
 			System.out.printf("\n\t\t\tUpgrading Your Equipment Will Increase Productivity.");
-			System.out.printf("\n\t\t\tYou Can Only Apply For A Business Grant Every 12 Months.\n");
+			System.out.printf("\n\t\t\tYou Can Only Apply For A Business Grant At The Start Of A New Year.\n");
 			
 			menuManager.printManageOperationsMenu();
 			
@@ -955,31 +955,62 @@ public class MainClass {
 			case 2: // Apply For Grant
 				int choice=0;
 				
-				System.out.println("\n\t\t\tThe Level Of Maintenance Your Building Gets Effects Your Reputation");
-				System.out.printf("\t\t\tYour Current Maintenance Bill Is €%.2f A Month.", business.getBuildingMaintenance());
+				System.out.println("\n\t\t\tYou Can Only Apply For A Business Grant At The Start Of A New Year.");
 				
-				menuManager.printSetMaintenanceLevelMenu();
-				
-				// to make sure the choice entered is in the right range
-				do
+				if((business.getBusinessAge() % 12) == 0) // is start of a new year
 				{
-					System.out.print("\nEnter Option Choice: ");
-				
-					while(!console.hasNextInt()) 
+					System.out.println("\n\t\t\tYou Are Currently Eligible To Apply For A Business Grant.");
+
+					System.out.println("\n\t\t\tWould You Like To Apply For A Business Grant?");
+					
+					System.out.println("\n\t\t\t1.) Yes.");
+					System.out.println("\t\t\t2.) No.");
+					
+					// to make sure the choice entered is in the right range
+					do
 					{
 						System.out.print("\nEnter Option Choice: ");
-						console.next(); // to advance Scanner past input
-					} // while
 					
-					choice = console.nextInt();
-				}while(choice < 1 || choice > 5); // do..while
-				
-				if(choice != 5)
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 2); // do..while
+
+					if(choice == 1) // if yes
+					{
+						Random rnd = new Random();
+						int chance = 0;
+						float grant = 10000; // the size of grant the player might get
+		
+						System.out.println("\n\t\t\tApplying For Grant!");
+						
+						chance = rnd.nextInt(100)+1;
+						
+						if(chance < 51) // 50% chance of getting 1 - 50 out of 100
+						{
+							System.out.printf("\n\t\t\tCongratulations! Your Business Has Been Awarded A Grant For €%.2f.", grant);
+							System.out.println("\n\t\t\tThe Grant Is Now Being Added To Your Bank Account.");
+							
+							business.setBankAccount(business.getBankAccount() + grant); // grant paid into business account
+						}
+						else
+						{
+							System.out.println("\n\t\t\tWe Are Sorry To Inform You That You Have Not Been Awarded A Business Grant.");
+						}// if
+					}
+					else // if no
+					{
+						// exit
+					} // if
+				}
+				else
 				{
-					// set the maintenance level
-					business.setBuildingMaintenanceLevel(choice);
+					System.out.println("\n\t\t\tYou Are Not Eligible To Apply For A Business Grant.");
 				} // if
-				// if 5, its exits
 				break;
 			case 3: // go back
 				System.out.println("Going Back.");
