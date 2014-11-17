@@ -278,9 +278,6 @@ public class MainClass {
 						
 					}while(choice < 1 || choice > 10); // do..while
 					
-					
-					
-					
 					// to make sure only one of each trait is picked
 					// choice is put into choiceRecord
 					choiceRecord[i] = choice;
@@ -476,6 +473,7 @@ public class MainClass {
 	
 	public static void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager, Scanner console)
 	{
+		gameManager.setAppliedForGrant(false);
 		int menuChoice = 0;
 		float monthlyIncome = 0;
 		float monthlyCosts = 0;
@@ -888,6 +886,27 @@ public class MainClass {
 		int menuChoice = 0;
 		int menusAllowed = 3;
 		
+		
+		if(business.getBadReputation() > 39) // if atleast 40
+		{
+			gameManager.setCanHireDealers(true);
+			menusAllowed = 4; // shows new menu option
+		}
+		else
+		{
+			gameManager.setCanHireDealers(false);
+		} // if
+		
+		if(business.getBadReputation() > 59) // atleast 60
+		{
+			gameManager.setCanBuildDrugLab(true);
+			menusAllowed = 5; // shows new menu option
+		}
+		else
+		{
+			gameManager.setCanBuildDrugLab(false);
+		} // if
+	
 		while(menuChoice != 99)
 		{	
 			System.out.printf("\n\t\t\tUpgrading Your Equipment Will Increase Productivity.");
@@ -957,8 +976,9 @@ public class MainClass {
 				
 				System.out.println("\n\t\t\tYou Can Only Apply For A Business Grant At The Start Of A New Year.");
 				
-				if((business.getBusinessAge() % 12) == 0) // is start of a new year
+				if((business.getBusinessAge() % 12) == 0 && gameManager.getAppliedForGrant() == false) // is start of a new year
 				{
+					gameManager.setAppliedForGrant(true);
 					System.out.println("\n\t\t\tYou Are Currently Eligible To Apply For A Business Grant.");
 
 					System.out.println("\n\t\t\tWould You Like To Apply For A Business Grant?");

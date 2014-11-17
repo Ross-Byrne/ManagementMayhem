@@ -12,8 +12,8 @@ public class GameManager {
 	public boolean isNewGameCreated = false;
 	public boolean isGameLoaded = false;
 	public boolean canHireDealers = false;
-	public boolean canBuildMethLab = false;
-	public boolean AppliedForGrant = false;
+	public boolean canBuildDrugLab = false;
+	public boolean appliedForGrant = false;
 	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	
@@ -85,15 +85,25 @@ public class GameManager {
 		return canHireDealers;
 	} // getCanHireDealers()
 	
-	public void setCanBuildMethLab(boolean canBuild)
+	public void setCanBuildDrugLab(boolean canBuild)
 	{
-		canBuildMethLab = canBuild;
-	} // setCanBuildMethLab()
+		canBuildDrugLab = canBuild;
+	} // setCanBuildDrugLab()
 	
-	public boolean getCanBuildMethLab()
+	public boolean getCanBuildDrugLab()
 	{
-		return canBuildMethLab;
-	} // getCanBuildMethLab()
+		return canBuildDrugLab;
+	} // getCanBuildDrugLab()
+	
+	public void setAppliedForGrant(boolean applied)
+	{
+		appliedForGrant = applied;
+	} // setAppliedForGrant()
+	
+	public boolean getAppliedForGrant()
+	{
+		return appliedForGrant;
+	} // getAppliedForGrant()
 	
 	public String getPlayerTraitsSelection(int index)
 	{	
