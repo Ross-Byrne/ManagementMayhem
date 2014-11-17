@@ -102,6 +102,14 @@ public class MenuManager {
 		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printSetMaintenanceLevelMenu()
 	
+	public void printManageOperationsMenu()
+	{
+		System.out.println("\n\t\t\tManage Operations\n");
+		System.out.println("\t\t\t1.) Upgrade Equipment.");
+		System.out.println("\t\t\t2.) Apply For Grant.");
+		System.out.println("\t\t\t3.) Back To Manage The Business.");
+	} // printManageOperationsMenu()
+	
 	public void printGameOverMessage()
 	{
 		System.out.println("\n\n\t\t\tYou Are Now €10,000 In Debt!");

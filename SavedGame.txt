@@ -2,21 +2,22 @@ Ross Byrne
 People Person
 Marketing Master
 Greedy
+Spitful
 Seedy
-Charming
 0.000000
 Prestige World Wide
 50000.000000
-40
 35
+40
 3
 800.000000
-0.000000
+2400.000000
 1000.000000
 0
+0
 3
-Jennifer Byrne
-Rachael Butler
-Rachael Byrne
+Mike Byrne
+Mike Power
+Sarah Jameson
 0
 Normal

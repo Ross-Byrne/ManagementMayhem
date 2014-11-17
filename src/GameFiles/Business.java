@@ -22,6 +22,7 @@ public class Business {
 	public int businessAge; // in months
 	public int productivityBonus;
 	public int equipmentUpgrades; // + 10% productivity bonus per upgrade
+	public float equipmentUpgradeCost;
 	public float moneyEarned;
 	
 	// Employees
@@ -281,6 +282,17 @@ public class Business {
 		return equipmentUpgrades;
 	} // getEquipmentUpgrades()
 	
+	public void setEquipmentUpgradeCost(float theAmount)
+	{
+		equipmentUpgradeCost = theAmount;
+	} // setEquipmentUpgradeCost()
+	
+	public float getEquipmentUpgradeCost()
+	{
+		setEquipmentUpgradeCost(getEquipmentUpgrades() * 5000); // each upgrade cost 5000 more then the last
+		return equipmentUpgradeCost;
+	} // getEquipmentUpgradeCost()
+	
 	public void setMoneyEarned(float theAmount)
 	{
 		moneyEarned = theAmount;
@@ -438,6 +450,18 @@ public class Business {
 		setBankAccount(getBankAccount() - getBuildingUpgradeCost());
 	} // upgradeBuilding()
 	
+	public void upgradeEquipment() throws BankAccountBalanceException
+	{
+		if(getEquipmentUpgradeCost() > getBankAccount())
+		{
+			throw new BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
+		} // if
+		
+		setEquipmentUpgrades(getEquipmentUpgrades() + 1); // increase equipment upgrades by 1
+	
+		setBankAccount(getBankAccount() - getEquipmentUpgradeCost());
+	} // upgradeEquipment()
+	
 	public String displayBusinessInfo()
 	{
 		String str="";
@@ -450,7 +474,8 @@ public class Business {
 				"\nRooms In The Building: " + getBuildingSize() +
 				"\nBuilding Maintenance: €" + getBuildingMaintenance() +
 				"\nEmployee Salary Per Month: €" + getEmployeeSalary() +
-				"\nBusiness Productivity Bonus: " + getProductivityBonus() + "%";
+				"\nBusiness Productivity Bonus: " + getProductivityBonus() + "%" +
+				"\nBusiness Equipment Upgrades: " + getEquipmentUpgrades();
 		
 		
 		return str;

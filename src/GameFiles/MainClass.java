@@ -489,6 +489,7 @@ public class MainClass {
 		
 		// The Business Monthly Incomes - producing products etc.
 		System.out.printf("\n\t\t\t********** The Business Monthly Incomes **********\n");
+		
 		business.produceProducts();
 		
 		monthlyIncome += business.getMoneyEarned();
@@ -614,7 +615,7 @@ public class MainClass {
 				break;
 			case 3:
 				// Manage Operations
-				System.out.println("Manage Operations");
+				manageOperations(gameManager, business, menuManager, console);
 				break;
 			case 4:
 				// Show Profits/Expenses
@@ -879,5 +880,121 @@ public class MainClass {
 			} // switch
 		} // while
 	} // manageBuilding
+	
+	public static void manageOperations(GameManager gameManager, Business business, MenuManager menuManager, Scanner console)
+	{
+		System.out.println("Manage Operations");
+		
+		int menuChoice = 0;
+		int menusAllowed = 3;
+		
+		while(menuChoice != 99)
+		{	
+			System.out.printf("\n\t\t\tUpgrading Your Equipment Will Increase Productivity.");
+			System.out.printf("\n\t\t\tYou Can Only Apply For A Business Grant Every 12 Months.\n");
+			
+			menuManager.printManageOperationsMenu();
+			
+			// to make sure the choice entered is in the right range
+			do
+			{
+				System.out.print("\nEnter Option Choice: ");
+			
+				while(!console.hasNextInt()) 
+				{
+					System.out.print("\nEnter Option Choice: ");
+					console.next(); // to advance Scanner past input
+				} // while
+				
+				menuChoice = console.nextInt();
+			}while(menuChoice < 1 || menuChoice > menusAllowed); // do..while
+			
+			switch(menuChoice)
+			{
+			case 1: // Upgrade Equipment
+				int upgrade = 0;
+				
+				System.out.println("\n\t\t\tWould You Like To Upgrade The Business Equipment?");
+				System.out.println("\t\t\tEach Upgrade Will Increase The Businesses Productivity Bonus By 10%\n");
+				System.out.printf("\t\t\tThe Upgrade Will Cost €%.2f", business.getEquipmentUpgradeCost());
+				System.out.printf("\n\t\t\tBusiness Account Balance is: €%.2f\n", business.getBankAccount());
+				
+				System.out.println("\n\t\t\t1.) Yes.");
+				System.out.println("\t\t\t2.) No.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					upgrade = console.nextInt();
+				}while(upgrade < 1 || upgrade > 2); // do..while
+				
+				if(upgrade == 1) // if upgrading
+				{
+					try
+					{
+						business.upgradeEquipment();
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+					} // try catch
+				}
+				else // exit
+				{
+					break;
+				}
+				break;
+			case 2: // Apply For Grant
+				int choice=0;
+				
+				System.out.println("\n\t\t\tThe Level Of Maintenance Your Building Gets Effects Your Reputation");
+				System.out.printf("\t\t\tYour Current Maintenance Bill Is €%.2f A Month.", business.getBuildingMaintenance());
+				
+				menuManager.printSetMaintenanceLevelMenu();
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					choice = console.nextInt();
+				}while(choice < 1 || choice > 5); // do..while
+				
+				if(choice != 5)
+				{
+					// set the maintenance level
+					business.setBuildingMaintenanceLevel(choice);
+				} // if
+				// if 5, its exits
+				break;
+			case 3: // go back
+				System.out.println("Going Back.");
+				menuChoice = 99;
+				break;
+			case 4: // Start Selling Drugs
+				System.out.println("\t\t\t3.) Start Selling Drugs.");
+				System.out.println("\t\t\t4.) Build A Drugs Lab.");
+				break;
+			case 5: // Build Drug Lab
+				break;
+
+			} // switch
+		} // while
+		
+	} // manageOperations()
 
 } // Class MainClass

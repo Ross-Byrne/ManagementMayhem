@@ -32,6 +32,7 @@ public class SaveGameManager {
 		outSavedGame.printf("%f%n", business.getTotalEmployeeSalary());
 		outSavedGame.printf("%f%n", business.getBuildingMaintenance());
 		outSavedGame.printf("%d%n", business.getBusinessAge());
+		outSavedGame.printf("%d%n", business.getEquipmentUpgrades());
 		
 		// Saving Employees (NO of employees and their names)
 		outSavedGame.printf("%d%n", business.employees.size());
@@ -90,6 +91,7 @@ public class SaveGameManager {
 			business.setTotalEmployeeSalary(inSavedGame.nextFloat());
 			business.setBuildingMaintenance(inSavedGame.nextFloat());
 			business.setBusinessAge(inSavedGame.nextInt());
+			business.setEquipmentUpgrades(inSavedGame.nextInt());
 
 			// Loading Employees (NO of employees and their names)
 			int eSize=0;
@@ -153,6 +155,7 @@ public class SaveGameManager {
 			business.setTotalEmployeeSalary(0);
 			business.setBuildingMaintenance(1000);
 			business.setBusinessAge(0);
+			business.setEquipmentUpgrades(0);
 			business.employees.clear();
 			business.dealers.clear();
 		} // try catch
