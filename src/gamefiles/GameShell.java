@@ -3,8 +3,7 @@ package gamefiles;
 import java.util.Random;
 import java.util.Scanner;
 
-/* The game shell has all the actual game code
- * that pulls everything together into a game */
+/* The game shell has all the actual game code */
 
 public class GameShell {
 	
@@ -310,7 +309,6 @@ public class GameShell {
 	
 	public void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{
-		gameManager.setAppliedForGrant(false);
 		int menuChoice = 0;
 		float monthlyIncome = 0;
 		float monthlyCosts = 0;
@@ -414,6 +412,9 @@ public class GameShell {
 		
 		business.setBusinessAge(business.getBusinessAge() + 1); // business age in months +1
 		System.out.println("\n\t\t\tBusiness Age: " + business.getBusinessAge() + " Months.");
+		
+		// Can now apply for a grant again.
+		gameManager.setAppliedForGrant(false);
 	} // continuePlaying()
 	
 	public void manageBusiness(Player player, GameManager gameManager, MenuManager menuManager, Business business)
@@ -453,7 +454,7 @@ public class GameShell {
 				break;
 			case 3:
 				// Manage Operations
-				manageOperations(gameManager, business, menuManager);
+				manageOperations(gameManager, player, business, menuManager);
 				break;
 			case 4:
 				// Show Profits/Expenses
@@ -719,7 +720,7 @@ public class GameShell {
 		} // while
 	} // manageBuilding
 	
-	public void manageOperations(GameManager gameManager, Business business, MenuManager menuManager)
+	public void manageOperations(GameManager gameManager,Player player, Business business, MenuManager menuManager)
 	{
 		System.out.println("Manage Operations");
 		
@@ -846,11 +847,48 @@ public class GameShell {
 						if(chance < 51) // 50% chance of getting 1 - 50 out of 100
 						{
 							System.out.printf("\n\t\t\tCongratulations! Your Business Has Been Awarded A Grant For €%.2f.", grant);
-							System.out.println("\n\t\t\tThe Grant Is Now Being Added To Your Bank Account.");
 							
-							business.setBankAccount(business.getBankAccount() + grant); // grant paid into business account
+							if(business.getBadReputation() > 49) // if at least 50 bad rep, can embezzle grant
+							{
+								System.out.println("\n\n\t\t\tWould You Like To Embezzle The Business Grant?" );
+								
+								System.out.println("\n\t\t\t1.) Yes." );
+								System.out.println("\t\t\t2.) No" );
+								
+								// to make sure the choice entered is in the right range
+								do
+								{
+									System.out.print("\nEnter Option Choice: ");
+								
+									while(!console.hasNextInt()) 
+									{
+										System.out.print("\nEnter Option Choice: ");
+										console.next(); // to advance Scanner past input
+									} // while
+									
+									choice = console.nextInt();
+								}while(choice < 1 || choice > 2); // do..while
+								
+								if(choice == 1) // if yes
+								{
+									// Embezzle grant - grant gets up into players personal bank account
+									System.out.println("\n\t\t\tThe Grant Is Now Being Added To Your Personal Bank Account.");
+									player.embezzleGrant(grant); // grant paid into player's personal bank account
+								}
+								else // no
+								{
+									// put money into business bank account
+									System.out.println("\n\t\t\tThe Grant Is Now Being Added To The Business Bank Account.");
+									business.setBankAccount(business.getBankAccount() + grant); // grant paid into business account
+								} // if
+							}
+							else // if rep isnt high enough - money goes into business bank account as usual
+							{
+								System.out.println("\n\t\t\tThe Grant Is Now Being Added To The Business Bank Account.");
+								business.setBankAccount(business.getBankAccount() + grant); // grant paid into business account
+							} // if
 						}
-						else
+						else // if you do not get awarded a grant
 						{
 							System.out.println("\n\t\t\tWe Are Sorry To Inform You That You Have Not Been Awarded A Business Grant.");
 						}// if
@@ -860,7 +898,7 @@ public class GameShell {
 						// exit
 					} // if
 				}
-				else
+				else // if you cannot apply for a grant
 				{
 					System.out.println("\n\t\t\tYou Are Not Eligible To Apply For A Business Grant.");
 				} // if

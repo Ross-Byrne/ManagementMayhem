@@ -2,7 +2,7 @@ package gamefiles;
 
 /* This is the class that handles the characters details */
 
-public class Player extends Person {
+public class Player extends Person implements Embezzle {
 
 	// Variables
 	float bankAccount;
@@ -66,9 +66,15 @@ public class Player extends Person {
 		return tempTraits;
 	} // getTraits()
 	
-	
-	
 	// Other Methods
+	
+	// this is from Embezzle Interface
+	public void embezzleGrant(float amount)
+	{
+		// adds the amount of money the player wants to embezzle to their account
+		setBankAccount(getBankAccount() + amount);
+	} // embezzleGrant()
+	
 	public String displayPlayerInfo()
 	{
 		String str="";

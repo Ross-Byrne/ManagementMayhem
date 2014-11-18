@@ -66,6 +66,9 @@ public class SaveGameManager {
 		business.employees.clear();
 		business.dealers.clear();
 		
+		// setting other values to default
+		gameManager.setAppliedForGrant(false);
+		
 		// to make sure the file loads the right values (in case file was edited)	
 		// try to load them, if it fails, set values
 		
