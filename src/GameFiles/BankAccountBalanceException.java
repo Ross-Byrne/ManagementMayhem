@@ -1,4 +1,6 @@
-package GameFiles;
+package gamefiles;
+
+/* Exception For when the player trys to over spend */
 
 @SuppressWarnings("serial")
 public class BankAccountBalanceException extends Exception {
@@ -7,4 +9,4 @@ public class BankAccountBalanceException extends Exception {
 
 		super(string);
 		}
-}
+} // Class

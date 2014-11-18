@@ -1,4 +1,4 @@
-package GameFiles;
+package gamefiles;
 
 public class Employee extends Person {
 
@@ -28,4 +28,4 @@ public class Employee extends Person {
 		return getName();
 	} // toString()
 
-} // Class Employee
+} // Class

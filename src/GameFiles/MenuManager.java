@@ -1,4 +1,4 @@
-package GameFiles;
+package gamefiles;
 
 /* Class To Manage all the Menus in the game */
 
@@ -69,8 +69,8 @@ public class MenuManager {
 		System.out.println("\n\t\t\tManage Employees\n");
 		System.out.println("\t\t\t1.) Hire Employees.");
 		System.out.println("\t\t\t2.) Fire Employees.");
-		System.out.println("\t\t\t3.) View List Of your Employees.");
-		System.out.println("\t\t\t4.) Set Salary For Employees.");
+		System.out.println("\t\t\t3.) Set Salary For Employees.");
+		System.out.println("\t\t\t4.) View List Of your Employees.");
 		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printManageEmployeesMenu()
 	
@@ -128,5 +128,4 @@ public class MenuManager {
 		System.out.println("\t\t\t2.) No.");
 	} // printQuitGameMenu()
 
-
-}
+} // Class

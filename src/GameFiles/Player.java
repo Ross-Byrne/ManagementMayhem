@@ -1,7 +1,6 @@
-package GameFiles;
+package gamefiles;
 
-/* This is the class that handles the characters details 
- * such as traits, money, etc... */
+/* This is the class that handles the characters details */
 
 public class Player extends Person {
 
@@ -81,4 +80,4 @@ public class Player extends Person {
 		return str;
 	} // displayePlayerInfo()
 
-} // Class Person
+} // Class

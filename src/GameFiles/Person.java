@@ -1,4 +1,6 @@
-package GameFiles;
+package gamefiles;
+
+/* Abstract Class Person */
 
 public abstract class Person {
 	
@@ -10,4 +12,4 @@ public abstract class Person {
 	
 	abstract String getName();
 
-} // Class Person
+} // Class

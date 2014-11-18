@@ -1,4 +1,4 @@
-package GameFiles;
+package gamefiles;
 
 import java.io.*;
 import java.util.Scanner;
@@ -161,4 +161,4 @@ public class SaveGameManager {
 		} // try catch
 	} // loadGame()
 
-} // Class SaveGameManager
+} // Class

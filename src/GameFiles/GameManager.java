@@ -1,8 +1,6 @@
-package GameFiles;
+package gamefiles;
 
-//import java.util.*;
-
-/* This class is to manage the game */
+/* This class manages certain parts of the game */
 
 public class GameManager {
 	
@@ -122,5 +120,27 @@ public class GameManager {
 	
 	// Other Methods
 	
+	// checks if player can do bad things because of bad rep level
+	public void checkBadReputation(Business business)
+	{
+		if(business.getBadReputation() > 39) // if at least 40 bad rep
+		{
+			setCanHireDealers(true);
+		}
+		else
+		{
+			setCanHireDealers(false);
+		} // if
+		
+		if(business.getBadReputation() > 59) // if at least 60 bad rep
+		{
+			setCanBuildDrugLab(true);
+		}
+		else
+		{
+			setCanBuildDrugLab(false);
+		} // if
+		
+	} // checkBadReputation()
 	
-} // Class GameManager
+} // Class

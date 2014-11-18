@@ -1,4 +1,4 @@
-package GameFiles;
+package gamefiles;
 
 public class Dealer extends Employee {
 
@@ -28,5 +28,4 @@ public class Dealer extends Employee {
 		return getName();
 	} // toString()
 
-
-} // Class Dealer
+} // Class 

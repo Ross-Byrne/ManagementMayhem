@@ -1,4 +1,4 @@
-package GameFiles;
+package gamefiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -483,4 +483,4 @@ public class Business {
 		return str;
 	} // displayBusinessInfo()
 
-}
+} // Class
