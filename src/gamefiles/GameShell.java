@@ -329,9 +329,9 @@ public class GameShell {
 		
 		if(gameManager.getCanStartSellingDrugs() == true)
 		{
-			business.sellDrugs();
-			System.out.printf("\t\t\tYour Dealers Generate A Total Of €%.2f This Month.\n", business.getMoneyEarned());
-			monthlyIncome += business.getMoneyEarned();
+			business.sellDrugs(player);
+			System.out.printf("\t\t\tYour Dealers Generate A Total Of €%.2f This Month.\n", business.getMoneyEarned() / 2); // divided by 2 
+			monthlyIncome += business.getMoneyEarned() / 2; // Because the business only gets half while the player gets the other half
 		} // if
 		
 		System.out.printf("\n\t\t\tTotal Income For The Business This Month Is €%.2f.\n", monthlyIncome);
@@ -1043,6 +1043,56 @@ public class GameShell {
 				} // if
 				break;
 			case 5: // Build Drug Lab
+				choice = 0;
+				
+				System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
+				System.out.println("\t\t\tYou Can Now Build A Drug Lab.");
+				
+				System.out.println("\n\t\t\tThe Profits From Making Drugs Are Split Between You And Your Business.");
+				System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
+				
+				System.out.println("\n\t\t\tBuilding A Drug Lab Dramatically Increases Your Bad Reputation.");
+				System.out.println("\t\t\tIt Will Cost €50,000 To Build");
+				System.out.printf("\t\t\tYour Bank Account Balance Is: €%.2f.", business.getBankAccount());
+				
+				System.out.println("\n\t\t\tWould You Like To Build A Drug Lab?");
+				System.out.println("\n\t\t\t1.) Yes.");
+				System.out.println("\t\t\t2.) No.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					choice = console.nextInt();
+				}while(choice < 1 || choice > 2); // do..while
+				
+				if(choice == 1) // if yes
+				{
+					try
+					{
+						System.out.println("\n\t\t\tYou Now Have A Drug Lab In Your Building.");
+						System.out.println("\t\t\tYou Can Now Start Making Drugs And Selling Them To Your Connections.");
+						gameManager.setCanStartMakingDrugs(true);
+						business.buildDrugLab();
+						business.setBadReputation(business.getBadReputation() + 100); // adds 100 bad rep
+					}
+					catch(Exception e)
+					{
+						System.out.println(e.getMessage());
+						gameManager.setCanStartMakingDrugs(false);
+					} // try catch
+				}
+				else // if no
+				{
+					// exit
+				} // if
 				break;
 
 			} // switch

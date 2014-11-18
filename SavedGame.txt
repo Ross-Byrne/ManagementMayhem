@@ -1,23 +1,28 @@
 Ross Byrne
-People Person
-Marketing Master
 Greedy
 Spitful
+Alcoholic
+Reckless
 Seedy
 0.000000
 Prestige World Wide
-50000.000000
-35
-40
+49150.000000
+25
+50
 3
 800.000000
 2400.000000
 1000.000000
-0
+1
 0
 3
-Mike Byrne
-Mike Power
-Sarah Jameson
-0
+Jennifer Daly
+Jim Harrington
+Bob Rodrigue
+3
+Jennifer Daly
+Samantha Kelly
+Ciara Rodrigue
 Normal
+true
+false

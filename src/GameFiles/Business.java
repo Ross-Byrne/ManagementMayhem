@@ -336,11 +336,12 @@ public class Business {
 		setBankAccount(getBankAccount() + getMoneyEarned()); // adds money earned into bank account
 	} // produceProducts()
 	
-	public void sellDrugs()
+	public void sellDrugs(Player player)
 	{
 		setMoneyEarned(dealers.size() * 500);
 		
-		setBankAccount(getBankAccount() + getMoneyEarned());
+		setBankAccount(getBankAccount() + (getMoneyEarned() / 2)); // half goes to business
+		player.setBankAccount(player.getBankAccount() + (getMoneyEarned() / 2)); // half goes to the player
 	} // sellDrugs()
 	
 	// pays employees for the month
@@ -483,6 +484,17 @@ public class Business {
 	
 		setBankAccount(getBankAccount() - getEquipmentUpgradeCost());
 	} // upgradeEquipment()
+	
+	public void buildDrugLab() throws BankAccountBalanceException
+	{
+		if(getBankAccount() < 50000)
+		{
+			throw new BankAccountBalanceException("\n\n\t\t\tInsufficient Bank Account Funds!");
+		} // if
+		
+		setBankAccount(getBankAccount() - 50000); // cost 50000 to build a lab
+		
+	} // buildDrugLab()
 	
 	public String displayBusinessInfo()
 	{

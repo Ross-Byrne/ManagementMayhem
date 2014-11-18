@@ -52,6 +52,8 @@ public class SaveGameManager {
 		
 		// Saving Game Info
 		outSavedGame.printf("%s%n", gameManager.getGameDifficulty());
+		outSavedGame.printf("%s%n", gameManager.getCanStartSellingDrugs());
+		outSavedGame.printf("%s%n", gameManager.getCanStartMakingDrugs());
 			
 		outSavedGame.close();
 	} // saveGame()
@@ -133,6 +135,8 @@ public class SaveGameManager {
 			
 			// Loading Game Info
 			gameManager.setGameDifficulty(inSavedGame.next());
+			gameManager.setCanStartSellingDrugs(inSavedGame.nextBoolean());
+			gameManager.setCanStartMakingDrugs(inSavedGame.nextBoolean());
 
 			// saying the game loaded
 			gameManager.setIsGameLoaded(true);
