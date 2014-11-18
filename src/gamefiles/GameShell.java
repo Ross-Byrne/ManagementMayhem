@@ -324,10 +324,17 @@ public class GameShell {
 		System.out.printf("\n\t\t\t********** The Business Monthly Incomes **********\n");
 		
 		business.produceProducts();
-		
-		monthlyIncome += business.getMoneyEarned();
-		
+		monthlyIncome = business.getMoneyEarned();
 		System.out.printf("\n\t\t\tThe Business Products Generate A Total Of €%.2f This Month.\n", monthlyIncome);
+		
+		if(gameManager.getCanStartSellingDrugs() == true)
+		{
+			business.sellDrugs();
+			System.out.printf("\t\t\tYour Dealers Generate A Total Of €%.2f This Month.\n", business.getMoneyEarned());
+			monthlyIncome += business.getMoneyEarned();
+		} // if
+		
+		System.out.printf("\n\t\t\tTotal Income For The Business This Month Is €%.2f.\n", monthlyIncome);
 			
 		// Business monthly costs - paying employees, maintenance etc
 		System.out.printf("\n\n\t\t\t********** The Business Monthly Costs **********\n");
@@ -473,15 +480,31 @@ public class GameShell {
 	public void manageEmployees(GameManager gameManager, MenuManager menuManager, Business business)
 	{
 		int menuChoice = 0;
+		int menusAllowed = 5;
 		
 		while(menuChoice != 99)
 		{	
 			int noOfEmployeesAllowed = (business.getMaxEmployees() - business.employees.size()); // the no. of employees you can hire
+			int noOfDealersAllowed = (business.getMaxDealers() - business.dealers.size()); // the no. of dealers you can hire
 			
-			System.out.printf("%n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", business.employees.size(), business.getMaxEmployees());
+			System.out.printf("\n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", business.employees.size(), business.getMaxEmployees());
+			if(gameManager.canHireDealers == true)
+			{ 
+				System.out.printf("\n\t\t\tYou Have %d Out Of The %d Dealers You Can Hire.", business.dealers.size(), business.getMaxDealers());
+			}
 			System.out.printf("%n\t\t\tExpanding Your Building Will Increase The Number Of Employees You Can Have.%n");
 			
 			menuManager.printManageEmployeesMenu();
+			
+			// if the options are available, print the menus
+			if(gameManager.canHireDealers == true)
+			{ 
+				menusAllowed = 8; // shows new menu option
+				System.out.println("\n\t\t\t*** Special Options ***\n");
+				System.out.println("\t\t\t6.) Hire Dealers."); 
+				System.out.println("\t\t\t7.) Fire Dealers.");
+				System.out.println("\t\t\t8.) View List Of Your Dealers.");
+			} // if
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -495,7 +518,7 @@ public class GameShell {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			}while(menuChoice < 1 || menuChoice > menusAllowed); // do..while
 			
 			switch(menuChoice)
 			{
@@ -521,7 +544,7 @@ public class GameShell {
 						System.out.printf("\n\t\t\tYou Have %d Out Of %d Employees!", business.employees.size(), business.getMaxEmployees());
 						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
 						amount = 0;
-					}
+					} // if
 					 
 					if(amount > noOfEmployeesAllowed)
 					{
@@ -532,8 +555,7 @@ public class GameShell {
 					if(amount == 0) // if don't want to hire anyone
 					{
 						break;
-					}
-					
+					} // if
 					
 				}while( amount < 1 || amount > noOfEmployeesAllowed); // do..while
 				
@@ -570,7 +592,6 @@ public class GameShell {
 				}while(amount < 1 || amount > business.employees.size()); // do..while
 		
 				business.fireEmployees(gameManager, amount);
-				
 				break;
 			case 3: // set employee Salary
 				int choice = 0;
@@ -608,6 +629,83 @@ public class GameShell {
 			case 5: // go back
 				System.out.println("Going Back.");
 				menuChoice = 99;
+				break;
+			case 6: // hire dealers
+				amount=0;
+				
+				System.out.println("\n\t\t\tDealers Are Used To Sell Drugs.");
+				System.out.println("\t\t\tThey Take A Percentage Of The Profits Straight Away, So Don't Worry About Paying Them.");
+				System.out.println("\t\t\tTo Use Your Dealers, Head Over To 'Manage Operations' And Start Selling.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{					
+					System.out.print("\nEnter the amount of Dealers you want to hire: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter the amount of Dealers you want to hire: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					amount = console.nextInt();
+					
+					if(noOfDealersAllowed == 0)
+					{
+						System.out.printf("\n\t\t\tYou Have %d Out Of %d Dealers!", business.dealers.size(), business.getMaxDealers());
+						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
+						amount = 0;
+					} // if
+					 
+					if(amount > noOfDealersAllowed)
+					{
+						System.out.printf("\n\t\t\tYou Can Only Hire %d More Dealers!", (business.getMaxDealers() - business.dealers.size()));
+						System.out.println("\n\t\t\tIncrease Size Of Building To Hire More!");
+					} // if
+					
+					if(amount == 0) // if don't want to hire anyone
+					{
+						break;
+					} // if
+					
+				}while( amount < 1 || amount > noOfDealersAllowed); // do..while
+				
+				business.hireDealers(gameManager, amount);
+				break;
+			case 7: // fire dealers
+				amount=0;
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter the amount of Dealers you want to Fire: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter the amount of Dealers you want to Fire: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					amount = console.nextInt();
+					
+					if(amount > business.dealers.size())
+					{
+						System.out.printf("\n\t\t\tYou Cannot Fire %d Dealers!", amount);
+						System.out.printf("\n\t\t\tYou Only Have %d Dealers!\n", business.dealers.size());
+					} // if
+					
+					if(amount == 0)
+					{
+						break;
+					} // if
+					
+				}while(amount < 1 || amount > business.dealers.size()); // do..while
+		
+				business.fireDealers(gameManager, amount);
+				break;
+			case 8: // list dealers
+				System.out.printf("\nYou Have %d Dealers.\n", business.dealers.size());
+				business.printListOfDealers();
 				break;
 			} // switch
 		} // while
@@ -908,8 +1006,41 @@ public class GameShell {
 				menuChoice = 99;
 				break;
 			case 4: // Start Selling Drugs
+				choice = 0;
 				
+				System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
+				System.out.println("\t\t\tWould You Like To Use Your Connections To Start Selling Drugs?");
 				
+				System.out.println("\n\t\t\tThe Profits From Selling Drugs Are Split Between You And Your Business.");
+				System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
+				
+				System.out.println("\n\t\t\t1.) Yes.");
+				System.out.println("\t\t\t2.) No.");
+				
+				// to make sure the choice entered is in the right range
+				do
+				{
+					System.out.print("\nEnter Option Choice: ");
+				
+					while(!console.hasNextInt()) 
+					{
+						System.out.print("\nEnter Option Choice: ");
+						console.next(); // to advance Scanner past input
+					} // while
+					
+					choice = console.nextInt();
+				}while(choice < 1 || choice > 2); // do..while
+				
+				if(choice == 1) // if yes
+				{
+					System.out.println("\n\t\t\tYou Can Now Start Selling Drugs.");
+					System.out.println("\t\t\tYour Connections Will Handle Everything, All You Have To Do Is Hire Some Dealers.");
+					gameManager.setCanStartSellingDrugs(true);
+				}
+				else // if no
+				{
+					// exit
+				} // if
 				break;
 			case 5: // Build Drug Lab
 				break;

@@ -68,6 +68,7 @@ public class SaveGameManager {
 		
 		// setting other values to default
 		gameManager.setAppliedForGrant(false);
+		gameManager.setCanStartSellingDrugs(false);
 		
 		// to make sure the file loads the right values (in case file was edited)	
 		// try to load them, if it fails, set values

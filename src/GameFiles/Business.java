@@ -17,6 +17,7 @@ public class Business {
 	public float buildingUpgradeCost;
 	public float buildingMaintenance;
 	public int maxEmployees;
+	public int maxDealers;
 	public float employeeSalary; // Per Month
 	public float totalEmployeeSalary;
 	public int businessAge; // in months
@@ -174,6 +175,19 @@ public class Business {
 		return maxEmployees;
 	} // getMaxEmployees()
 	
+	public void setMaxDealers(int theAmount)
+	{
+		maxDealers = theAmount;
+	} // setMaxDealers()
+	
+	public int getMaxDealers()
+	{
+		// the maximum number of dealers the business can have
+		// is 1 dealer per room
+		setMaxDealers(getBuildingSize());
+		return maxDealers;
+	} // getMaxDealers()
+	
 	public void setEmployeeSalaryLevel(int theLevel)
 	{
 		float oldSalary=0;
@@ -322,6 +336,13 @@ public class Business {
 		setBankAccount(getBankAccount() + getMoneyEarned()); // adds money earned into bank account
 	} // produceProducts()
 	
+	public void sellDrugs()
+	{
+		setMoneyEarned(dealers.size() * 500);
+		
+		setBankAccount(getBankAccount() + getMoneyEarned());
+	} // sellDrugs()
+	
 	// pays employees for the month
 	public void payEmployees() throws BankAccountBalanceException
 	{
@@ -421,12 +442,11 @@ public class Business {
 	public void printListOfDealers()
 	{
 		String tempNames = "";
-		System.out.println("\nNumber of Dealers: " + dealers.size() + ".");
 		
 		for(int i = 0; i < dealers.size(); i++)
 			tempNames += "\n\t" + dealers.get(i);
 		
-		System.out.println("List of Dealers: \n" + tempNames);
+		System.out.println("Dealers: " + tempNames);
 	} // printListOfDealers()
 	
 	// to pay the buildings monthly maintenance bill

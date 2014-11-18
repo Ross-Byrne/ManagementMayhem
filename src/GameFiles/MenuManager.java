@@ -70,7 +70,7 @@ public class MenuManager {
 		System.out.println("\t\t\t1.) Hire Employees.");
 		System.out.println("\t\t\t2.) Fire Employees.");
 		System.out.println("\t\t\t3.) Set Salary For Employees.");
-		System.out.println("\t\t\t4.) View List Of your Employees.");
+		System.out.println("\t\t\t4.) View List Of Your Employees.");
 		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printManageEmployeesMenu()
 	

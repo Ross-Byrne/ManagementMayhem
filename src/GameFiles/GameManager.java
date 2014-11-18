@@ -11,6 +11,8 @@ public class GameManager {
 	public boolean isGameLoaded = false;
 	public boolean canHireDealers = false;
 	public boolean canBuildDrugLab = false;
+	public boolean canStartSellingDrugs = false;
+	public boolean canStartMakingDrugs = false;
 	public boolean appliedForGrant = false;
 	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
@@ -93,6 +95,26 @@ public class GameManager {
 		return canBuildDrugLab;
 	} // getCanBuildDrugLab()
 	
+	public void setCanStartSellingDrugs(boolean canSell)
+	{
+		canStartSellingDrugs = canSell;
+	} // setCanStartSellingDrugs()
+	
+	public boolean getCanStartSellingDrugs()
+	{
+		return canStartSellingDrugs;
+	} // getCanStartSellingDrugs()
+	
+	public void setCanStartMakingDrugs(boolean canMake)
+	{
+		canStartMakingDrugs = canMake;
+	} // setCanStartMakingDrugs()
+	
+	public boolean getCanStartMakingDrugs()
+	{
+		return canStartMakingDrugs;
+	} // getCanStartMakingDrugs()
+	
 	public void setAppliedForGrant(boolean applied)
 	{
 		appliedForGrant = applied;
@@ -129,7 +151,10 @@ public class GameManager {
 		}
 		else
 		{
+			// if you cant sell, you cant hire and all dealers a fired
 			setCanHireDealers(false);
+			setCanStartSellingDrugs(false);
+			business.dealers.clear();
 		} // if
 		
 		if(business.getBadReputation() > 59) // if at least 60 bad rep
@@ -139,6 +164,7 @@ public class GameManager {
 		else
 		{
 			setCanBuildDrugLab(false);
+			setCanStartMakingDrugs(false);
 		} // if
 		
 	} // checkBadReputation()
