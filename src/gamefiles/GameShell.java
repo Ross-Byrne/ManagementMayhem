@@ -308,7 +308,7 @@ public class GameShell {
 	} // playGame
 	
 	public void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager)
-	{
+	{	
 		int menuChoice = 0;
 		float monthlyIncome = 0;
 		float monthlyCosts = 0;
@@ -321,7 +321,9 @@ public class GameShell {
 		} // if
 		
 		// The Business Monthly Incomes - producing products etc.
-		System.out.printf("\n\t\t\t********** The Business Monthly Incomes **********\n");
+		System.out.printf("\t\t\t======================================================");
+		System.out.printf("\n\t\t\t============ The Business Monthly Incomes ============");
+		System.out.printf("\n\t\t\t======================================================\n");
 		
 		business.produceProducts();
 		monthlyIncome = business.getMoneyEarned();
@@ -334,10 +336,19 @@ public class GameShell {
 			monthlyIncome += business.getMoneyEarned() / 2; // Because the business only gets half while the player gets the other half
 		} // if
 		
+		if(gameManager.getCanStartMakingDrugs() == true)
+		{
+			business.makeDrugs(player);
+			System.out.printf("\t\t\tYour Lab Generate A Total Of €%.2f This Month.\n", business.getMoneyEarned() / 2); // divided by 2 
+			monthlyIncome += business.getMoneyEarned() / 2; // Because the business only gets half while the player gets the other half
+		} // if
+		
 		System.out.printf("\n\t\t\tTotal Income For The Business This Month Is €%.2f.\n", monthlyIncome);
-			
+		
 		// Business monthly costs - paying employees, maintenance etc
-		System.out.printf("\n\n\t\t\t********** The Business Monthly Costs **********\n");
+		System.out.printf("\n\t\t\t======================================================");
+		System.out.printf("\n\t\t\t============= The Business Monthly Costs =============");
+		System.out.printf("\n\t\t\t======================================================\n");
 		try 
 		{
 			business.payMaintenance();
@@ -351,8 +362,13 @@ public class GameShell {
 			
 			System.out.printf("\n\t\t\tThe Business Pays A Total Cost Of €%.2f This Month.\n", monthlyCosts);
 			
-			System.out.printf("\n\n\t\t\t********** The Business Account Balance **********\n");
+			System.out.printf("\n\t\t\t======================================================");
+			System.out.printf("\n\t\t\t============ The Business Account Balance ============");
+			System.out.printf("\n\t\t\t======================================================\n");
+			
 			System.out.printf("\n\t\t\tThe Business Bank Account Balance Is Now €%.2f.\n", business.getBankAccount());
+			
+			System.out.printf("\t\t\t======================================================\n");
 		}
 		catch(Exception e)
 		{
@@ -411,8 +427,13 @@ public class GameShell {
 					System.out.printf("\n\t\t\t%d Employees Have Been Paid A Total Of €%.2f For The Month.\n", 
 							business.employees.size(), business.getTotalEmployeeSalary());
 					
-					System.out.printf("\n\n\t\t\t********** The Business Account Balance **********\n");
+					System.out.printf("\n\t\t\t======================================================");
+					System.out.printf("\n\t\t\t============ The Business Account Balance ============");
+					System.out.printf("\n\t\t\t======================================================\n");
+					
 					System.out.println("\t\t\tYour Business Bank Account Balance Is Now: €" + business.getBankAccount());
+					
+					System.out.printf("\t\t\t======================================================\n");
 				} // if
 			} // if
 		} // try catch
@@ -1077,10 +1098,10 @@ public class GameShell {
 				{
 					try
 					{
+						business.buildDrugLab();
 						System.out.println("\n\t\t\tYou Now Have A Drug Lab In Your Building.");
 						System.out.println("\t\t\tYou Can Now Start Making Drugs And Selling Them To Your Connections.");
 						gameManager.setCanStartMakingDrugs(true);
-						business.buildDrugLab();
 						business.setBadReputation(business.getBadReputation() + 100); // adds 100 bad rep
 					}
 					catch(Exception e)

@@ -344,6 +344,14 @@ public class Business {
 		player.setBankAccount(player.getBankAccount() + (getMoneyEarned() / 2)); // half goes to the player
 	} // sellDrugs()
 	
+	public void makeDrugs(Player player)
+	{
+		setMoneyEarned(5000); // drugs produced = €5,000 a month
+		
+		setBankAccount(getBankAccount() + (getMoneyEarned() / 2)); // half goes to business
+		player.setBankAccount(player.getBankAccount() + (getMoneyEarned() / 2)); // half goes to the player
+	} // makeDrugs()
+	
 	// pays employees for the month
 	public void payEmployees() throws BankAccountBalanceException
 	{
