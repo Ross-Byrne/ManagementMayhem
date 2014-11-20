@@ -1,3 +1,6 @@
+// Ross Byrne 2014
+// Second Year Java Project
+
 package gamefiles;
 
 import java.util.Random;
@@ -468,7 +471,7 @@ public class GameShell {
 				} // while
 				
 				menuChoice = console.nextInt();
-			}while(menuChoice < 1 || menuChoice > 5); // do..while
+			}while(menuChoice < 1 || menuChoice > 4); // do..while
 			
 			switch(menuChoice)
 			{
@@ -485,10 +488,6 @@ public class GameShell {
 				manageOperations(gameManager, player, business, menuManager);
 				break;
 			case 4:
-				// Show Profits/Expenses
-				System.out.println("Show Profits/Expenses");
-				break;
-			case 5:
 				// Back to Game Menu
 				System.out.println("Heading Back To Game Menu");
 				menuChoice=99;
@@ -1115,10 +1114,8 @@ public class GameShell {
 					// exit
 				} // if
 				break;
-
 			} // switch
 		} // while
-		
 	} // manageOperations()
 
 } // Class

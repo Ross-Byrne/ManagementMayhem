@@ -1,3 +1,6 @@
+// Ross Byrne 2014
+// Second Year Java Project
+
 package gamefiles;
 
 /* Abstract Class Person */

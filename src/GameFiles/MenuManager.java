@@ -1,3 +1,6 @@
+// Ross Byrne 2014
+// Second Year Java Project
+
 package gamefiles;
 
 /* Class To Manage all the Menus in the game */
@@ -60,8 +63,7 @@ public class MenuManager {
 		System.out.println("\t\t\t1.) Manage Employees.");
 		System.out.println("\t\t\t2.) Manage The Building.");
 		System.out.println("\t\t\t3.) Manage Operations.");
-		System.out.println("\t\t\t4.) Show Profits/Expenses.");
-		System.out.println("\t\t\t5.) Back To Game Menu.\n");
+		System.out.println("\t\t\t4.) Back To Game Menu.\n");
 	} // printManageBusinessMenu()
 	
 	public void printManageEmployeesMenu()

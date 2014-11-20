@@ -1,3 +1,6 @@
+// Ross Byrne 2014
+// Second Year Java Project
+
 package gamefiles;
 
 import java.util.Scanner;
@@ -30,7 +33,9 @@ public class MainClass {
 		// Variables
 		int menuChoice = 0, endGame = 0;
 		
-		System.out.println("\t\t\tWelcome To Management Mayhem!");
+		System.out.printf("\t\t\t=======================================================");
+		System.out.printf("\n\t\t\t============ Welcome To Management Mayhem! ============");
+		System.out.printf("\n\t\t\t=======================================================\n");
 		
 		while(endGame != 99)
 		{

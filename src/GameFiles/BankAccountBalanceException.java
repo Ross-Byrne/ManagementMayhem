@@ -1,3 +1,6 @@
+// Ross Byrne 2014
+// Second Year Java Project
+
 package gamefiles;
 
 /* Exception For when the player trys to over spend */
