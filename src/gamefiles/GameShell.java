@@ -854,17 +854,29 @@ public class GameShell {
 			menuManager.printManageOperationsMenu();
 			
 			// if the options are available, print the menus
-			if(gameManager.canHireDealers == true)
-			{ 
+			if(gameManager.canStartSellingDrugs == true)
+			{
+				menusAllowed = 4; // shows new menu option
+				System.out.println("\n\t\t\t*** Special Options ***\n");
+				System.out.println("\t\t\t4.) Stop Selling Drugs."); 
+			}
+			else if(gameManager.canHireDealers == true)
+			{
 				menusAllowed = 4; // shows new menu option
 				System.out.println("\n\t\t\t*** Special Options ***\n");
 				System.out.println("\t\t\t4.) Start Selling Drugs."); 
+			} // if
+			
+			if(gameManager.canStartMakingDrugs == true)
+			{
+				menusAllowed = 5; // shows new menu option
+				System.out.println("\t\t\t5.) Destroy Your Drugs Lab."); 
 			}
-			if(gameManager.canBuildDrugLab == true)
+			else if(gameManager.canBuildDrugLab == true)
 			{ 
 				menusAllowed = 5; // shows new menu option
 				System.out.println("\t\t\t5.) Build A Drugs Lab."); 
-			}
+			} // if
 			
 			// to make sure the choice entered is in the right range
 			do
@@ -1025,94 +1037,164 @@ public class GameShell {
 				System.out.println("Going Back.");
 				menuChoice = 99;
 				break;
-			case 4: // Start Selling Drugs
+			case 4: // Start/Stop Selling Drugs
 				choice = 0;
 				
-				System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
-				System.out.println("\t\t\tWould You Like To Use Your Connections To Start Selling Drugs?");
-				
-				System.out.println("\n\t\t\tThe Profits From Selling Drugs Are Split Between You And Your Business.");
-				System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
-				
-				System.out.println("\n\t\t\t1.) Yes.");
-				System.out.println("\t\t\t2.) No.");
-				
-				// to make sure the choice entered is in the right range
-				do
+				if(gameManager.canStartSellingDrugs == false)
 				{
-					System.out.print("\nEnter Option Choice: ");
-				
-					while(!console.hasNextInt()) 
+					System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
+					System.out.println("\t\t\tWould You Like To Use Your Connections To Start Selling Drugs?");
+					
+					System.out.println("\n\t\t\tThe Profits From Selling Drugs Are Split Between You And Your Business.");
+					System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
+					
+					System.out.println("\n\t\t\t1.) Yes.");
+					System.out.println("\t\t\t2.) No.");
+					
+					// to make sure the choice entered is in the right range
+					do
 					{
 						System.out.print("\nEnter Option Choice: ");
-						console.next(); // to advance Scanner past input
-					} // while
 					
-					choice = console.nextInt();
-				}while(choice < 1 || choice > 2); // do..while
-				
-				if(choice == 1) // if yes
-				{
-					System.out.println("\n\t\t\tYou Can Now Start Selling Drugs.");
-					System.out.println("\t\t\tYour Connections Will Handle Everything, All You Have To Do Is Hire Some Dealers.");
-					gameManager.setCanStartSellingDrugs(true);
-				}
-				else // if no
-				{
-					// exit
-				} // if
-				break;
-			case 5: // Build Drug Lab
-				choice = 0;
-				
-				System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
-				System.out.println("\t\t\tYou Can Now Build A Drug Lab.");
-				
-				System.out.println("\n\t\t\tThe Profits From Making Drugs Are Split Between You And Your Business.");
-				System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
-				
-				System.out.println("\n\t\t\tBuilding A Drug Lab Dramatically Increases Your Bad Reputation.");
-				System.out.println("\t\t\tIt Will Cost €50,000 To Build");
-				System.out.printf("\t\t\tYour Bank Account Balance Is: €%.2f.", business.getBankAccount());
-				
-				System.out.println("\n\t\t\tWould You Like To Build A Drug Lab?");
-				System.out.println("\n\t\t\t1.) Yes.");
-				System.out.println("\t\t\t2.) No.");
-				
-				// to make sure the choice entered is in the right range
-				do
-				{
-					System.out.print("\nEnter Option Choice: ");
-				
-					while(!console.hasNextInt()) 
-					{
-						System.out.print("\nEnter Option Choice: ");
-						console.next(); // to advance Scanner past input
-					} // while
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 2); // do..while
 					
-					choice = console.nextInt();
-				}while(choice < 1 || choice > 2); // do..while
-				
-				if(choice == 1) // if yes
-				{
-					try
+					if(choice == 1) // if yes
 					{
-						business.buildDrugLab();
-						System.out.println("\n\t\t\tYou Now Have A Drug Lab In Your Building.");
-						System.out.println("\t\t\tYou Can Now Start Making Drugs And Selling Them To Your Connections.");
-						gameManager.setCanStartMakingDrugs(true);
-						business.setBadReputation(business.getBadReputation() + 100); // adds 100 bad rep
+						System.out.println("\n\t\t\tYou Can Now Start Selling Drugs.");
+						System.out.println("\t\t\tYour Connections Will Handle Everything, All You Have To Do Is Hire Some Dealers.");
+						gameManager.setCanStartSellingDrugs(true);
 					}
-					catch(Exception e)
+					else // if no
 					{
-						System.out.println(e.getMessage());
-						gameManager.setCanStartMakingDrugs(false);
-					} // try catch
+						// exit
+					} // if
 				}
-				else // if no
+				else // if already selling drugs
 				{
-					// exit
-				} // if
+					System.out.println("\t\t\tWould You Like To Fire Your Dealers And Stop Selling Drugs?");
+					
+					System.out.println("\n\t\t\t1.) Yes.");
+					System.out.println("\t\t\t2.) No.");
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter Option Choice: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 2); // do..while
+					
+					if(choice == 1) // if yes
+					{
+						gameManager.setCanStartSellingDrugs(false);
+						business.dealers.clear(); // fires all dealers
+						System.out.println("\n\t\t\tYou Have Fired Your Dealers And Stopped Selling Drugs.");
+					}
+					else // if no
+					{
+						// exit
+					} // if
+				}
+				break;
+			case 5: // Build/Destroy Drug Lab
+				choice = 0;
+				
+				if(gameManager.canStartMakingDrugs == false) // if you can't make drugs yet
+				{
+					System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
+					System.out.println("\t\t\tYou Can Now Build A Drugs Lab.");
+					
+					System.out.println("\n\t\t\tThe Profits From Making Drugs Are Split Between You And Your Business.");
+					System.out.println("\t\t\tHalf The Profits Go To The Business Account And The Rest Goes To Your Personal Account.");
+					
+					System.out.println("\n\t\t\tBuilding A Drugs Lab Dramatically Increases Your Bad Reputation.");
+					System.out.println("\t\t\tIt Will Cost €50,000 To Build");
+					System.out.printf("\t\t\tYour Bank Account Balance Is: €%.2f.", business.getBankAccount());
+					
+					System.out.println("\n\t\t\tWould You Like To Build A Drugs Lab?");
+					System.out.println("\n\t\t\t1.) Yes.");
+					System.out.println("\t\t\t2.) No.");
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter Option Choice: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 2); // do..while
+					
+					if(choice == 1) // if yes
+					{
+						try
+						{
+							business.buildDrugLab();
+							System.out.println("\n\t\t\tYou Now Have A Drugs Lab In Your Building.");
+							System.out.println("\t\t\tYou Can Now Start Making Drugs And Selling Them To Your Connections.");
+							gameManager.setCanStartMakingDrugs(true);
+							business.setBadReputation(business.getBadReputation() + 100); // adds 100 bad rep
+						}
+						catch(Exception e)
+						{
+							System.out.println(e.getMessage());
+							gameManager.setCanStartMakingDrugs(false);
+						} // try catch
+					}
+					else // if no
+					{
+						// exit
+					} // if
+				}
+				else // if the lab is already built
+				{	
+					System.out.println("\n\t\t\tWould You Like To Destroy Your Drugs Lab?");
+					System.out.println("\n\t\t\t1.) Yes.");
+					System.out.println("\t\t\t2.) No.");
+					
+					// to make sure the choice entered is in the right range
+					do
+					{
+						System.out.print("\nEnter Option Choice: ");
+					
+						while(!console.hasNextInt()) 
+						{
+							System.out.print("\nEnter Option Choice: ");
+							console.next(); // to advance Scanner past input
+						} // while
+						
+						choice = console.nextInt();
+					}while(choice < 1 || choice > 2); // do..while
+					
+					if(choice == 1) // if yes
+					{
+						gameManager.setCanStartMakingDrugs(false);
+						business.setBadReputation(business.getBadReputation() - 100); // takes away 100 bad rep
+						System.out.println("\n\t\t\tYour Drugs Lab Has Been Destroyed.");
+						System.out.println("\t\t\tYou Are No Longer Making Drugs.");
+					}
+					else // if no
+					{
+						// exit
+					} // if
+				}
 				break;
 			} // switch
 		} // while

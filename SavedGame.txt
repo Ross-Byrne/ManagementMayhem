@@ -1,28 +1,29 @@
 Ross Byrne
-Greedy
-Spitful
-Alcoholic
-Reckless
-Seedy
+People Person
+Marketing Master
+Organiser
+Opertunist
+Charming
 0.000000
 Prestige World Wide
-49150.000000
+7200.000000
 25
-50
-3
+75
+4
 800.000000
 2400.000000
-1000.000000
+0.000000
+27
 1
-0
 3
-Jennifer Daly
-Jim Harrington
-Bob Rodrigue
-3
-Jennifer Daly
-Samantha Kelly
-Ciara Rodrigue
+Jennifer McCarthy
+Mike Daly
+Rachael Daly
+4
+Bob Butler
+Jane Jameson
+John White
+Conor Butler
 Normal
-true
+false
 false

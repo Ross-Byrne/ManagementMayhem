@@ -167,7 +167,6 @@ public class GameManager {
 		else
 		{
 			setCanBuildDrugLab(false);
-			setCanStartMakingDrugs(false);
 		} // if
 		
 	} // checkBadReputation()
