@@ -7,6 +7,8 @@ package gamefiles;
 
 public class GameManager {
 	
+	/*===================== Member Variables =====================================================================================*/
+	
 	public String gameDifficulty;
 	public boolean isCharacterCreated = false;
 	public boolean isBusinessSetup = false;
@@ -26,7 +28,9 @@ public class GameManager {
 	public String[] randomLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
 										" Browne", " Butler", " Byrne", " Daly", " Kelly", " Harrington", " Jameson"};
 	
-	// Get and Set Methods
+	/*===================== Get and Set Methods =====================================================================================*/
+	
+	/*===================== get/setGameDifficulty() =====================================================================================*/
 	
 	public void setGameDifficulty(String theDif)
 	{
@@ -38,6 +42,8 @@ public class GameManager {
 		return gameDifficulty;
 	} // getGameDifficulty
 	
+	/*===================== get/setIsCharacterCreated() =====================================================================================*/
+	
 	public void setIsCharacterCreated(boolean isItCreated)
 	{
 		isCharacterCreated = isItCreated;
@@ -47,6 +53,8 @@ public class GameManager {
 	{
 		return isCharacterCreated;
 	} // getIsCharacterCreated()
+	
+	/*===================== get/setIsBusinessSetup() =====================================================================================*/
 	
 	public void setIsBusinessSetup(boolean isItSetup)
 	{
@@ -58,6 +66,8 @@ public class GameManager {
 		return isBusinessSetup;
 	} // getIsBusinessSetup()
 	
+	/*===================== get/setIsNewGameCreated() =====================================================================================*/
+	
 	public void setIsNewGameCreated(boolean isItCreated)
 	{
 		isNewGameCreated = isItCreated;
@@ -67,6 +77,8 @@ public class GameManager {
 	{
 		return isNewGameCreated;
 	} // getIsNewGameCreated()
+	
+	/*===================== get/setIsGameLoaded() =====================================================================================*/
 	
 	public void setIsGameLoaded(boolean isItLoaded)
 	{
@@ -78,6 +90,8 @@ public class GameManager {
 		return isGameLoaded;
 	} // getIsGameLoaded()
 	
+	/*===================== get/setCanHireDealers() =====================================================================================*/
+	
 	public void setCanHireDealers(boolean canHire)
 	{
 		canHireDealers = canHire;
@@ -87,6 +101,8 @@ public class GameManager {
 	{
 		return canHireDealers;
 	} // getCanHireDealers()
+	
+	/*===================== get/setCanBuildDrugLab() =====================================================================================*/
 	
 	public void setCanBuildDrugLab(boolean canBuild)
 	{
@@ -98,6 +114,8 @@ public class GameManager {
 		return canBuildDrugLab;
 	} // getCanBuildDrugLab()
 	
+	/*===================== get/setCanStartSellingDrugs() =====================================================================================*/
+	
 	public void setCanStartSellingDrugs(boolean canSell)
 	{
 		canStartSellingDrugs = canSell;
@@ -107,6 +125,8 @@ public class GameManager {
 	{
 		return canStartSellingDrugs;
 	} // getCanStartSellingDrugs()
+	
+	/*===================== get/setCanStartMakingDrugs() =====================================================================================*/
 	
 	public void setCanStartMakingDrugs(boolean canMake)
 	{
@@ -118,6 +138,8 @@ public class GameManager {
 		return canStartMakingDrugs;
 	} // getCanStartMakingDrugs()
 	
+	/*===================== get/setAppliedForGrant() =====================================================================================*/
+	
 	public void setAppliedForGrant(boolean applied)
 	{
 		appliedForGrant = applied;
@@ -128,22 +150,30 @@ public class GameManager {
 		return appliedForGrant;
 	} // getAppliedForGrant()
 	
+	/*===================== getPlayerTraitsSelection() =====================================================================================*/
+	
 	public String getPlayerTraitsSelection(int index)
 	{	
 		return playerTraitsSelection[index];
 	} // getPlayerTraitsSelection()
+	
+	/*===================== getRandomFName() =====================================================================================*/
 	
 	public String getRandomFName(int index)
 	{	
 		return randomFName[index];
 	} // getRandomFName()
 	
+	/*===================== getRandomLName() =====================================================================================*/
+	
 	public String getRandomLName(int index)
 	{	
 		return randomLName[index];
 	} // getRandomLName()
 	
-	// Other Methods
+	/*===================== Other Methods =====================================================================================*/
+	
+	/*===================== CheckBadReputation() =====================================================================================*/
 	
 	// checks if player can do bad things because of bad rep level
 	public void checkBadReputation(Business business)

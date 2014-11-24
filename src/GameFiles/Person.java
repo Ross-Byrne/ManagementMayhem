@@ -7,10 +7,12 @@ package gamefiles;
 
 public abstract class Person {
 	
-	// Variables
+	/*===================== Member Variables =====================================================================================*/
+	
 	String name;
 	
-	// Methods
+	/*===================== Abstract Methods =====================================================================================*/
+	
 	abstract void setName(String theName);
 	
 	abstract String getName();

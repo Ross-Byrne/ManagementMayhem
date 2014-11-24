@@ -12,6 +12,8 @@ public class GameShell {
 	
 	Scanner console = new Scanner(System.in);
 	
+	/*===================== startNewGame() =====================================================================================*/
+	
 	public void startNewGame(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{
 		// Starting a new Game Stuff
@@ -31,6 +33,8 @@ public class GameShell {
 		}
 		
 	} // startNewGame()
+	
+	/*===================== createCharacter() =====================================================================================*/
 	
 	public void createCharacter(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{
@@ -105,12 +109,13 @@ public class GameShell {
 							{
 								if(choiceRecord[j] == choice) 	// the trait picked is checked against other traits picked
 								{							  	// if the triat has alreadly been picked,
-									System.out.printf("'%s' has Already been Chosen, Pick a Different Trait.%n", gameManager.getPlayerTraitsSelection(choice-1)); 
+									System.out.printf("'%s' has Already been Chosen, Pick a Different Trait.%n", 
+											gameManager.getPlayerTraitsSelection(choice-1)); 
+									
 									choice = 99; // exit
 								} // if
 							} // for
 						} // if
-						
 						
 					}while(choice < 1 || choice > 10); // do..while
 					
@@ -152,6 +157,8 @@ public class GameShell {
 		} // while
 		
 	} // createCharacter()
+	
+	/*===================== setUpBusiness() =====================================================================================*/
 	
 	public void setUpBusiness(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{
@@ -207,6 +214,8 @@ public class GameShell {
 		
 	} // setUpBusiness()
 	
+	/*===================== setGameDifficulty() =====================================================================================*/
+	
 	public void setGameDifficulty(Business business, GameManager gameManager)
 	{
 		int difChoice=0;
@@ -250,6 +259,8 @@ public class GameShell {
 		gameManager.setIsNewGameCreated(true);
 		
 	} // setGameDifficulty
+	
+	/*===================== playGame() =====================================================================================*/
 	
 	public void playGame(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{
@@ -309,6 +320,8 @@ public class GameShell {
 		} // while
 		
 	} // playGame
+	
+	/*===================== continuePlaying() =====================================================================================*/
 	
 	public void continuePlaying(Player player, Business business, GameManager gameManager, MenuManager menuManager)
 	{	
@@ -448,6 +461,8 @@ public class GameShell {
 		gameManager.setAppliedForGrant(false);
 	} // continuePlaying()
 	
+	/*===================== manageBusiness() =====================================================================================*/
+	
 	public void manageBusiness(Player player, GameManager gameManager, MenuManager menuManager, Business business)
 	{
 		int menuChoice = 0;
@@ -496,6 +511,8 @@ public class GameShell {
 			
 		} // while
 	} // manageBusiness()
+	
+	/*===================== manageEmployees() ======================================================================*/
 	
 	public void manageEmployees(GameManager gameManager, MenuManager menuManager, Business business)
 	{
@@ -607,7 +624,6 @@ public class GameShell {
 					{
 						break;
 					} // if
-					
 					
 				}while(amount < 1 || amount > business.employees.size()); // do..while
 		
@@ -731,6 +747,8 @@ public class GameShell {
 		} // while
 	} // manageEmployees()
 	
+	/*===================== manageBuilding() =====================================================================================*/
+	
 	public void manageBuilding(Business business, MenuManager menuManager)
 	{
 		System.out.println("Manage The Building");
@@ -837,6 +855,8 @@ public class GameShell {
 			} // switch
 		} // while
 	} // manageBuilding
+	
+	/*===================== manageOperations() =====================================================================================*/
 	
 	public void manageOperations(GameManager gameManager,Player player, Business business, MenuManager menuManager)
 	{

@@ -3,9 +3,10 @@
 
 package gamefiles;
 
-public class Dealer extends Employee {
+public class Dealer extends Employee { // extends Employee Class
 
-	// Constructors
+	/*===================== Constructors =====================================================================================*/
+	
 	public Dealer()
 	{	
 	} // default Constructor
@@ -15,7 +16,10 @@ public class Dealer extends Employee {
 		setName(theName);
 	}
 	
-	// Methods
+	/*===================== Get and Set Methods =====================================================================================*/
+	
+	/*===================== get/setName() =====================================================================================*/
+	
 	public void setName(String theName)
 	{
 		name = theName;
@@ -25,6 +29,10 @@ public class Dealer extends Employee {
 	{
 		return name;
 	} // getName()
+	
+	/*===================== Other Methods =====================================================================================*/
+	
+	/*===================== toString() =====================================================================================*/
 	
 	public String toString() // used when saving dealers
 	{

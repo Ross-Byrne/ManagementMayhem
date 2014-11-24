@@ -5,13 +5,15 @@ package gamefiles;
 
 /* This is the class that handles the characters details */
 
-public class Player extends Person implements Embezzle {
+public class Player extends Person implements Embezzle { // extends Person Class and implements Embezzle Interface
 
-	// Variables
+	/*===================== Member Variables =====================================================================================*/
+	
 	float bankAccount;
 	String[] traits = {"", "", "", "", ""}; // string array to store 5 player traits
 	
-	// Constructors
+	/*===================== Constructors =====================================================================================*/
+	
 	public Player()
 	{	
 	} // default Constructor
@@ -21,7 +23,10 @@ public class Player extends Person implements Embezzle {
 		setName(theName);
 	}
 	
-	// Get Set Methods
+	/*===================== Get and Set Methods =====================================================================================*/
+	
+	/*===================== get/setName() =====================================================================================*/
+	
 	public void setName(String theName)
 	{
 		name = theName;
@@ -32,6 +37,8 @@ public class Player extends Person implements Embezzle {
 		return name;
 	} // getName()
 	
+	/*===================== get/setBankAccount() =====================================================================================*/
+	
 	public void setBankAccount(float theAccount)
 	{
 		bankAccount = theAccount;
@@ -40,7 +47,9 @@ public class Player extends Person implements Embezzle {
 	public float getBankAccount()
 	{
 		return bankAccount;
-	}
+	} // getBankAccount()
+	
+	/*===================== get/setTraits() =====================================================================================*/
 	
 	public void setTraits(int index, String trait)
 	{
@@ -48,6 +57,7 @@ public class Player extends Person implements Embezzle {
 	} // setTraits()
 	
 	// getTraits() is overloaded
+	// returns traits number entered
 	public String getTraits(int index)
 	{
 		String trait="";
@@ -69,7 +79,9 @@ public class Player extends Person implements Embezzle {
 		return tempTraits;
 	} // getTraits()
 	
-	// Other Methods
+	/*===================== Other Methods =====================================================================================*/
+	
+	/*===================== embezzleGrant() =====================================================================================*/
 	
 	// this is from Embezzle Interface
 	public void embezzleGrant(float amount)
@@ -77,6 +89,8 @@ public class Player extends Person implements Embezzle {
 		// adds the amount of money the player wants to embezzle to their account
 		setBankAccount(getBankAccount() + amount);
 	} // embezzleGrant()
+	
+	/*===================== displayPlayerInfo() =====================================================================================*/
 	
 	public String displayPlayerInfo()
 	{

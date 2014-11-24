@@ -7,12 +7,16 @@ package gamefiles;
 
 public class MenuManager {
 	
+	/*===================== printGameInfo() =====================================================================================*/
+	
 	public void printGameInfo()
 	{
 		System.out.println("\nWelcome to Management Mayhem!\n"
 				+ "As the sole owner and manager of your business,\n"
 				+ "it is your duty to keep it running at all costs.\n");
 	} // printGameInfo()
+	
+	/*===================== printMainMenu() =====================================================================================*/
 	
 	public void printMainMenu()
 	{
@@ -23,6 +27,8 @@ public class MenuManager {
 		System.out.println("\t\t\t4.) Exit.\n");
 	} // printMainMenu()
 	
+	/*===================== printCharacterCreateMenu() =====================================================================================*/
+	
 	public void printCharacterCreateMenu()
 	{
 		System.out.println("\n\t\t\tBoth Fields Must Be Complete!\n");
@@ -31,12 +37,16 @@ public class MenuManager {
 		System.out.println("\t\t\t3.) Back To Main Menu.");
 	} // printCharacterCreateMenu()
 	
+	/*===================== printBusinessSetupMenu() =====================================================================================*/
+	
 	public void printBusinessSetupMenu()
 	{
 		System.out.println("\n\t\t\tAll Fields Must Be Complete!\n");
 		System.out.println("\t\t\t1.) Name Your Business.");	
 		System.out.println("\t\t\t2.) Back To Main Menu.");
 	} // printBusinessSetupMenu()
+	
+	/*===================== printMainGameMenu() =====================================================================================*/
 	
 	public void printMainGameMenu()
 	{
@@ -46,6 +56,8 @@ public class MenuManager {
 		System.out.println("\t\t\t3.) Load Game.");
 		System.out.println("\t\t\t4.) Exit Game.\n");
 	} // printMainGameMenu()
+	
+	/*===================== printGameOptionsMenu() =====================================================================================*/
 	
 	public void printGameOptionsMenu()
 	{
@@ -57,6 +69,8 @@ public class MenuManager {
 		System.out.println("\t\t\t5.) Back To Main Game Menu.\n");
 	} // printGameMenu()
 	
+	/*===================== printManageBusinessMenu() =====================================================================================*/
+	
 	public void printManageBusinessMenu()
 	{
 		System.out.println("\n\t\t\tManage The Business\n");
@@ -65,6 +79,8 @@ public class MenuManager {
 		System.out.println("\t\t\t3.) Manage Operations.");
 		System.out.println("\t\t\t4.) Back To Game Menu.\n");
 	} // printManageBusinessMenu()
+	
+	/*===================== printManageEmployeesMenu() =====================================================================================*/
 	
 	public void printManageEmployeesMenu()
 	{
@@ -76,6 +92,8 @@ public class MenuManager {
 		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printManageEmployeesMenu()
 	
+	/*===================== printSetEmployeeSalaryMenu() =====================================================================================*/
+	
 	public void printSetEmployeeSalaryMenu()
 	{
 		System.out.println("\n\n\t\t\tSet The Salary Of Your Employees.");
@@ -86,6 +104,8 @@ public class MenuManager {
 		System.out.println("\t\t\t5.) Back To Manage Employees.");
 	} // printSetEmployeeSalaryMenu()
 	
+	/*===================== printManageTheBuildingMenu() =====================================================================================*/
+	
 	public void printManageTheBuildingMenu()
 	{
 		System.out.println("\n\t\t\tManage The Building\n");
@@ -93,6 +113,8 @@ public class MenuManager {
 		System.out.println("\t\t\t2.) Set Maintenance Level.");
 		System.out.println("\t\t\t3.) Back To Manage The Business.");
 	} // printManageTheBuildingMenu()
+	
+	/*===================== printSetMaintenanceLevelMenu() =====================================================================================*/
 	
 	public void printSetMaintenanceLevelMenu()
 	{
@@ -104,6 +126,8 @@ public class MenuManager {
 		System.out.println("\t\t\t5.) Back To Manage The Business.");
 	} // printSetMaintenanceLevelMenu()
 	
+	/*===================== printManageOperationsMenu() =====================================================================================*/
+	
 	public void printManageOperationsMenu()
 	{
 		System.out.println("\n\t\t\tManage Operations\n");
@@ -111,6 +135,8 @@ public class MenuManager {
 		System.out.println("\t\t\t2.) Apply For Grant.");
 		System.out.println("\t\t\t3.) Back To Manage The Business.");
 	} // printManageOperationsMenu()
+	
+	/*===================== printGameOverMessage() =====================================================================================*/
 	
 	public void printGameOverMessage()
 	{
@@ -120,6 +146,8 @@ public class MenuManager {
 		System.out.println("\n\t\t\tI'm Sorry To Tell You This,");
 		System.out.println("\t\t\tBut It's: GAME OVER!");
 	} // printGameOverMessage()
+	
+	/*===================== printQuitGameMenu() =====================================================================================*/
 	
 	public void printQuitGameMenu()
 	{

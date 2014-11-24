@@ -3,9 +3,10 @@
 
 package gamefiles;
 
-public class Employee extends Person {
+public class Employee extends Person { // extends Person Class
 
-	// Constructors
+	/*===================== Constructors =====================================================================================*/
+	
 	public Employee()
 	{	
 	} // default Constructor
@@ -15,7 +16,10 @@ public class Employee extends Person {
 		setName(theName);
 	}
 	
-	// Methods
+	/*===================== Get and Set Methods =====================================================================================*/
+	
+	/*===================== get/setName() =====================================================================================*/
+	
 	public void setName(String theName)
 	{
 		name = theName;
@@ -25,6 +29,10 @@ public class Employee extends Person {
 	{
 		return name;
 	} // getName()
+	
+	/*===================== Other Methods =====================================================================================*/
+	
+	/*===================== toString() =====================================================================================*/
 	
 	public String toString() // used when saving employees
 	{

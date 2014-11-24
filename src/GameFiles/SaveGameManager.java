@@ -9,6 +9,9 @@ import java.util.Scanner;
 /* Class to manage the saving and loading of the game */
 
 public class SaveGameManager {
+	
+	/*===================== saveGame() =====================================================================================*/
+	
 	// Saves The Player's Game
 	public void saveGame(Player player, Business business, GameManager gameManager) throws IOException
 	{
@@ -60,6 +63,8 @@ public class SaveGameManager {
 			
 		outSavedGame.close();
 	} // saveGame()
+	
+	/*===================== loadGame() =====================================================================================*/
 	
 	// Loads The Player's Game
 	public void loadGame(Player player, Business business, GameManager gameManager) throws IOException
@@ -147,7 +152,7 @@ public class SaveGameManager {
 	
 			inSavedGame.close();
 		}
-		catch(Exception e)
+		catch(Exception e) // if loading fails, say so and set everything to default
 		{
 			inSavedGame.close();
 			

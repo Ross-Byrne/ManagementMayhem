@@ -7,6 +7,8 @@ package gamefiles;
 
 public interface Embezzle {
 	
+	/*===================== Methods =====================================================================================*/
+	
 	void embezzleGrant(float amount);
 
 } // Interface

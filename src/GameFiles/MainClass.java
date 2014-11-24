@@ -11,11 +11,13 @@ import java.io.*;
 
 public class MainClass {
 	
-	// Main Method
+	/*===================== Main Method =====================================================================================*/
 	
 	public static void main(String[] args) throws IOException
 	{
-		// Creating Objects
+		
+		/*===================== Creating Objects =====================================================================================*/
+		
 		Scanner console = new Scanner(System.in);
 		GameShell gameShell = new GameShell();
 		SaveGameManager saveGameManager = new SaveGameManager();
@@ -24,14 +26,20 @@ public class MainClass {
 		Player player = new Player();
 		Business business = new Business();
 		
+		/*===================== Checking Save File =====================================================================================*/
+		
 		// Checks if the save file exists, creates it if it doesn't
 		File gameSave = new File("SavedGame.txt");
 		if(!gameSave.exists()) {
 			gameSave.createNewFile();
-		} 
+		} // if
 		
-		// Variables
-		int menuChoice = 0, endGame = 0;
+		/*===================== Variables =====================================================================================*/
+		
+		int menuChoice = 0;
+		int endGame = 0;
+		
+		/*===================== Code =====================================================================================*/
 		
 		System.out.printf("\t\t\t=======================================================");
 		System.out.printf("\n\t\t\t============ Welcome To Management Mayhem! ============");
