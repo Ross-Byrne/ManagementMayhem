@@ -13,22 +13,22 @@ public class Business {
 	
 	/*===================== Member Variables =====================================================================================*/
 	
-	public String name;
-	public float bankAccount;
-	public int goodReputation;
-	public int badReputation;
-	public int buildingSize; // no. of rooms
-	public float buildingUpgradeCost;
-	public float buildingMaintenance;
-	public int maxEmployees;
-	public int maxDealers;
-	public float employeeSalary; // Per Month
-	public float totalEmployeeSalary;
-	public int businessAge; // in months
-	public int productivityBonus;
-	public int equipmentUpgrades; // + 10% productivity bonus per upgrade
-	public float equipmentUpgradeCost;
-	public float moneyEarned;
+	private String name;
+	private float bankAccount;
+	private int goodReputation;
+	private int badReputation;
+	private int buildingSize; // no. of rooms
+	private float buildingUpgradeCost;
+	private float buildingMaintenance;
+	private int maxEmployees;
+	private int maxDealers;
+	private float employeeSalary; // Per Month
+	private float totalEmployeeSalary;
+	private int businessAge; // in months
+	private int productivityBonus;
+	private int equipmentUpgrades; // + 10% productivity bonus per upgrade
+	private float equipmentUpgradeCost;
+	private float moneyEarned;
 	
 	/*===================== Lists Of Employee Objects =====================================================================================*/
 	List<Employee> employees = new ArrayList<Employee>();
@@ -346,10 +346,10 @@ public class Business {
 			Employee employee = new Employee(); // create employee
 			
 			rndValue = rnd.nextInt(14); // get a random value 
-			tempName = gameManager.randomFName[rndValue]; // use value to get random first name
+			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name
 			
 			rndValue = rnd.nextInt(14); // get another random value
-			tempName += gameManager.randomLName[rndValue]; // choose a random last name and add it on to the first name
+			tempName += gameManager.getRandomLName(rndValue); // choose a random last name and add it on to the first name
 			
 			employee.setName(tempName); // name the employee
 			employees.add(employee); // add employee to employees list

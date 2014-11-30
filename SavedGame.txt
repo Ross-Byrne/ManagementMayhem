@@ -1,26 +1,24 @@
 Ross Byrne
 People Person
 Marketing Master
-Greedy
-Spitful
-Seedy
+Organiser
+Opertunist
+Charming
 0.000000
 Prestige World Wide
-45800.000000
-35
-40
+50000.000000
+50
+25
 3
 800.000000
-4000.000000
+2400.000000
 1000.000000
-12
 0
-5
-Bob Browne
-Jennifer Rodrigue
-Jane Kelly
-Jennifer McCarthy
-John Jameson
+0
+3
+Sarah Browne
+Jane Jameson
+Conor Smith
 0
 Normal
 false

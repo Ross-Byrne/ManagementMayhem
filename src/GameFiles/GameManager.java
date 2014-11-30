@@ -9,23 +9,23 @@ public class GameManager {
 	
 	/*===================== Member Variables =====================================================================================*/
 	
-	public String gameDifficulty;
-	public boolean isCharacterCreated = false;
-	public boolean isBusinessSetup = false;
-	public boolean isNewGameCreated = false;
-	public boolean isGameLoaded = false;
-	public boolean canHireDealers = false;
-	public boolean canBuildDrugLab = false;
-	public boolean canStartSellingDrugs = false;
-	public boolean canStartMakingDrugs = false;
-	public boolean appliedForGrant = false;
-	public String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
+	private String gameDifficulty;
+	private boolean isCharacterCreated = false;
+	private boolean isBusinessSetup = false;
+	private boolean isNewGameCreated = false;
+	private boolean isGameLoaded = false;
+	private boolean canHireDealers = false;
+	private boolean canBuildDrugLab = false;
+	private boolean canStartSellingDrugs = false;
+	private boolean canStartMakingDrugs = false;
+	private boolean appliedForGrant = false;
+	private String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	
-	public String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
+	private String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
 										"Rachael", "Samantha", "Mary", "Ciara", "Jennifer", "Jane", "Sarah"};
 	
-	public String[] randomLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
+	private String[] randomLName = {		" Power", " Sullivan", " Smith", " McCarthy", " White", " Rodrigue", " Jones",
 										" Browne", " Butler", " Byrne", " Daly", " Kelly", " Harrington", " Jameson"};
 	
 	/*===================== Get and Set Methods =====================================================================================*/
@@ -156,6 +156,16 @@ public class GameManager {
 	{	
 		return playerTraitsSelection[index];
 	} // getPlayerTraitsSelection()
+	
+	/*===================== getPlayerTraitsSelectionLength() =====================================================================================*/
+	
+	public int getPlayerTraitsSelectionLength()
+	{	
+		int length;
+		
+		length = playerTraitsSelection.length;
+		return length;
+	} // getPlayerTraitsSelectionLength()
 	
 	/*===================== getRandomFName() =====================================================================================*/
 	

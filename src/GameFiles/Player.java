@@ -9,8 +9,8 @@ public class Player extends Person implements Embezzle { // extends Person Class
 
 	/*===================== Member Variables =====================================================================================*/
 	
-	float bankAccount;
-	String[] traits = {"", "", "", "", ""}; // string array to store 5 player traits
+	private float bankAccount;
+	private String[] traits = {"", "", "", "", ""}; // string array to store 5 player traits
 	
 	/*===================== Constructors =====================================================================================*/
 	

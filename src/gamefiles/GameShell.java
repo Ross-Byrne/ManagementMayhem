@@ -76,7 +76,7 @@ public class GameShell {
 			case 2:
 				System.out.print("\n\t\t\tChoose Five Traits For Your Character!\n");
 				
-				for(int i = 0; i < gameManager.playerTraitsSelection.length; i++)
+				for(int i = 0; i < gameManager.getPlayerTraitsSelectionLength(); i++)
 				{
 					System.out.printf("\n\t\t\t%d.) %s", i+1, gameManager.getPlayerTraitsSelection(i));
 
@@ -525,7 +525,7 @@ public class GameShell {
 			int noOfDealersAllowed = (business.getMaxDealers() - business.dealers.size()); // the no. of dealers you can hire
 			
 			System.out.printf("\n\t\t\tYou Have %d Out Of The %d Employees You Can Hire.", business.employees.size(), business.getMaxEmployees());
-			if(gameManager.canHireDealers == true)
+			if(gameManager.getCanHireDealers() == true)
 			{ 
 				System.out.printf("\n\t\t\tYou Have %d Out Of The %d Dealers You Can Hire.", business.dealers.size(), business.getMaxDealers());
 			}
@@ -534,7 +534,7 @@ public class GameShell {
 			menuManager.printManageEmployeesMenu();
 			
 			// if the options are available, print the menus
-			if(gameManager.canHireDealers == true)
+			if(gameManager.getCanHireDealers() == true)
 			{ 
 				menusAllowed = 8; // shows new menu option
 				System.out.println("\n\t\t\t*** Special Options ***\n");
@@ -874,25 +874,25 @@ public class GameShell {
 			menuManager.printManageOperationsMenu();
 			
 			// if the options are available, print the menus
-			if(gameManager.canStartSellingDrugs == true)
+			if(gameManager.getCanStartSellingDrugs() == true)
 			{
 				menusAllowed = 4; // shows new menu option
 				System.out.println("\n\t\t\t*** Special Options ***\n");
 				System.out.println("\t\t\t4.) Stop Selling Drugs."); 
 			}
-			else if(gameManager.canHireDealers == true)
+			else if(gameManager.getCanHireDealers() == true)
 			{
 				menusAllowed = 4; // shows new menu option
 				System.out.println("\n\t\t\t*** Special Options ***\n");
 				System.out.println("\t\t\t4.) Start Selling Drugs."); 
 			} // if
 			
-			if(gameManager.canStartMakingDrugs == true)
+			if(gameManager.getCanStartMakingDrugs() == true)
 			{
 				menusAllowed = 5; // shows new menu option
 				System.out.println("\t\t\t5.) Destroy Your Drugs Lab."); 
 			}
-			else if(gameManager.canBuildDrugLab == true)
+			else if(gameManager.getCanBuildDrugLab() == true)
 			{ 
 				menusAllowed = 5; // shows new menu option
 				System.out.println("\t\t\t5.) Build A Drugs Lab."); 
@@ -1060,7 +1060,7 @@ public class GameShell {
 			case 4: // Start/Stop Selling Drugs
 				choice = 0;
 				
-				if(gameManager.canStartSellingDrugs == false)
+				if(gameManager.getCanStartSellingDrugs() == false)
 				{
 					System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
 					System.out.println("\t\t\tWould You Like To Use Your Connections To Start Selling Drugs?");
@@ -1132,7 +1132,7 @@ public class GameShell {
 			case 5: // Build/Destroy Drug Lab
 				choice = 0;
 				
-				if(gameManager.canStartMakingDrugs == false) // if you can't make drugs yet
+				if(gameManager.getCanStartMakingDrugs() == false) // if you can't make drugs yet
 				{
 					System.out.println("\n\t\t\tBecause Of Your Reputation, You Have Made Many Connections.");
 					System.out.println("\t\t\tYou Can Now Build A Drugs Lab.");
