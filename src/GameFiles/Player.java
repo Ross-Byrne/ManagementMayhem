@@ -23,6 +23,13 @@ public class Player extends Person implements Embezzle { // extends Person Class
 		setName(theName);
 	}
 	
+	// using the 'this' keyword to call one constructor from another
+	public Player(String theName, float theAccount)
+	{
+		this(theName);
+		setBankAccount(theAccount);
+	}
+	
 	/*===================== Get and Set Methods =====================================================================================*/
 	
 	/*===================== get/setName() =====================================================================================*/

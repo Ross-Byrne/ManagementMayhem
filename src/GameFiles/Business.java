@@ -393,7 +393,7 @@ public class Business {
 		
 		for(int i = 0; i < theAmount; i++)
 		{
-			Dealer dealer = new Dealer(); // create dealer - Polymorphism
+			Employee dealer = new Dealer(); // create dealer - Polymorphism
 			
 			rndValue = rnd.nextInt(14); // get a random value 
 			tempName = gameManager.getRandomFName(rndValue); // use value to get random first name

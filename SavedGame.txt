@@ -1,14 +1,14 @@
 Ross Byrne
 People Person
 Marketing Master
+Greedy
+Spitful
 Organiser
-Opertunist
-Charming
 0.000000
 Prestige World Wide
 50000.000000
-50
-25
+40
+35
 3
 800.000000
 2400.000000
@@ -16,9 +16,9 @@ Prestige World Wide
 0
 0
 3
-Sarah Browne
-Jane Jameson
-Conor Smith
+Tom Daly
+Mary Power
+John White
 0
 Normal
 false

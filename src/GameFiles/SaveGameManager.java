@@ -135,7 +135,7 @@ public class SaveGameManager {
 				inSavedGame.nextLine(); // Flush the buffer
 				for(j = 0; j < dSize; j++)
 				{
-					Dealer dealer = new Dealer(); // create dealer
+					Employee dealer = new Dealer(); // create dealer
 					dealer.setName(inSavedGame.nextLine()); // set their name
 					business.dealers.add(dealer);
 				} // for
