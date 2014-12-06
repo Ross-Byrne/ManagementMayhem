@@ -24,7 +24,7 @@ college work. This is just the list of bugs I've noticed so far.
 
 I do intend on finishing off this project!
 
-Management Mayhem is mean't to be a game.
+Management Mayhem is meant to be a game.
 Athough, because it was a college project and I had limited time,
 I did not get time to finish the game and add in all the features I wanted.
 Because of this, Management Mayhem is more like a simulator then a game.
