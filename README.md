@@ -36,7 +36,7 @@ I had planned on adding in randomly generated events, as the player cycled throu
 the months (making it an actual game, not simulator) but I ran out of time.
 So for a start, here are the features I wish to add.
 
-* Randomly generated events as the player cycles through the months.a
+* Randomly generated events as the player cycles through the months
   This would include eg. parts of the building getting damaged because the 
   maintenance level is too low etc...
 
