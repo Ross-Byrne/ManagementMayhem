@@ -45,7 +45,7 @@ So for a start, here are the features I wish to add.
 
 * Make the player's traits do more then increase/decrease rep
 
-* Following the above feature, I want give the player different options when dealing
+* Following the above feature, I want to give the player different options when dealing
   with a random event, depending on a certain trait they picked.
 
 That will do for now!
