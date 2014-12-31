@@ -12,6 +12,7 @@ Keep it running at all costs.
 ================
 
 Bugs: This project is by no means finished!
+==========================================
 
 The biggest major bug that I know of is, if the player gets the bad reputation too high
 (not 100% sure how high, but close to max bad rep), the player gets a negitive income, 
@@ -31,6 +32,7 @@ Because of this, Management Mayhem is more like a simulator then a game.
 
 ================
 The list of features I want to add to the game.
+===============================================
 
 I had planned on adding in randomly generated events, as the player cycled through
 the months (making it an actual game, not simulator) but I ran out of time.
@@ -53,6 +55,7 @@ That will do for now!
 ================
 
 DISCLAIMER
+==========
 
 I, Ross Byrne, do not take responsability for the effect my code has on any computer.
 I remain the full and only owner of this code.
