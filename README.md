@@ -51,17 +51,3 @@ So for a start, here are the features I wish to add.
   with a random event, depending on a certain trait they picked.
 
 That will do for now!
-
-================
-
-DISCLAIMER
-==========
-
-I, Ross Byrne, do not take responsability for the effect my code has on any computer.
-I remain the full and only owner of this code.
-Anyone can view, use or edit my code but cannot publish it without crediting me.
-
-The bottom line: 
-
-I hope my code might help anymore who views or uses it but I just ask that 
-you don't steal it and pretend it's yours. 
