@@ -1,0 +1,25 @@
+Ross Byrne
+People Person
+Marketing Master
+Greedy
+Spitful
+Seedy
+0.000000
+Prestige World Wide
+50000.000000
+35
+40
+3
+800.000000
+2400.000000
+1000.000000
+0
+0
+3
+Jim Smith
+Conor Rodrigue
+Jane Jameson
+0
+Normal
+false
+false
