@@ -2,6 +2,7 @@ ManagementMayhem
 ================
 
 Management Mayhem is a game written in java in eclipse Luna. It is a second year college project - Grade 95%.
+For version of project submitted for grading see "CollegeProject" branch.
 
 Author: Ross Byrne.
 
