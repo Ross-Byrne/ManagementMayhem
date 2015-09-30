@@ -1,7 +1,7 @@
 // Ross Byrne 2014
 // Second Year Java Project
 
-package gamefiles;
+package gameFiles;
 
 /* This is the class that handles the characters details */
 

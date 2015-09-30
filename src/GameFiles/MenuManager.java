@@ -1,7 +1,7 @@
 // Ross Byrne 2014
 // Second Year Java Project
 
-package gamefiles;
+package gameFiles;
 
 /* Class To Manage all the Menus in the game */
 

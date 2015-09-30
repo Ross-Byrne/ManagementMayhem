@@ -1,7 +1,7 @@
 // Ross Byrne 2014
 // Second Year Java Project
 
-package gamefiles;
+package gameFiles;
 
 /* This class manages certain parts of the game */
 
@@ -19,7 +19,7 @@ public class GameManager {
 	private boolean canStartSellingDrugs = false;
 	private boolean canStartMakingDrugs = false;
 	private boolean appliedForGrant = false;
-	private String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opertunist", "Charming",
+	private String[] playerTraitsSelection = { 	"People Person", "Marketing Master", "Organiser", "Opportunist", "Charming",
 												"Greedy", "Spitful", "Alcoholic", "Reckless", "Seedy"};
 	
 	private String[] randomFName = {		"John", "Mike", "Carl", "Jim", "Conor", "Bob", "Tom",
